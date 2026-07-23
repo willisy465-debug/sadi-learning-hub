@@ -1,197 +1,146 @@
 import React from 'react';
-import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { Search, Filter, BookOpen, Clock, Award, ArrowRight, ShieldCheck, Tag } from 'lucide-react';
+import { getCurrentUser } from '@/lib/auth';
+import { BookOpen, Sparkles, ShieldCheck, Video, Download } from 'lucide-react';
+import { CoursesMarketplaceClient } from './CoursesMarketplaceClient';
 
-export default async function CoursesPage({
-  searchParams,
-}: {
-  searchParams?: { query?: string; category?: string; delivery?: string };
-}) {
-  const query = searchParams?.query || '';
-  const categoryFilter = searchParams?.category || '';
-  const deliveryFilter = searchParams?.delivery || '';
+export const dynamic = 'force-dynamic';
 
-  const categories = await prisma.courseCategory.findMany({
-    orderBy: { displayOrder: 'asc' },
-  });
+export default async function CoursesPage() {
+  let categories: any[] = [];
+  let courses: any[] = [];
+  let currentUser: any = null;
 
-  const courses = await prisma.course.findMany({
-    where: {
-      isPublished: true,
-      ...(categoryFilter ? { categoryId: categoryFilter } : {}),
-      ...(deliveryFilter ? { deliveryMethod: deliveryFilter } : {}),
-      ...(query
-        ? {
-            OR: [
-              { title: { contains: query } },
-              { code: { contains: query } },
-              { shortDescription: { contains: query } },
-            ],
-          }
-        : {}),
-    },
-    include: { category: true, cohorts: true },
-    orderBy: { createdAt: 'desc' },
-  });
+  try {
+    currentUser = await getCurrentUser();
+
+    categories = await prisma.courseCategory.findMany({
+      orderBy: { displayOrder: 'asc' },
+    });
+
+    courses = await prisma.course.findMany({
+      where: {
+        isPublished: true,
+      },
+      include: { category: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch (err) {
+    console.error('CoursesPage database query error:', err);
+  }
+
+  // Fallback Executive Online Courses if database is unseeded or query fails
+  if (!courses || courses.length === 0) {
+    courses = [
+      {
+        id: 'demo-1',
+        code: 'FIN-801',
+        title: 'Executive Public Finance Management & IPSAS Standards',
+        shortDescription: 'Master modern international public sector accounting standards, national budget monitoring, and financial auditing through 100% online video lectures.',
+        deliveryMethod: 'SELF_PACED',
+        durationDays: 5,
+        cpdPoints: 20,
+        priceZar: 18500,
+        priceUsd: 1100,
+        slug: 'public-finance-ipsas',
+        featuredImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop',
+        category: { id: 'cat-fin', name: 'Public Finance & Accounting' },
+      },
+      {
+        id: 'demo-2',
+        code: 'GOV-902',
+        title: 'Corporate Governance, Risk & Board Leadership',
+        shortDescription: 'Strategic online masterclass on governance frameworks for state-owned enterprises, central banks, and corporate entities across Africa.',
+        deliveryMethod: 'SELF_PACED',
+        durationDays: 5,
+        cpdPoints: 25,
+        priceZar: 21000,
+        priceUsd: 1350,
+        slug: 'corporate-governance-risk',
+        featuredImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
+        category: { id: 'cat-gov', name: 'Governance & Leadership' },
+      },
+      {
+        id: 'demo-3',
+        code: 'ICT-703',
+        title: 'Cybersecurity Policy & Public Sector Digital Transformation',
+        shortDescription: 'Comprehensive online cyber risk management, infrastructure protection, and digital governance hosted e-learning programme.',
+        deliveryMethod: 'SELF_PACED',
+        durationDays: 4,
+        cpdPoints: 15,
+        priceZar: 15500,
+        priceUsd: 950,
+        slug: 'cybersecurity-digital-transformation',
+        featuredImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+        category: { id: 'cat-ict', name: 'ICT & Cyber Security' },
+      },
+      {
+        id: 'demo-4',
+        code: 'PRO-604',
+        title: 'Public Procurement, Contract Management & PPPs',
+        shortDescription: 'Advanced online course on transparent tender evaluation, legal contract compliance, and Public-Private Partnership structuring.',
+        deliveryMethod: 'SELF_PACED',
+        durationDays: 5,
+        cpdPoints: 20,
+        priceZar: 19500,
+        priceUsd: 1200,
+        slug: 'public-procurement-ppp',
+        featuredImage: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=1200&auto=format&fit=crop',
+        category: { id: 'cat-pro', name: 'Procurement & Supply Chain' },
+      },
+    ];
+  }
+
+  if (!categories || categories.length === 0) {
+    categories = [
+      { id: 'cat-fin', name: 'Public Finance & Accounting' },
+      { id: 'cat-gov', name: 'Governance & Leadership' },
+      { id: 'cat-ict', name: 'ICT & Cyber Security' },
+      { id: 'cat-pro', name: 'Procurement & Supply Chain' },
+    ];
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       
-      {/* Page Header */}
+      {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center space-x-2 text-xs font-semibold text-amber-400">
-          <BookOpen className="w-4 h-4" />
-          <span>SADI 2026 Academic Catalogue</span>
+        <div className="inline-flex items-center space-x-2 text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>SADI 100% Executive Online Marketplace</span>
         </div>
+
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-          Professional Training & <span className="gold-gradient-text">Capacity Courses</span>
+          Hosted Online Courses & <span className="gold-gradient-text">Video Streaming</span>
         </h1>
+
         <p className="text-sm text-slate-300 max-w-3xl leading-relaxed">
-          Browse public scheduled workshops, online self-paced e-learning, blended programmes, and institutional certifications across Pan-African development sectors.
+          Explore our executive online e-learning marketplace. Select your course to trigger instant automated registration, payment receipt, credential issuance, and immediate access to HD streaming video lectures and digital materials.
         </p>
+
+        {/* Feature Badges */}
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300 pt-2">
+          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+            <Video className="w-4 h-4 text-amber-400" />
+            <span>Hosted HD Video Lectures</span>
+          </div>
+          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+            <Download className="w-4 h-4 text-emerald-400" />
+            <span>Digital Study Guides & PDFs</span>
+          </div>
+          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+            <ShieldCheck className="w-4 h-4 text-blue-400" />
+            <span>Instant Auto-Credentials</span>
+          </div>
+        </div>
       </div>
 
-      {/* Filter & Search Toolbar */}
-      <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
-        <form method="GET" className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          
-          {/* Search Input */}
-          <div className="relative md:col-span-2">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
-            <input
-              type="text"
-              name="query"
-              defaultValue={query}
-              placeholder="Search by course title, code (e.g. SADI-EXEC-01)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
-            />
-          </div>
-
-          {/* Category Filter */}
-          <div>
-            <select
-              name="category"
-              defaultValue={categoryFilter}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
-            >
-              <option value="">All Categories</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Delivery Method Filter */}
-          <div>
-            <select
-              name="delivery"
-              defaultValue={deliveryFilter}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
-            >
-              <option value="">All Delivery Modes</option>
-              <option value="BLENDED">Blended Learning</option>
-              <option value="SELF_PACED">Online Self-Paced</option>
-              <option value="FACE_TO_FACE">Face-to-Face Workshop</option>
-              <option value="IN_HOUSE_CORPORATE">In-House Corporate</option>
-              <option value="CERTIFICATION_PROGRAMME">Certification Exam</option>
-            </select>
-          </div>
-
-          <div className="md:col-span-4 flex items-center justify-end space-x-3">
-            {(query || categoryFilter || deliveryFilter) && (
-              <Link
-                href="/courses"
-                className="text-xs text-slate-400 hover:text-white underline mr-auto"
-              >
-                Reset Filters
-              </Link>
-            )}
-            <button
-              type="submit"
-              className="gold-button px-6 py-2 rounded-xl text-xs font-bold shadow-md shadow-amber-500/10"
-            >
-              Apply Filters
-            </button>
-          </div>
-
-        </form>
-      </div>
-
-      {/* Course Grid */}
-      {courses.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl border border-slate-800 space-y-3">
-          <BookOpen className="w-10 h-10 text-slate-600 mx-auto" />
-          <h3 className="text-lg font-bold text-white">No courses match your filter criteria</h3>
-          <p className="text-xs text-slate-400">Try searching for a different keyword or resetting your filters.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              className="glass-panel rounded-3xl border border-slate-800 overflow-hidden flex flex-col justify-between hover:border-amber-500/40 transition-colors group"
-            >
-              <div className="space-y-4 p-6">
-                <div className="aspect-video rounded-2xl overflow-hidden relative bg-slate-900">
-                  <img
-                    src={course.featuredImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'}
-                    alt={course.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-amber-500/30 text-amber-400 font-mono text-[10px] font-bold">
-                    {course.code}
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2 text-xs text-slate-400">
-                  <span className="px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-medium">
-                    {course.deliveryMethod.replace(/_/g, ' ')}
-                  </span>
-                  <span>•</span>
-                  <span>{course.durationDays} Days</span>
-                  <span>•</span>
-                  <span className="text-emerald-400 font-medium">{course.cpdPoints} CPD Points</span>
-                </div>
-
-                <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2">
-                  {course.title}
-                </h3>
-
-                <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
-                  {course.shortDescription}
-                </p>
-
-                {course.cohorts && course.cohorts.length > 0 && (
-                  <div className="pt-2 flex items-center space-x-2 text-[11px] text-slate-300">
-                    <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span className="truncate">Next Cohort: {new Date(course.cohorts[0].startDate).toLocaleDateString()}</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="p-6 pt-0 border-t border-slate-800/80 mt-4 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] uppercase text-slate-500 font-semibold">Tuition Fee</p>
-                  <p className="text-sm font-black text-amber-400">
-                    ZAR {course.priceZar.toLocaleString()} <span className="text-xs font-normal text-slate-400">(/ USD {course.priceUsd})</span>
-                  </p>
-                </div>
-
-                <Link
-                  href={`/courses/${course.slug}`}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-white font-semibold text-xs transition-colors flex items-center space-x-1"
-                >
-                  <span>Enrol / Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Marketplace Component */}
+      <CoursesMarketplaceClient
+        initialCourses={courses}
+        categories={categories}
+        currentUser={currentUser}
+      />
 
     </div>
   );
