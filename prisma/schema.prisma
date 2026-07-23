@@ -1,0 +1,572 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  code        String           @unique // SUPER_ADMIN, PROGRAMME_DIRECTOR, etc.
+  name        String
+  description String
+  userRoles   UserRole[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  code        String           @unique
+  name        String
+  description String
+  roles       RolePermission[]
+  createdAt   DateTime         @default(now())
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model User {
+  id                  String             @id @default(uuid())
+  email               String             @unique
+  passwordHash        String
+  firstName           String
+  middleName          String?
+  lastName            String
+  mobileNumber        String?
+  country             String
+  nationality         String?
+  jobTitle            String?
+  department          String?
+  preferredLanguage   String             @default("English")
+  timeZone            String             @default("Africa/Johannesburg")
+  isActive            Boolean            @default(true)
+  isMfaEnabled        Boolean            @default(false)
+  mfaSecret           String?
+  avatarUrl           String?
+  
+  userRoles           UserRole[]
+  organisationUsers   OrganisationUser[]
+  registrations       Registration[]
+  enrolments          Enrolment[]
+  progressRecords     LearnerProgress[]
+  videoProgress       VideoProgress[]
+  examAttempts        ExamAttempt[]      @relation("LearnerExamAttempts")
+  gradedAttempts      ExamAttempt[]      @relation("AssessorGradedAttempts")
+  certificates        Certificate[]
+  supportTickets      SupportTicket[]    @relation("LearnerTickets")
+  assignedTickets     SupportTicket[]    @relation("AgentTickets")
+  auditLogs           AuditLog[]
+  submissions         AssignmentSubmission[]
+  attendanceRecords   AttendanceRecord[]
+  corporateRequests   CorporateRequest[]
+
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  roleId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, roleId])
+}
+
+model Organisation {
+  id               String             @id @default(uuid())
+  name             String
+  code             String             @unique
+  country          String
+  industry         String?
+  contactEmail     String
+  contactPhone     String?
+  address          String?
+  taxNumber        String?
+  isVerified       Boolean            @default(true)
+  
+  users            OrganisationUser[]
+  registrations    Registration[]
+  invoices         Invoice[]
+  corporateRequests CorporateRequest[]
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model OrganisationUser {
+  id             String       @id @default(uuid())
+  organisationId String
+  userId         String
+  isPrimaryAdmin Boolean      @default(false)
+  organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([organisationId, userId])
+}
+
+model CourseCategory {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String?
+  icon        String?
+  displayOrder Int     @default(0)
+  courses     Course[]
+  createdAt   DateTime @default(now())
+}
+
+model Course {
+  id                 String           @id @default(uuid())
+  slug               String           @unique
+  code               String           @unique
+  title              String
+  shortDescription   String
+  fullDescription    String
+  categoryId         String
+  deliveryMethod     String           @default("BLENDED") // SELF_PACED, INSTRUCTOR_LED_ONLINE, FACE_TO_FACE, BLENDED, etc.
+  durationDays       Int              @default(5)
+  cpdPoints          Int              @default(10)
+  priceZar           Float            @default(15000.0)
+  priceUsd           Float            @default(950.0)
+  isPublished        Boolean          @default(true)
+  featuredImage      String?
+  promotionalVideoUrl String?
+  targetAudience     String?
+  learningObjectives String?
+  prerequisites      String?
+  accreditationInfo  String?
+  
+  category           CourseCategory   @relation(fields: [categoryId], references: [id])
+  cohorts            Cohort[]
+  modules            Module[]
+  registrations      Registration[]
+  enrolments         Enrolment[]
+  examinations       Examination[]
+  certificates       Certificate[]
+
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+}
+
+model Cohort {
+  id               String              @id @default(uuid())
+  courseId         String
+  code             String              @unique
+  name             String
+  deliveryMethod   String              @default("BLENDED")
+  startDate        DateTime
+  endDate          DateTime
+  location         String              @default("Pretoria, South Africa")
+  venueDetails     String?
+  maxCapacity      Int                 @default(30)
+  currentCapacity  Int                 @default(0)
+  facilitatorName  String?
+  isAccepting      Boolean             @default(true)
+  
+  course           Course              @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrolments       Enrolment[]
+  attendanceSessions AttendanceSession[]
+  registrations    Registration[]
+
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+}
+
+model Module {
+  id           String     @id @default(uuid())
+  courseId     String
+  title        String
+  description  String?
+  displayOrder Int        @default(0)
+  course       Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons      Lesson[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Lesson {
+  id             String          @id @default(uuid())
+  moduleId       String
+  title          String
+  summary        String?
+  contentType    String          @default("VIDEO") // VIDEO, RICH_TEXT, PDF, QUIZ, ASSIGNMENT
+  videoUrl       String?
+  durationMinutes Int            @default(15)
+  textContent    String?
+  assetUrl       String?
+  displayOrder   Int             @default(0)
+  isMandatory    Boolean         @default(true)
+  
+  module         Module          @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  videoProgress  VideoProgress[]
+  progresses     LearnerProgress[]
+  assignments    Assignment[]
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model VideoProgress {
+  id               String   @id @default(uuid())
+  userId           String
+  lessonId         String
+  watchedSeconds   Int      @default(0)
+  totalSeconds     Int      @default(0)
+  completionPercent Float    @default(0.0)
+  isCompleted      Boolean  @default(false)
+  lastWatchedPosition Int   @default(0)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson           Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  updatedAt        DateTime @updatedAt
+
+  @@unique([userId, lessonId])
+}
+
+model Registration {
+  id                   String             @id @default(uuid())
+  registrationNumber   String             @unique
+  userId               String
+  courseId             String
+  cohortId             String?
+  organisationId       String?
+  deliveryMethod       String             @default("BLENDED")
+  status               String             @default("SUBMITTED") // SUBMITTED, PAID, CONFIRMED, ENROLLED, etc.
+  participantCount     Int                @default(1)
+  currency             String             @default("ZAR")
+  totalAmount          Float
+  notes                String?
+  dietaryRequirements String?
+  accommodationNeeded  Boolean            @default(false)
+
+  user                 User               @relation(fields: [userId], references: [id])
+  course               Course             @relation(fields: [courseId], references: [id])
+  cohort               Cohort?            @relation(fields: [cohortId], references: [id])
+  organisation         Organisation?      @relation(fields: [organisationId], references: [id])
+  enrolments           Enrolment[]
+  invoices             Invoice[]
+  payments             Payment[]
+
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+model Enrolment {
+  id               String            @id @default(uuid())
+  userId           String
+  courseId         String
+  cohortId         String
+  registrationId   String?
+  enrolledAt       DateTime          @default(now())
+  completedAt      DateTime?
+  progressPercent  Float             @default(0.0)
+  isCompleted      Boolean           @default(false)
+  certificateId    String?
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course           Course            @relation(fields: [courseId], references: [id])
+  cohort           Cohort            @relation(fields: [cohortId], references: [id])
+  registration     Registration?     @relation(fields: [registrationId], references: [id])
+
+  @@unique([userId, cohortId])
+}
+
+model LearnerProgress {
+  id          String    @id @default(uuid())
+  userId      String
+  lessonId    String
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+model AttendanceSession {
+  id          String             @id @default(uuid())
+  cohortId    String
+  sessionName String
+  sessionDate DateTime
+  qrCodeToken String             @unique
+  cohort      Cohort             @relation(fields: [cohortId], references: [id], onDelete: Cascade)
+  records     AttendanceRecord[]
+  createdAt   DateTime           @default(now())
+}
+
+model AttendanceRecord {
+  id                  String            @id @default(uuid())
+  attendanceSessionId String
+  userId              String
+  status              String            @default("PRESENT") // PRESENT, ABSENT, EXCUSED, LATE
+  checkInTime         DateTime          @default(now())
+  session             AttendanceSession @relation(fields: [attendanceSessionId], references: [id], onDelete: Cascade)
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([attendanceSessionId, userId])
+}
+
+model Assignment {
+  id          String                 @id @default(uuid())
+  lessonId    String
+  title       String
+  instructions String
+  maxScore    Int                    @default(100)
+  dueDate     DateTime?
+  lesson      Lesson                 @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submissions AssignmentSubmission[]
+  createdAt   DateTime               @default(now())
+}
+
+model AssignmentSubmission {
+  id           String     @id @default(uuid())
+  assignmentId String
+  userId       String
+  submissionText String?
+  fileUrl      String?
+  score        Float?
+  feedback     String?
+  gradedAt     DateTime?
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime   @default(now())
+}
+
+model Examination {
+  id               String        @id @default(uuid())
+  courseId         String
+  code             String        @unique
+  title            String
+  description      String
+  timeLimitMinutes Int           @default(60)
+  passMarkPercent  Float         @default(70.0)
+  maxAttempts      Int           @default(3)
+  isPublished      Boolean       @default(true)
+  course           Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions        Question[]
+  attempts         ExamAttempt[]
+  createdAt        DateTime      @default(now())
+}
+
+model Question {
+  id            String           @id @default(uuid())
+  examinationId String
+  questionText  String
+  questionType  String           @default("MULTIPLE_CHOICE") // MULTIPLE_CHOICE, TRUE_FALSE, ESSAY
+  points        Float            @default(10.0)
+  displayOrder  Int              @default(0)
+  examination   Examination      @relation(fields: [examinationId], references: [id], onDelete: Cascade)
+  options       QuestionOption[]
+  responses     ExamResponse[]
+  createdAt     DateTime         @default(now())
+}
+
+model QuestionOption {
+  id          String   @id @default(uuid())
+  questionId  String
+  optionText  String
+  isCorrect   Boolean  @default(false)
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model ExamAttempt {
+  id             String         @id @default(uuid())
+  examinationId  String
+  userId         String
+  attemptNumber  Int            @default(1)
+  startedAt      DateTime       @default(now())
+  submittedAt    DateTime?
+  timeRemainingSec Int          @default(3600)
+  status         String         @default("IN_PROGRESS") // IN_PROGRESS, SUBMITTED, PASSED, FAILED, MODERATED
+  scorePercent   Float          @default(0.0)
+  isPassed       Boolean        @default(false)
+  assessorId     String?
+  assessorNotes  String?
+
+  examination    Examination    @relation(fields: [examinationId], references: [id], onDelete: Cascade)
+  user           User           @relation("LearnerExamAttempts", fields: [userId], references: [id], onDelete: Cascade)
+  assessor       User?          @relation("AssessorGradedAttempts", fields: [assessorId], references: [id])
+  responses      ExamResponse[]
+
+  createdAt      DateTime       @default(now())
+}
+
+model ExamResponse {
+  id            String       @id @default(uuid())
+  examAttemptId String
+  questionId    String
+  selectedOptionId String?
+  essayAnswer   String?
+  scoreAwarded  Float?
+  isCorrect     Boolean      @default(false)
+
+  examAttempt   ExamAttempt  @relation(fields: [examAttemptId], references: [id], onDelete: Cascade)
+  question      Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model Certificate {
+  id                 String                  @id @default(uuid())
+  certificateNumber  String                  @unique
+  verificationCode   String                  @unique
+  userId             String
+  courseId           String
+  courseTitle        String
+  learnerName        String
+  issueDate          DateTime                @default(now())
+  expiryDate         DateTime?
+  status             String                  @default("VALID") // VALID, EXPIRED, REVOKED, REISSUED
+  cpdPoints          Int                     @default(10)
+  digitalSignature   String
+  qrVerificationUrl  String
+  pdfUrl             String?
+  revocationReason   String?
+
+  user               User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course             Course                  @relation(fields: [courseId], references: [id])
+  verifications      CertificateVerification[]
+
+  createdAt          DateTime                @default(now())
+}
+
+model CertificateVerification {
+  id            String      @id @default(uuid())
+  certificateId String
+  scannedAt     DateTime    @default(now())
+  ipAddress     String?
+  userAgent     String?
+  certificate   Certificate @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+}
+
+model Invoice {
+  id               String        @id @default(uuid())
+  invoiceNumber    String        @unique
+  registrationId   String?
+  organisationId   String?
+  billedToName     String
+  billedToEmail    String
+  currency         String        @default("ZAR")
+  subtotal         Float
+  taxAmount        Float         @default(0.0)
+  discountAmount   Float         @default(0.0)
+  totalAmount      Float
+  paidAmount       Float         @default(0.0)
+  balanceDue       Float
+  status           String        @default("ISSUED") // ISSUED, PAID, OVERDUE, CANCELLED
+  dueDate          DateTime
+
+  registration     Registration? @relation(fields: [registrationId], references: [id])
+  organisation     Organisation? @relation(fields: [organisationId], references: [id])
+  invoiceItems     InvoiceItem[]
+  payments         Payment[]
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  description String
+  quantity    Int      @default(1)
+  unitPrice   Float
+  totalPrice  Float
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id               String        @id @default(uuid())
+  receiptNumber    String        @unique
+  invoiceId        String
+  registrationId   String?
+  paymentMethod    String        @default("CARD") // M_PESA, PESAPAL, FLUTTERWAVE, PAYSTACK, STRIPE, BANK_TRANSFER, etc.
+  transactionRef   String        @unique
+  currency         String        @default("ZAR")
+  amount           Float
+  status           String        @default("COMPLETED")
+  payerEmail       String
+  idempotencyKey   String        @unique
+  
+  invoice          Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  registration     Registration? @relation(fields: [registrationId], references: [id])
+
+  createdAt        DateTime      @default(now())
+}
+
+model SupportTicket {
+  id          String                 @id @default(uuid())
+  ticketNumber String               @unique
+  userId      String
+  assignedToId String?
+  category    String                 @default("GENERAL")
+  subject     String
+  description String
+  status      String                 @default("OPEN")
+  priority    String                 @default("MEDIUM")
+  user        User                   @relation("LearnerTickets", fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo  User?                  @relation("AgentTickets", fields: [assignedToId], references: [id])
+  messages    SupportTicketMessage[]
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+}
+
+model SupportTicketMessage {
+  id          String        @id @default(uuid())
+  ticketId    String
+  senderName  String
+  senderRole  String
+  message     String
+  ticket      SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+}
+
+model CorporateRequest {
+  id                String       @id @default(uuid())
+  organisationName  String
+  contactPerson     String
+  contactEmail      String
+  contactPhone      String
+  country           String
+  preferredCourse   String
+  participantCount  Int          @default(10)
+  preferredDates    String?
+  deliveryMode      String       @default("IN_HOUSE_CORPORATE")
+  comments          String?
+  status            String       @default("NEW_LEAD")
+  userId            String?
+  organisationId    String?
+
+  user              User?        @relation(fields: [userId], references: [id])
+  organisation      Organisation? @relation(fields: [organisationId], references: [id])
+
+  createdAt         DateTime     @default(now())
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  actorId      String?
+  actorEmail   String
+  action       String
+  entityType   String
+  entityId     String?
+  details      String?
+  ipAddress    String   @default("127.0.0.1")
+  user         User?    @relation(fields: [actorId], references: [id])
+  createdAt    DateTime @default(now())
+}
