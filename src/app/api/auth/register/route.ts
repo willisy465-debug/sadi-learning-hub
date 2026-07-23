@@ -19,43 +19,62 @@ export async function POST(request: Request) {
     } = await request.json();
 
     if (!email || !password || !firstName || !lastName) {
-      return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+      return NextResponse.json({ error: 'First name, last name, email and password are required' }, { status: 400 });
     }
 
-    const existing = await prisma.user.findUnique({ where: { email } });
+    const cleanEmail = email.trim().toLowerCase();
+
+    let existing;
+    try {
+      existing = await prisma.user.findUnique({ where: { email: cleanEmail } });
+    } catch (dbErr: any) {
+      console.error('Database error during register check:', dbErr);
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
+
     if (existing) {
       return NextResponse.json({ error: 'An account with this email already exists' }, { status: 400 });
     }
 
     const passwordHash = await hashPassword(password);
 
-    // Get LEARNER role
-    const learnerRole = await prisma.role.findUnique({ where: { code: 'LEARNER' } });
+    // Get or create LEARNER role
+    let learnerRole = await prisma.role.findUnique({ where: { code: 'LEARNER' } });
     if (!learnerRole) {
-      return NextResponse.json({ error: 'System configuration error' }, { status: 500 });
+      learnerRole = await prisma.role.create({
+        data: {
+          code: 'LEARNER',
+          name: 'Learner / Delegate',
+          description: 'Course participant & examination candidate',
+        },
+      });
     }
 
     // Handle Organisation entity linkage if sponsored
     let orgId: string | undefined;
     if (sponsorType === 'ORGANISATION' && organisationName) {
-      const orgCode = organisationName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10) || 'ORG-SADI';
-      const org = await prisma.organisation.upsert({
-        where: { code: orgCode },
-        update: { taxNumber: taxNumber || undefined },
-        create: {
-          name: organisationName,
-          code: orgCode,
-          country: country || 'South Africa',
-          contactEmail: managerEmail || email,
-          taxNumber: taxNumber || undefined,
-        },
-      });
-      orgId = org.id;
+      const orgCode = 'ORG-' + organisationName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'ORG-SADI';
+      try {
+        const org = await prisma.organisation.upsert({
+          where: { code: orgCode },
+          update: { taxNumber: taxNumber || undefined },
+          create: {
+            name: organisationName,
+            code: orgCode,
+            country: country || 'South Africa',
+            contactEmail: managerEmail || cleanEmail,
+            taxNumber: taxNumber || undefined,
+          },
+        });
+        orgId = org.id;
+      } catch (orgErr) {
+        console.error('Organisation creation notice:', orgErr);
+      }
     }
 
     const newUser = await prisma.user.create({
       data: {
-        email,
+        email: cleanEmail,
         passwordHash,
         firstName,
         lastName,
@@ -81,11 +100,12 @@ export async function POST(request: Request) {
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       roles: ['LEARNER'],
+      organisationId: orgId || null,
     };
 
     await setAuthCookie(payload);
     await logAuditEvent(
-      email,
+      cleanEmail,
       'USER_REGISTER',
       'USER',
       `Registered ${sponsorType === 'ORGANISATION' ? `ORGANISATION-SPONSORED (${organisationName})` : 'SELF-SPONSORED'} delegate for ${firstName} ${lastName}`,
@@ -94,10 +114,14 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
+      roles: ['LEARNER'],
       user: payload,
     });
   } catch (error: any) {
     console.error('Registration error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: error?.message || 'Registration failed due to server error' },
+      { status: 500 }
+    );
   }
 }
