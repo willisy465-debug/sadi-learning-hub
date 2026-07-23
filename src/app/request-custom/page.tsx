@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Building2, Mail, Phone, MapPin, Calendar, Users, Send, CheckCircle } from 'lucide-react';
 
-export default function CustomRequestPage() {
+function CustomRequestForm() {
   const searchParams = useSearchParams();
   const prefilledCourse = searchParams.get('course') || '';
   const router = useRouter();
@@ -49,7 +49,6 @@ export default function CustomRequestPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-      
       {/* Header */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
@@ -83,7 +82,6 @@ export default function CustomRequestPage() {
       ) : (
         <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-6">
-            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-1.5">Organisation / Institution Name</label>
@@ -214,7 +212,20 @@ export default function CustomRequestPage() {
           </form>
         </div>
       )}
-
     </div>
+  );
+}
+
+export default function CustomRequestPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-4xl mx-auto px-4 py-12 text-center text-amber-400 font-bold text-sm">
+          Loading Custom Programme Portal...
+        </div>
+      }
+    >
+      <CustomRequestForm />
+    </Suspense>
   );
 }
