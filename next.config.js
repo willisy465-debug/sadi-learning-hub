@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  experimental: {
+    outputFileTracingIncludes: {
+      '/**/*': ['./prisma/dev.db', './dev.db'],
+    },
+  },
   images: {
     remotePatterns: [
       {
