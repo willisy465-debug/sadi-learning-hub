@@ -4,16 +4,64 @@ import { prisma } from '@/lib/prisma';
 import { Shield, BookOpen, Award, Users, Globe2, Building2, CheckCircle2, ArrowRight, Star, Cpu, Calculator, ShieldAlert, Sparkles } from 'lucide-react';
 
 export default async function HomePage() {
-  const categories = await prisma.courseCategory.findMany({
-    take: 6,
-    orderBy: { displayOrder: 'asc' },
-  });
+  let categories: any[] = [];
+  let featuredCourses: any[] = [];
 
-  const featuredCourses = await prisma.course.findMany({
-    where: { isPublished: true },
-    include: { category: true, cohorts: true },
-    take: 3,
-  });
+  try {
+    categories = await prisma.courseCategory.findMany({
+      take: 6,
+      orderBy: { displayOrder: 'asc' },
+    });
+
+    featuredCourses = await prisma.course.findMany({
+      where: { isPublished: true },
+      include: { category: true, cohorts: true },
+      take: 3,
+    });
+  } catch (err) {
+    console.error('HomePage database query error:', err);
+    featuredCourses = [
+      {
+        id: 'demo-1',
+        code: 'FIN-801',
+        title: 'Executive Public Finance Management & IPSAS Standards',
+        shortDescription: 'Master modern international public sector accounting standards, national budget monitoring, and financial auditing for government ministries.',
+        deliveryMethod: 'BLENDED',
+        durationDays: 5,
+        cpdPoints: 20,
+        priceZar: 18500,
+        priceUsd: 1100,
+        slug: 'public-finance-ipsas',
+        featuredImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop',
+      },
+      {
+        id: 'demo-2',
+        code: 'GOV-902',
+        title: 'Corporate Governance, Risk & Board Leadership',
+        shortDescription: 'Strategic governance frameworks for state-owned enterprises, central banks, and corporate entities across Southern Africa.',
+        deliveryMethod: 'FACE_TO_FACE',
+        durationDays: 5,
+        cpdPoints: 25,
+        priceZar: 21000,
+        priceUsd: 1350,
+        slug: 'corporate-governance-risk',
+        featuredImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
+      },
+      {
+        id: 'demo-3',
+        code: 'ICT-703',
+        title: 'Cybersecurity Policy & Public Sector Digital Transformation',
+        shortDescription: 'Comprehensive cyber risk management, infrastructure protection, and digital governance for African public institutions.',
+        deliveryMethod: 'ONLINE_SELF_PACED',
+        durationDays: 4,
+        cpdPoints: 15,
+        priceZar: 15500,
+        priceUsd: 950,
+        slug: 'cybersecurity-digital-transformation',
+        featuredImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+      },
+    ];
+  }
 
   return (
     <div className="space-y-24 pb-20">

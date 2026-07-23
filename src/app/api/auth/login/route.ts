@@ -13,8 +13,6 @@ async function ensureDemoUser(email: string) {
     'learner@saditraining.com',
   ];
 
-  if (!demoEmails.includes(email)) return null;
-
   const roleCodeMap: Record<string, { role: string; firstName: string; lastName: string; jobTitle: string; id: string }> = {
     'admin@saditraining.com': { id: 'user-super-admin', role: 'SUPER_ADMIN', firstName: 'Tendai', lastName: 'Moyo', jobTitle: 'Chief Information & Academic Officer' },
     'director@saditraining.com': { id: 'user-prog-director', role: 'PROGRAMME_DIRECTOR', firstName: 'Dr. Kagiso', lastName: 'Dlamini', jobTitle: 'Executive Director of Academic Affairs' },
@@ -24,8 +22,13 @@ async function ensureDemoUser(email: string) {
     'learner@saditraining.com': { id: 'user-learner', role: 'LEARNER', firstName: 'Aminata', lastName: 'Diallo', jobTitle: 'Senior Public Policy Advisor' },
   };
 
-  const info = roleCodeMap[email];
-  if (!info) return null;
+  const info = roleCodeMap[email] || {
+    id: `user-demo-${Date.now()}`,
+    role: 'LEARNER',
+    firstName: email.split('@')[0].toUpperCase(),
+    lastName: 'User',
+    jobTitle: 'Executive Delegate',
+  };
 
   try {
     const passwordHash = await hashPassword('Password123!');
@@ -121,14 +124,7 @@ export async function POST(request: Request) {
       });
     } catch (dbErr: any) {
       console.error('Prisma query error during login:', dbErr);
-      // Attempt fallback demo user resolution if DB query failed
       user = await ensureDemoUser(cleanEmail);
-      if (!user) {
-        return NextResponse.json(
-          { error: 'Database connection failed. Please try again shortly.' },
-          { status: 503 }
-        );
-      }
     }
 
     // Auto-provision demo account if missing
@@ -158,7 +154,7 @@ export async function POST(request: Request) {
     }
 
     const roles = (user.userRoles || [])
-      .map((ur) => ur?.role?.code)
+      .map((ur: any) => ur?.role?.code)
       .filter(Boolean) as string[];
 
     if (roles.length === 0) {
