@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, PlusCircle, Calendar, Award, Edit, Trash2, ArrowLeft, Upload, Video, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

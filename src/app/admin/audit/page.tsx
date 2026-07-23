@@ -3,11 +3,18 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { Activity, Shield, ArrowLeft, Lock } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminAuditPage() {
-  const auditLogs = await prisma.auditLog.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  });
+  let auditLogs: any[] = [];
+  try {
+    auditLogs = await prisma.auditLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+  } catch (dbErr) {
+    console.error('Error fetching audit logs:', dbErr);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
