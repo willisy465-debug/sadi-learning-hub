@@ -8,21 +8,28 @@ export default async function FacilitatorDashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const cohorts = await prisma.cohort.findMany({
-    include: {
-      course: true,
-      registrations: { include: { user: true } },
-    },
-    take: 10,
-  });
+  let cohorts: any[] = [];
+  let pendingAttempts: any[] = [];
 
-  const pendingAttempts = await prisma.examAttempt.findMany({
-    where: { status: 'SUBMITTED' },
-    include: {
-      examination: { include: { course: true } },
-      user: true,
-    },
-  });
+  try {
+    cohorts = await prisma.cohort.findMany({
+      include: {
+        course: true,
+        registrations: { include: { user: true } },
+      },
+      take: 10,
+    });
+
+    pendingAttempts = await prisma.examAttempt.findMany({
+      where: { status: 'SUBMITTED' },
+      include: {
+        examination: { include: { course: true } },
+        user: true,
+      },
+    });
+  } catch (dbErr) {
+    console.error('Error fetching facilitator dashboard data:', dbErr);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">

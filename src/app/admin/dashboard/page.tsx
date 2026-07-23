@@ -8,19 +8,32 @@ export default async function AdminDashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const coursesCount = await prisma.course.count();
-  const enrolmentsCount = await prisma.enrolment.count();
-  const delegatesCount = await prisma.user.count();
-  const certificatesCount = await prisma.certificate.count();
-  const corporateLeadsCount = await prisma.corporateRequest.count();
+  let coursesCount = 0;
+  let enrolmentsCount = 0;
+  let delegatesCount = 0;
+  let certificatesCount = 0;
+  let corporateLeadsCount = 0;
+  let invoices: any[] = [];
+  let totalRevenueZar = 0;
+  let recentAuditLogs: any[] = [];
 
-  const invoices = await prisma.invoice.findMany();
-  const totalRevenueZar = invoices.reduce((acc, inv) => acc + inv.paidAmount, 0);
+  try {
+    coursesCount = await prisma.course.count();
+    enrolmentsCount = await prisma.enrolment.count();
+    delegatesCount = await prisma.user.count();
+    certificatesCount = await prisma.certificate.count();
+    corporateLeadsCount = await prisma.corporateRequest.count();
 
-  const recentAuditLogs = await prisma.auditLog.findMany({
-    take: 5,
-    orderBy: { createdAt: 'desc' },
-  });
+    invoices = await prisma.invoice.findMany();
+    totalRevenueZar = invoices.reduce((acc, inv) => acc + (inv.paidAmount || 0), 0);
+
+    recentAuditLogs = await prisma.auditLog.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch (dbErr) {
+    console.error('Error fetching admin dashboard data:', dbErr);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">

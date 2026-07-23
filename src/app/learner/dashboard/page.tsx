@@ -8,24 +8,31 @@ export default async function LearnerDashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const enrolments = await prisma.enrolment.findMany({
-    where: { userId: user.userId },
-    include: {
-      course: {
-        include: {
-          modules: {
-            include: { lessons: true },
-          },
-          examinations: true,
-        },
-      },
-      cohort: true,
-    },
-  });
+  let enrolments: any[] = [];
+  let certificates: any[] = [];
 
-  const certificates = await prisma.certificate.findMany({
-    where: { userId: user.userId },
-  });
+  try {
+    enrolments = await prisma.enrolment.findMany({
+      where: { userId: user.userId },
+      include: {
+        course: {
+          include: {
+            modules: {
+              include: { lessons: true },
+            },
+            examinations: true,
+          },
+        },
+        cohort: true,
+      },
+    });
+
+    certificates = await prisma.certificate.findMany({
+      where: { userId: user.userId },
+    });
+  } catch (dbErr) {
+    console.error('Error fetching learner dashboard data:', dbErr);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
