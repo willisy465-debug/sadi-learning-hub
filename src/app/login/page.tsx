@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Shield, Lock, Mail, User, Building, MapPin, CheckCircle, ArrowRight, KeyRound } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isRegisterInitial = searchParams.get('register') === 'true';
@@ -63,7 +63,6 @@ export default function LoginPage() {
         return;
       }
 
-      // Redirect based on primary role or query param
       if (data.roles?.includes('SUPER_ADMIN') || data.roles?.includes('PROGRAMME_DIRECTOR')) {
         router.push('/admin/dashboard');
       } else if (data.roles?.includes('FACILITATOR')) {
@@ -85,12 +84,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
-      {/* Glow background accents */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-md w-full space-y-8 relative z-10">
-        
-        {/* Header */}
         <div className="text-center">
           <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-xl shadow-amber-500/20 mb-4">
             <Shield className="w-8 h-8 text-slate-950 font-bold" />
@@ -105,7 +101,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Quick Demo Login Bar for Testing */}
         {!isRegister && (
           <div className="glass-panel p-4 rounded-2xl border border-amber-500/20 space-y-2">
             <div className="flex items-center space-x-2 text-xs font-semibold text-amber-400">
@@ -138,7 +133,6 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Form Card */}
         <div className="glass-panel p-8 rounded-3xl border border-slate-800 shadow-2xl">
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-medium flex items-center space-x-2">
@@ -210,7 +204,6 @@ export default function LoginPage() {
 
             {isRegister && (
               <>
-                {/* Sponsorship Model Selection */}
                 <div className="space-y-2 pt-2 border-t border-slate-800">
                   <label className="block text-xs font-bold text-amber-400 uppercase tracking-wider">
                     Sponsorship / Funding Model *
@@ -246,7 +239,6 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                {/* Organisation Fields if Sponsored */}
                 {sponsorType === 'ORGANISATION' && (
                   <div className="space-y-4 p-4 rounded-2xl bg-slate-900/90 border border-amber-500/20">
                     <div className="flex items-center space-x-2 text-xs font-bold text-amber-400">
@@ -338,7 +330,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Toggle Register/Login */}
           <div className="mt-6 text-center text-xs text-slate-400">
             {isRegister ? (
               <p>
@@ -371,5 +362,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[85vh] flex items-center justify-center bg-slate-950">
+          <div className="text-amber-400 font-bold text-sm">Loading SADI Authentication Portal...</div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
