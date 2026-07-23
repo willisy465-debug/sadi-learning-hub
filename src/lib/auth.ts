@@ -42,10 +42,23 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
 }
 
 export async function getCurrentUser(): Promise<JWTPayload | null> {
-  const cookieStore = cookies();
-  const token = cookieStore.get('sadi_token')?.value;
-  if (!token) return null;
-  return verifyToken(token);
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get('sadi_token')?.value;
+    if (!token) return null;
+    const user = await verifyToken(token);
+    if (!user) return null;
+
+    return {
+      ...user,
+      firstName: user.firstName || 'User',
+      lastName: user.lastName || '',
+      roles: Array.isArray(user.roles) && user.roles.length > 0 ? user.roles : ['LEARNER'],
+    };
+  } catch (error) {
+    console.error('Error getting current user:', error);
+    return null;
+  }
 }
 
 export async function setAuthCookie(payload: JWTPayload) {

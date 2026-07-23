@@ -16,7 +16,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
+  let user = null;
+  try {
+    user = await getCurrentUser();
+  } catch (err) {
+    console.error('RootLayout getCurrentUser error:', err);
+  }
 
   return (
     <html lang="en" className="dark">

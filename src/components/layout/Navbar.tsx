@@ -28,9 +28,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     router.refresh();
   };
 
-  const isLearner = currentUser?.roles.includes('LEARNER');
-  const isFacilitator = currentUser?.roles.includes('FACILITATOR') || currentUser?.roles.includes('SUPER_ADMIN');
-  const isAdmin = currentUser?.roles.some((r) =>
+  const roles = Array.isArray(currentUser?.roles) ? currentUser.roles : [];
+  const isLearner = roles.includes('LEARNER');
+  const isFacilitator = roles.includes('FACILITATOR') || roles.includes('SUPER_ADMIN');
+  const isAdmin = roles.some((r) =>
     ['SUPER_ADMIN', 'PROGRAMME_DIRECTOR', 'OPERATIONS_MANAGER', 'LMS_ADMIN', 'PROGRAMME_MANAGER', 'FINANCE_OFFICER'].includes(r)
   );
 
@@ -105,15 +106,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                   className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-500/40 transition-colors"
                 >
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-bold text-sm">
-                    {currentUser.firstName[0]}
-                    {currentUser.lastName[0]}
+                    {currentUser.firstName?.[0] || 'U'}
+                    {currentUser.lastName?.[0] || ''}
                   </div>
                   <div className="text-left">
                     <p className="text-xs font-semibold text-white">
                       {currentUser.firstName} {currentUser.lastName}
                     </p>
                     <p className="text-[10px] text-amber-400 font-mono">
-                      {currentUser.roles[0]?.replace('_', ' ')}
+                      {(roles[0] || 'LEARNER').replace(/_/g, ' ')}
                     </p>
                   </div>
                   <ChevronDown className="w-4 h-4 text-slate-400" />
