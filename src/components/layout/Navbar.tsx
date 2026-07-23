@@ -29,7 +29,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   };
 
   const isLearner = currentUser?.roles.includes('LEARNER');
-  const isCorporate = currentUser?.roles.includes('CORPORATE_ADMIN') || currentUser?.roles.includes('SUPER_ADMIN');
   const isFacilitator = currentUser?.roles.includes('FACILITATOR') || currentUser?.roles.includes('SUPER_ADMIN');
   const isAdmin = currentUser?.roles.some((r) =>
     ['SUPER_ADMIN', 'PROGRAMME_DIRECTOR', 'OPERATIONS_MANAGER', 'LMS_ADMIN', 'PROGRAMME_MANAGER', 'FINANCE_OFFICER'].includes(r)
@@ -137,17 +136,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         <BookOpen className="w-4 h-4" />
                         <span>Learner Dashboard</span>
                       </Link>
-
-                      {isCorporate && (
-                        <Link
-                          href="/corporate/dashboard"
-                          onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-200 hover:bg-slate-700/50 hover:text-amber-400"
-                        >
-                          <Building2 className="w-4 h-4" />
-                          <span>Corporate Client Portal</span>
-                        </Link>
-                      )}
 
                       {isFacilitator && (
                         <Link
@@ -257,11 +245,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               {isAdmin && (
                 <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-amber-400 font-semibold">
                   Admin Hub
-                </Link>
-              )}
-              {isCorporate && (
-                <Link href="/corporate/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-slate-200">
-                  Corporate Client Portal
                 </Link>
               )}
               <button onClick={handleLogout} className="block text-sm text-rose-400 pt-2">
