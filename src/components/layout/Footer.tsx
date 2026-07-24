@@ -13,12 +13,12 @@ export const Footer: React.FC = () => {
           {/* Institutional Info & SADI Branding */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-                <Shield className="w-5 h-5 text-slate-950 font-bold" />
+              <img src="/logo.jpg" alt="SADI Logo" className="h-12 w-auto object-contain" />
+              <div className="flex flex-col">
+                <span className="text-xl font-black tracking-tight text-white">
+                  SADI <span className="text-amber-400 text-sm font-semibold ml-1">Learning Hub</span>
+                </span>
               </div>
-              <span className="text-xl font-black tracking-tight text-white">
-                SADI <span className="text-amber-400 text-sm font-semibold ml-1">Learning Hub</span>
-              </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               The Southern Africa Development Institute (SADI) is a premier Pan-African professional training and capacity-development institution providing public, online, and customised institutional programmes across Africa.

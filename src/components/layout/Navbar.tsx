@@ -42,25 +42,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
           
           {/* Brand Logo & Name */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform flex items-center justify-center">
-              {/* Custom SADI Logo Image slot with Shield Fallback */}
+            <div className="h-12 w-auto flex items-center">
               <img
-                src="/logo.png"
+                src="/logo.jpg"
                 alt="SADI Logo"
-                className="w-full h-full object-contain rounded-lg hidden text-transparent"
-                onError={(e) => {
-                  // If logo.png is not uploaded yet, display default brand badge
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
+                className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
               />
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Shield className="w-5 h-5 text-amber-400" />
-              </div>
             </div>
-            <div>
+            <div className="hidden sm:block">
               <div className="flex items-center space-x-1.5">
-                <span className="font-black text-lg text-white tracking-tight">SADI</span>
-                <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold text-[10px] tracking-wider uppercase">
+                <span className="font-black text-lg text-slate-100 tracking-tight">SADI</span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-[10px] tracking-wider uppercase">
                   Learning Hub
                 </span>
               </div>

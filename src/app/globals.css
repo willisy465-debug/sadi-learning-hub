@@ -11,8 +11,8 @@
   --sadi-gold-light: #ffcd57;
   --sadi-gold-dark: #0087bd;
   --sadi-blue-accent: #00b1f8;
-  --sadi-bg-light: #FFFFFF;
-  --sadi-text-dark: #1e293b;
+  --sadi-bg-light: #f8fafc;
+  --sadi-text-dark: #0f172a;
 }
 
 body {
@@ -22,22 +22,21 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 /* SADI Premium Glassmorphism & Card Primitives */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85); /* Changed to light glass */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 177, 248, 0.2); /* Cyan border accent */
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 .glass-nav {
-  background: rgba(247, 245, 231, 0.95); /* Sticky nav color #f7f5e7 */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(6, 0, 151, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* SADI Brand Gradients */
