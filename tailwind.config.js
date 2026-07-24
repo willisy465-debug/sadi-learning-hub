@@ -9,19 +9,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        slate: {
-          950: '#ffffff', // Background (was very dark)
-          900: '#f9f6fe', // Background (was dark)
-          800: '#F2F5F7', // Background/Border (was slightly lighter dark)
-          700: '#e2e8f0',
-          600: '#cbd5e1',
-          500: '#94a3b8',
-          400: '#67768e', // Secondary text (was light grey)
-          300: '#1e293b', // Primary dark text (was lighter grey)
-          200: '#0f172a',
-          100: '#020617',
-          50: '#020617',
-        },
         amber: {
           500: '#060097', // Primary Dark Blue (was Gold)
           400: '#00b1f8', // Cyan Accent (was Light Gold)

@@ -43,7 +43,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
           className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
             selectedCategory === ''
               ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
-              : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900'
+              : 'bg-white text-gray-900 border border-slate-200 hover:border-slate-300 hover:text-black'
           }`}
         >
           All Categories
@@ -55,7 +55,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
               selectedCategory === c.id
                 ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
-                : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900'
+                : 'bg-white text-gray-900 border border-slate-200 hover:border-slate-300 hover:text-black'
             }`}
           >
             {c.name}
@@ -69,13 +69,13 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
           
           {/* Search Input */}
           <div className="relative md:col-span-2">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+            <Search className="w-4 h-4 text-[#64748b] absolute left-3.5 top-3.5" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search executive online courses, skills, codes (e.g. FIN-801)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
             />
           </div>
 
@@ -84,7 +84,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
             >
               <option value="">All Executive Sectors</option>
               {categories.map((c) => (
@@ -100,7 +100,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedDelivery}
               onChange={(e) => setSelectedDelivery(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
             >
               <option value="">All Online Delivery Modes</option>
               <option value="SELF_PACED">100% Online Self-Paced Video</option>
@@ -113,7 +113,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
 
         {(query || selectedCategory || selectedDelivery) && (
           <div className="flex items-center justify-between pt-3 border-t border-slate-200 text-xs">
-            <span className="text-slate-500 font-medium">Showing {filteredCourses.length} executive online courses</span>
+            <span className="text-[#64748b] font-medium">Showing {filteredCourses.length} executive online courses</span>
             <button
               onClick={() => {
                 setQuery('');
@@ -131,9 +131,9 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
       {/* Udemy-Style Course Grid */}
       {filteredCourses.length === 0 ? (
         <div className="glass-panel p-12 text-center rounded-3xl space-y-3">
-          <BookOpen className="w-10 h-10 text-slate-400 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-900">No online courses match your search</h3>
-          <p className="text-xs text-slate-500">Try adjusting your keywords or clearing filters.</p>
+          <BookOpen className="w-10 h-10 text-[#64748b] mx-auto" />
+          <h3 className="text-lg font-bold text-black">No online courses match your search</h3>
+          <p className="text-xs text-[#64748b]">Try adjusting your keywords or clearing filters.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -192,20 +192,20 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                       <span className="text-[#00b1f8] font-bold uppercase tracking-wider">
                         {course.category?.name || 'Executive Online'}
                       </span>
-                      <span className="text-slate-500 font-mono">
+                      <span className="text-[#64748b] font-mono">
                         {course.durationDays || 5} Days Access
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-[#060097] transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-base font-bold text-black group-hover:text-[#060097] transition-colors line-clamp-2 leading-snug">
                       <Link href={`/courses/${course.slug}`}>
                         {course.title}
                       </Link>
                     </h3>
 
                     {/* Instructor / Faculty */}
-                    <p className="text-xs text-slate-600 font-medium">
+                    <p className="text-xs text-gray-900 font-medium">
                       SADI Executive Faculty & Pan-African Experts
                     </p>
 
@@ -219,11 +219,11 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                         <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
                         <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
                       </div>
-                      <span className="text-slate-500 font-mono text-[11px]">({reviewCount})</span>
+                      <span className="text-[#64748b] font-mono text-[11px]">({reviewCount})</span>
                     </div>
 
                     {/* Quick Specs Pills */}
-                    <div className="flex items-center space-x-3 text-[11px] text-slate-500 pt-1">
+                    <div className="flex items-center space-x-3 text-[11px] text-[#64748b] pt-1">
                       <span className="flex items-center space-x-1">
                         <Video className="w-3.5 h-3.5 text-[#00b1f8]" />
                         <span>HD Video</span>
@@ -245,10 +245,10 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                   
                   {/* Udemy Price Display */}
                   <div className="flex items-baseline space-x-2">
-                    <span className="text-lg font-black text-slate-900 font-mono">
+                    <span className="text-lg font-black text-black font-mono">
                       ZAR {course.priceZar?.toLocaleString()}
                     </span>
-                    <span className="text-xs text-slate-400 line-through font-mono">
+                    <span className="text-xs text-[#64748b] line-through font-mono">
                       ZAR {originalPrice.toLocaleString()}
                     </span>
                     <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 font-bold text-[10px] border border-emerald-200">
@@ -259,7 +259,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                   <div className="grid grid-cols-2 gap-2">
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:text-[#060097] hover:border-slate-300 text-center transition-all"
+                      className="py-2.5 rounded-xl text-xs font-bold text-black bg-white border border-slate-200 hover:bg-slate-50 hover:text-[#060097] hover:border-slate-300 text-center transition-all"
                     >
                       View Details
                     </Link>
@@ -278,17 +278,17 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                 {/* Udemy Quick Hover Preview Popover */}
                 {hoveredCourseId === course.id && (
                   <div className="hidden xl:block absolute left-full top-0 ml-4 w-80 bg-white border border-slate-200 p-5 rounded-2xl shadow-2xl z-50 space-y-4 animate-in fade-in slide-in-from-left-2 duration-200">
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug">
+                    <h4 className="font-bold text-black text-sm leading-snug">
                       {course.title}
                     </h4>
 
-                    <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                    <p className="text-xs text-gray-900 line-clamp-3 leading-relaxed">
                       {course.shortDescription || 'Master executive leadership, governance standards, and strategic skills through 100% online self-paced e-learning.'}
                     </p>
 
                     <div className="space-y-2 border-t border-slate-100 pt-3">
                       <p className="text-[11px] font-bold text-[#00b1f8] uppercase tracking-wider">What you'll learn:</p>
-                      <div className="space-y-1.5 text-xs text-slate-600">
+                      <div className="space-y-1.5 text-xs text-gray-900">
                         <div className="flex items-start space-x-2">
                           <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                           <span>Complete 100% online executive video modules</span>

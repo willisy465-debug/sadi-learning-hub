@@ -113,19 +113,19 @@ export default async function HomePage() {
           <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
               <p className="text-3xl font-black text-amber-400">100,000+</p>
-              <p className="text-xs text-slate-400 font-medium">Delegates Trained</p>
+              <p className="text-xs text-[#64748b] font-medium">Delegates Trained</p>
             </div>
             <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
               <p className="text-3xl font-black text-amber-400">54</p>
-              <p className="text-xs text-slate-400 font-medium">African Member States</p>
+              <p className="text-xs text-[#64748b] font-medium">African Member States</p>
             </div>
             <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
               <p className="text-3xl font-black text-amber-400">100%</p>
-              <p className="text-xs text-slate-400 font-medium">Verifiable QR Certificates</p>
+              <p className="text-xs text-[#64748b] font-medium">Verifiable QR Certificates</p>
             </div>
             <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
               <p className="text-3xl font-black text-amber-400">ISO 9001</p>
-              <p className="text-xs text-slate-400 font-medium">Quality Compliance</p>
+              <p className="text-xs text-[#64748b] font-medium">Quality Compliance</p>
             </div>
           </div>
 
@@ -136,7 +136,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3">
           <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#00b1f8]">Flexible Delivery Architecture</h2>
-          <p className="text-3xl font-black text-slate-900 tracking-tight">Tailored Learning for Modern African Institutions</p>
+          <p className="text-3xl font-black text-black tracking-tight">Tailored Learning for Modern African Institutions</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -144,8 +144,8 @@ export default async function HomePage() {
             <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
               <Globe2 className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Public & Blended Programmes</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h3 className="text-xl font-bold text-black">Public & Blended Programmes</h3>
+            <p className="text-xs text-gray-900 leading-relaxed">
               Scheduled cohort-based training delivered in Pretoria, Johannesburg, Nairobi, and online. Combines live facilitator sessions, group case studies, and digital courseware.
             </p>
           </div>
@@ -154,8 +154,8 @@ export default async function HomePage() {
             <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
               <BookOpen className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Online Self-Paced E-Learning</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h3 className="text-xl font-bold text-black">Online Self-Paced E-Learning</h3>
+            <p className="text-xs text-gray-900 leading-relaxed">
               Immediate continuous enrolment for technical and executive modules with adaptive video streaming, low-bandwidth audio mode, downloadable transcripts, and online exams.
             </p>
           </div>
@@ -164,8 +164,8 @@ export default async function HomePage() {
             <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
               <Building2 className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Custom In-House Training</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h3 className="text-xl font-bold text-black">Custom In-House Training</h3>
+            <p className="text-xs text-gray-900 leading-relaxed">
               Bespoke capacity-building interventions designed specifically for government ministries, state utilities, central banks, and private corporate entities with dedicated portals.
             </p>
           </div>
@@ -177,7 +177,7 @@ export default async function HomePage() {
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
             <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#00b1f8]">Featured Programmes</h2>
-            <p className="text-3xl font-black text-slate-900 tracking-tight">High-Impact Professional Courses</p>
+            <p className="text-3xl font-black text-black tracking-tight">High-Impact Professional Courses</p>
           </div>
           <Link href="/courses" className="text-sm font-semibold text-[#060097] hover:text-[#00b1f8] flex items-center">
             <span>View Full 2026 Catalogue</span>
@@ -200,28 +200,28 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 text-xs text-slate-500">
-                  <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium border border-slate-200">
+                <div className="flex items-center space-x-2 text-xs text-[#64748b]">
+                  <span className="px-2 py-0.5 rounded bg-slate-100 text-black font-medium border border-slate-200">
                     {course.deliveryMethod.replace(/_/g, ' ')}
                   </span>
                   <span>•</span>
                   <span>{course.durationDays} Days ({course.cpdPoints} CPD Points)</span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#060097] transition-colors line-clamp-2">
+                <h3 className="text-lg font-bold text-black group-hover:text-[#060097] transition-colors line-clamp-2">
                   {course.title}
                 </h3>
 
-                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-gray-900 line-clamp-3 leading-relaxed">
                   {course.shortDescription}
                 </p>
               </div>
 
               <div className="p-6 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] uppercase text-slate-500 font-semibold">Course Fee</p>
+                  <p className="text-[10px] uppercase text-[#64748b] font-semibold">Course Fee</p>
                   <p className="text-sm font-black text-[#060097]">
-                    ZAR {course.priceZar.toLocaleString()} <span className="text-xs font-normal text-slate-500">(/ USD {course.priceUsd})</span>
+                    ZAR {course.priceZar.toLocaleString()} <span className="text-xs font-normal text-[#64748b]">(/ USD {course.priceUsd})</span>
                   </p>
                 </div>
 
@@ -246,8 +246,8 @@ export default async function HomePage() {
               <CheckCircle2 className="w-4 h-4" />
               <span>Tamper-Proof Cryptographic Credentials</span>
             </div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight">Public QR Certificate Verification</h2>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <h2 className="text-3xl font-black text-black tracking-tight">Public QR Certificate Verification</h2>
+            <p className="text-xs sm:text-sm text-gray-900 leading-relaxed">
               Every certificate issued by the Southern Africa Development Institute contains a unique QR code and cryptographic verification hash. Employers, regulators, and audit bodies can instantly verify credential authenticity.
             </p>
           </div>
