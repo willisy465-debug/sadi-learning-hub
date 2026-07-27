@@ -25,6 +25,8 @@ export default function AdminCoursesPage() {
   const [videoUrl, setVideoUrl] = useState('');
   const [moduleTitle, setModuleTitle] = useState('');
   const [lessonTitle, setLessonTitle] = useState('');
+  const [meetingPlatform, setMeetingPlatform] = useState('ZOOM');
+  const [meetingUrl, setMeetingUrl] = useState('');
 
   const fetchCourses = async () => {
     try {
@@ -65,6 +67,8 @@ export default function AdminCoursesPage() {
           videoUrl,
           moduleTitle,
           lessonTitle,
+          meetingPlatform,
+          meetingUrl,
         }),
       });
 
@@ -76,10 +80,10 @@ export default function AdminCoursesPage() {
       setMessage('Course & video lecture material successfully uploaded!');
       setShowModal(false);
       // Reset form
-      setCode('');
       setTitle('');
       setShortDescription('');
       setVideoUrl('');
+      setMeetingUrl('');
       fetchCourses();
     } catch (err: any) {
       setMessage(`Error: ${err.message}`);
@@ -167,10 +171,9 @@ export default function AdminCoursesPage() {
                     onChange={(e) => setDeliveryMethod(e.target.value)}
                     className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none"
                   >
-                    <option value="BLENDED">Blended (Pretoria + Online)</option>
-                    <option value="SELF_PACED">Online Self-Paced Video</option>
-                    <option value="FACE_TO_FACE">Pretoria Face-to-Face Workshop</option>
-                    <option value="IN_HOUSE_CORPORATE">In-House Corporate Executive</option>
+                    <option value="SELF_PACED_VIDEOS">Online Self-Paced Videos</option>
+                    <option value="INSTRUCTOR_LED_LIVE">Instructor-Led Live (Zoom/Teams)</option>
+                    <option value="VIRTUAL_IN_HOUSE">Virtual In-House Corporate</option>
                   </select>
                 </div>
               </div>
@@ -281,6 +284,41 @@ export default function AdminCoursesPage() {
                 </div>
               </div>
 
+              {/* Live Meeting details (if instructor-led or virtual in-house) */}
+              {(deliveryMethod === 'INSTRUCTOR_LED_LIVE' || deliveryMethod === 'VIRTUAL_IN_HOUSE') && (
+                <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/20 space-y-3">
+                  <div className="flex items-center space-x-2 text-indigo-400 font-bold">
+                    <Video className="w-4 h-4" />
+                    <span>Live Session Setup (Auto-creates initial Cohort)</span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="col-span-1">
+                      <label className="block text-slate-300 mb-1">Platform</label>
+                      <select
+                        value={meetingPlatform}
+                        onChange={(e) => setMeetingPlatform(e.target.value)}
+                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-indigo-400 focus:outline-none"
+                      >
+                        <option value="ZOOM">Zoom</option>
+                        <option value="TEAMS">Microsoft Teams</option>
+                        <option value="GOOGLE_MEET">Google Meet</option>
+                      </select>
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-slate-300 mb-1">Meeting Invite URL</label>
+                      <input
+                        type="url"
+                        value={meetingUrl}
+                        onChange={(e) => setMeetingUrl(e.target.value)}
+                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-indigo-400 focus:outline-none"
+                        placeholder="https://zoom.us/j/..."
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center justify-end space-x-3 pt-4">
                 <button
                   type="button"
@@ -329,7 +367,7 @@ export default function AdminCoursesPage() {
                 <tr key={course.id} className="hover:bg-slate-900/50">
                   <td className="p-3 font-mono font-bold text-amber-400">{course.code}</td>
                   <td className="p-3 font-bold text-white max-w-xs truncate">{course.title}</td>
-                  <td className="p-3 font-medium text-slate-300">{course.deliveryMethod ? course.deliveryMethod.replace(/_/g, ' ') : 'BLENDED'}</td>
+                  <td className="p-3 font-medium text-slate-300">{course.deliveryMethod ? course.deliveryMethod.replace(/_/g, ' ') : 'SELF PACED VIDEOS'}</td>
                   <td className="p-3 text-slate-400">{course.durationDays} Days</td>
                   <td className="p-3 font-mono text-amber-400 font-bold">{course.cpdPoints} Pts</td>
                   <td className="p-3 font-mono text-emerald-400 font-semibold">

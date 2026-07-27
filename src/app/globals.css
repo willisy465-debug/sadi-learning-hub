@@ -4,15 +4,15 @@
 
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --sadi-navy-dark: #060097; /* Replaced with new Primary Dark Blue */
-  --sadi-navy-main: #060097;
-  --sadi-navy-card: #F2F5F7; /* Light card bg */
-  --sadi-gold-main: #00b1f8; /* Replaced with Cyan */
-  --sadi-gold-light: #ffcd57;
-  --sadi-gold-dark: #0087bd;
-  --sadi-blue-accent: #00b1f8;
-  --sadi-bg-light: #f8fafc;
-  --sadi-text-dark: #0f172a;
+  --sadi-navy-dark: #1c1d1f; /* Replaced with Udemy Dark Purple */
+  --sadi-navy-main: #1c1d1f;
+  --sadi-navy-card: #f7f9fa; /* Light card bg */
+  --sadi-gold-main: #5624d0; /* Replaced with Udemy Purple */
+  --sadi-gold-light: #6a35ff;
+  --sadi-gold-dark: #3b198f;
+  --sadi-blue-accent: #0056d2; /* Udemy Accent Blue */
+  --sadi-bg-light: #ffffff;
+  --sadi-text-dark: #1c1d1f;
 }
 
 body {
@@ -28,38 +28,38 @@ body {
 /* SADI Premium Glassmorphism & Card Primitives */
 .glass-panel {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #d1d7dc;
+  box-shadow: 0 4px 6px -1px rgba(28, 29, 31, 0.05), 0 2px 4px -1px rgba(28, 29, 31, 0.03);
 }
 
 .glass-nav {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(24px);
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #d1d7dc;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.08);
 }
 
 /* SADI Brand Gradients */
 .gold-gradient-text {
-  /* Re-mapped gold to cyan/blue gradient for the new theme */
-  background: linear-gradient(135deg, #00b1f8 0%, #060097 100%);
+  /* Re-mapped to Udemy purple gradient */
+  background: linear-gradient(135deg, #5624d0 0%, #3b198f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-bg {
-  /* Re-mapped gold bg to cyan/blue gradient */
-  background: linear-gradient(135deg, #00b1f8 0%, #060097 100%);
+  /* Re-mapped to Udemy purple gradient */
+  background: linear-gradient(135deg, #5624d0 0%, #3b198f 100%);
 }
 
 .gold-border {
-  border-color: rgba(0, 177, 248, 0.5); /* Cyan border */
+  border-color: rgba(86, 36, 208, 0.5); /* Purple border */
 }
 
 /* SADI Corporate Buttons */
 .gold-button {
-  background: #060097; /* Primary Brand Color */
+  background: #5624d0; /* Primary Brand Color (Udemy Purple) */
   color: #FFFFFF;
   font-weight: 700;
   transition: all 0.2s ease-in-out;
@@ -67,21 +67,20 @@ body {
 }
 
 .gold-button:hover {
-  background: #00b1f8; /* Accent Cyan on hover */
-  box-shadow: 0 0 25px rgba(0, 177, 248, 0.45);
-  transform: translateY(-1px);
+  background: #3b198f; /* Dark Purple on hover */
+  box-shadow: 0 0 15px rgba(86, 36, 208, 0.45);
 }
 
 .navy-button {
-  background: #54595F; /* Charcoal secondary button */
+  background: #1c1d1f; /* Charcoal secondary button */
   color: #FFFFFF;
-  border: 1px solid rgba(84, 89, 95, 0.3);
+  border: 1px solid rgba(28, 29, 31, 0.3);
   transition: all 0.2s ease-in-out;
 }
 
 .navy-button:hover {
-  background: #1e293b;
-  border-color: #060097;
+  background: #000000;
+  border-color: #5624d0;
 }
 
 /* Custom Scrollbar */
@@ -91,15 +90,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F2F5F7;
+  background: #f7f9fa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d1d7dc;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00b1f8;
+  background: #5624d0;
 }
-

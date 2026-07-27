@@ -22,6 +22,8 @@ export async function POST(request: Request) {
       videoUrl,
       moduleTitle,
       lessonTitle,
+      meetingPlatform,
+      meetingUrl,
     } = await request.json();
 
     if (!code || !title || !shortDescription) {
@@ -51,7 +53,7 @@ export async function POST(request: Request) {
         shortDescription,
         fullDescription: fullDescription || shortDescription,
         categoryId: category.id,
-        deliveryMethod: deliveryMethod || 'BLENDED',
+        deliveryMethod: deliveryMethod || 'SELF_PACED_VIDEOS',
         durationDays: parseInt(durationDays) || 5,
         cpdPoints: parseInt(cpdPoints) || 10,
         priceZar: parseFloat(priceZar) || 15000.0,
@@ -76,6 +78,29 @@ export async function POST(request: Request) {
         },
       },
     });
+
+    // If instructor-led or virtual in-house, create an initial cohort with meeting details
+    if (deliveryMethod === 'INSTRUCTOR_LED_LIVE' || deliveryMethod === 'VIRTUAL_IN_HOUSE') {
+      const cohortCode = `${code}-COHORT-1`;
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() + 14); // starts in 14 days by default
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + parseInt(durationDays) || 5);
+      
+      await prisma.cohort.create({
+        data: {
+          courseId: newCourse.id,
+          code: cohortCode,
+          name: `Inaugural Online Session - ${code}`,
+          deliveryMethod,
+          startDate,
+          endDate,
+          location: 'Online',
+          meetingPlatform: meetingPlatform || 'ZOOM',
+          meetingUrl: meetingUrl || undefined,
+        }
+      });
+    }
 
     await logAuditEvent(
       user.email,

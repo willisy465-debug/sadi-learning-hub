@@ -64,67 +64,66 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="space-y-24 pb-20">
+    <div className="space-y-24 pb-20 bg-udemy-white">
       
       {/* 1. HERO SECTION */}
-      <section className="relative pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-[#060097] to-[#171462] rounded-b-[2rem] sm:rounded-b-[4rem] shadow-2xl mb-12">
+      <section className="relative pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-udemy-purple to-udemy-darkPurple rounded-b-[2rem] sm:rounded-b-[4rem] shadow-2xl mb-12">
         {/* Background glow effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-[#00b1f8]/30 via-[#00b1f8]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10 text-center space-y-8">
           
           {/* Institution Tagline */}
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-wide shadow-lg shadow-amber-500/10">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Southern Africa Development Institute — Brooklyn, Pretoria, South Africa</span>
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-udemy-black/40 border border-white/20 text-white text-xs font-semibold tracking-wide shadow-lg">
+            <Sparkles className="w-4 h-4 text-udemy-grayBorder" />
+            <span>Southern Africa Development Institute — Fully Online Global Learning</span>
           </div>
 
-          {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
-            Transforming <span className="gold-gradient-text">African Leadership</span>
+            Transforming <span className="text-white drop-shadow-md">African Leadership</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
-            Empowering executives, public sector leadership, boards, financial regulators, and corporate professionals across Africa through accredited public training, self-paced e-learning, customized in-house programmes, and verifiable certifications.
+          <p className="text-base sm:text-lg text-udemy-gray max-w-3xl mx-auto leading-relaxed font-normal">
+            Empowering executives, public sector leadership, boards, financial regulators, and corporate professionals across Africa through accredited fully online training, self-paced video e-learning, and interactive virtual instructor-led sessions via Zoom and Microsoft Teams.
           </p>
 
           {/* Call to Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               href="/courses"
-              className="w-full sm:w-auto gold-button px-8 py-4 rounded-2xl text-base font-bold flex items-center justify-center space-x-3 shadow-xl shadow-amber-500/20 hover:scale-105 transition-all"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white text-udemy-purple text-base font-bold flex items-center justify-center space-x-3 shadow-xl hover:bg-udemy-gray transition-all"
             >
-              <BookOpen className="w-5 h-5 text-slate-950" />
-              <span>Explore 2026 Course Catalogue</span>
-              <ArrowRight className="w-5 h-5 text-slate-950" />
+              <BookOpen className="w-5 h-5" />
+              <span>Explore 2026 Online Catalogue</span>
+              <ArrowRight className="w-5 h-5" />
             </Link>
 
             <Link
               href="/request-custom"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 border border-slate-700 hover:border-amber-500/40 text-slate-200 text-base font-semibold flex items-center justify-center space-x-3 transition-colors"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-transparent border-2 border-white hover:bg-white/10 text-white text-base font-semibold flex items-center justify-center space-x-3 transition-colors"
             >
-              <Building2 className="w-5 h-5 text-amber-400" />
-              <span>Request Custom In-House Training</span>
+              <Building2 className="w-5 h-5" />
+              <span>Request Virtual In-House Training</span>
             </Link>
           </div>
 
           {/* Key Metrics Banner */}
           <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
-              <p className="text-3xl font-black text-amber-400">100,000+</p>
-              <p className="text-xs text-[#64748b] font-medium">Delegates Trained</p>
+            <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <p className="text-3xl font-black text-white">100,000+</p>
+              <p className="text-xs text-udemy-gray font-medium">Online Learners</p>
             </div>
-            <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
-              <p className="text-3xl font-black text-amber-400">54</p>
-              <p className="text-xs text-[#64748b] font-medium">African Member States</p>
+            <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <p className="text-3xl font-black text-white">54</p>
+              <p className="text-xs text-udemy-gray font-medium">African Member States</p>
             </div>
-            <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
-              <p className="text-3xl font-black text-amber-400">100%</p>
-              <p className="text-xs text-[#64748b] font-medium">Verifiable QR Certificates</p>
+            <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <p className="text-3xl font-black text-white">100%</p>
+              <p className="text-xs text-udemy-gray font-medium">Verifiable QR Certificates</p>
             </div>
-            <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center space-y-1">
-              <p className="text-3xl font-black text-amber-400">ISO 9001</p>
-              <p className="text-xs text-[#64748b] font-medium">Quality Compliance</p>
+            <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <p className="text-3xl font-black text-white">ISO 9001</p>
+              <p className="text-xs text-udemy-gray font-medium">Quality Compliance</p>
             </div>
           </div>
 
@@ -134,38 +133,38 @@ export default async function HomePage() {
       {/* 2. PROGRAMME DELIVERY MODELS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3">
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#00b1f8]">Flexible Delivery Architecture</h2>
-          <p className="text-3xl font-black text-black tracking-tight">Tailored Learning for Modern African Institutions</p>
+          <h2 className="text-xs font-extrabold uppercase tracking-widest text-udemy-purple">Flexible Online Delivery Architecture</h2>
+          <p className="text-3xl font-black text-udemy-black tracking-tight">Tailored E-Learning for Modern African Institutions</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-panel p-8 rounded-3xl space-y-4 hover:border-[#00b1f8]/40 transition-colors">
-            <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
+          <div className="bg-white border border-udemy-grayBorder p-8 rounded-3xl space-y-4 hover:border-udemy-purple transition-colors shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-udemy-gray text-udemy-purple flex items-center justify-center">
               <Globe2 className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-black">Public & Blended Programmes</h3>
-            <p className="text-xs text-gray-900 leading-relaxed">
-              Scheduled cohort-based training delivered in Pretoria, Johannesburg, Nairobi, and online. Combines live facilitator sessions, group case studies, and digital courseware.
+            <h3 className="text-xl font-bold text-udemy-black">Instructor-Led Live Sessions</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Scheduled virtual cohort-based training delivered globally via Microsoft Teams and Zoom. Combines live facilitator sessions, interactive Q&A, and group case studies.
             </p>
           </div>
 
-          <div className="glass-panel p-8 rounded-3xl space-y-4 hover:border-[#00b1f8]/40 transition-colors">
-            <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
+          <div className="bg-white border border-udemy-grayBorder p-8 rounded-3xl space-y-4 hover:border-udemy-purple transition-colors shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-udemy-gray text-udemy-purple flex items-center justify-center">
               <BookOpen className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-black">Online Self-Paced E-Learning</h3>
-            <p className="text-xs text-gray-900 leading-relaxed">
-              Immediate continuous enrolment for technical and executive modules with adaptive video streaming, low-bandwidth audio mode, downloadable transcripts, and online exams.
+            <h3 className="text-xl font-bold text-udemy-black">Self-Paced E-Learning</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Immediate continuous enrolment for technical and executive modules with adaptive video streaming, downloadable transcripts, and online exams. Learn on your own schedule.
             </p>
           </div>
 
-          <div className="glass-panel p-8 rounded-3xl space-y-4 hover:border-[#00b1f8]/40 transition-colors">
-            <div className="w-12 h-12 rounded-2xl bg-[#00b1f8]/10 text-[#00b1f8] flex items-center justify-center">
+          <div className="bg-white border border-udemy-grayBorder p-8 rounded-3xl space-y-4 hover:border-udemy-purple transition-colors shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-udemy-gray text-udemy-purple flex items-center justify-center">
               <Building2 className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-black">Custom In-House Training</h3>
-            <p className="text-xs text-gray-900 leading-relaxed">
-              Bespoke capacity-building interventions designed specifically for government ministries, state utilities, central banks, and private corporate entities with dedicated portals.
+            <h3 className="text-xl font-bold text-udemy-black">Virtual In-House Training</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Bespoke capacity-building virtual interventions designed specifically for government ministries and corporate entities, delivered securely over your preferred corporate meeting platform.
             </p>
           </div>
         </div>
@@ -173,29 +172,29 @@ export default async function HomePage() {
 
       {/* 3. FEATURED COURSES CATALOGUE (MARKETPLACE STYLE) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-udemy-grayBorder pb-6">
           <div>
-            <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#00b1f8]">Top Selling Executive Courses</h2>
-            <p className="text-3xl font-black text-black tracking-tight">Invest in Your Professional Growth</p>
+            <h2 className="text-xs font-extrabold uppercase tracking-widest text-udemy-purple">Top Selling Online Courses</h2>
+            <p className="text-3xl font-black text-udemy-black tracking-tight">Invest in Your Professional Growth</p>
           </div>
-          <Link href="/courses" className="text-sm font-semibold text-[#060097] hover:text-[#00b1f8] flex items-center">
-            <span>View Full 2026 Catalogue</span>
+          <Link href="/courses" className="text-sm font-semibold text-udemy-purple hover:text-udemy-darkPurple flex items-center">
+            <span>View Full 2026 Online Catalogue</span>
             <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {featuredCourses.map((course, idx) => (
-            <div key={course.id} className="glass-panel relative rounded-3xl overflow-hidden flex flex-col justify-between group border border-slate-200 hover:border-[#00b1f8]/60 transition-all duration-300 hover:shadow-2xl hover:shadow-[#00b1f8]/10 hover:-translate-y-1 bg-white">
+            <div key={course.id} className="bg-white relative rounded-3xl overflow-hidden flex flex-col justify-between group border border-udemy-grayBorder hover:border-udemy-purple transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               {/* Badges */}
               {idx === 0 && (
-                <div className="absolute top-4 right-4 z-20 bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/30 flex items-center space-x-1">
+                <div className="absolute top-4 right-4 z-20 bg-udemy-purple text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1">
                   <Award className="w-3.5 h-3.5" />
                   <span>Best Seller</span>
                 </div>
               )}
               {idx === 1 && (
-                <div className="absolute top-4 right-4 z-20 bg-[#00b1f8] text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg shadow-[#00b1f8]/30 flex items-center space-x-1">
+                <div className="absolute top-4 right-4 z-20 bg-udemy-darkPurple text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Trending</span>
                 </div>
@@ -225,13 +224,13 @@ export default async function HomePage() {
                   <span>{course.cpdPoints} CPD</span>
                 </div>
 
-                <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#060097] transition-colors line-clamp-2 leading-tight">
+                <h3 className="text-xl font-extrabold text-udemy-black group-hover:text-udemy-purple transition-colors line-clamp-2 leading-tight">
                   {course.title}
                 </h3>
                 
                 {/* Trust Signals (Mocked for Sales) */}
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center text-amber-400">
+                  <div className="flex items-center text-yellow-500">
                     <Star className="w-4 h-4 fill-current" />
                     <Star className="w-4 h-4 fill-current" />
                     <Star className="w-4 h-4 fill-current" />
@@ -246,10 +245,10 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="p-6 pt-4 border-t border-slate-100 bg-slate-50/50 mt-auto space-y-4">
+              <div className="p-6 pt-4 border-t border-udemy-grayBorder bg-udemy-gray mt-auto space-y-4">
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-2xl font-black text-[#060097] tracking-tight">
+                    <p className="text-2xl font-black text-udemy-black tracking-tight">
                       ZAR {course.priceZar.toLocaleString()}
                     </p>
                     <p className="text-xs font-semibold text-slate-500">
@@ -261,13 +260,13 @@ export default async function HomePage() {
                 <div className="grid grid-cols-2 gap-3">
                   <Link
                     href={`/courses/${course.slug}`}
-                    className="col-span-1 px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold flex items-center justify-center hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+                    className="col-span-1 px-4 py-3 rounded-xl bg-white border border-udemy-purple text-udemy-purple text-xs font-bold flex items-center justify-center hover:bg-udemy-gray transition-colors shadow-sm"
                   >
                     View Details
                   </Link>
                   <Link
                     href={`/courses/${course.slug}/checkout`}
-                    className="col-span-1 px-4 py-3 rounded-xl gold-button text-xs font-bold flex items-center justify-center shadow-lg shadow-[#060097]/20 text-white"
+                    className="col-span-1 px-4 py-3 rounded-xl bg-udemy-purple text-white text-xs font-bold flex items-center justify-center shadow-lg shadow-udemy-purple/20 hover:bg-udemy-darkPurple transition-colors"
                   >
                     Buy Course
                   </Link>
@@ -280,14 +279,14 @@ export default async function HomePage() {
 
       {/* 4. PUBLIC CERTIFICATE VERIFICATION BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-panel p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-slate-100 via-white to-slate-50 flex flex-col lg:flex-row items-center justify-between gap-8 border-[#00b1f8]/20 border">
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border-udemy-grayBorder border flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-semibold border border-emerald-200">
               <CheckCircle2 className="w-4 h-4" />
               <span>Tamper-Proof Cryptographic Credentials</span>
             </div>
-            <h2 className="text-3xl font-black text-black tracking-tight">Public QR Certificate Verification</h2>
-            <p className="text-xs sm:text-sm text-gray-900 leading-relaxed">
+            <h2 className="text-3xl font-black text-udemy-black tracking-tight">Public QR Certificate Verification</h2>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Every certificate issued by the Southern Africa Development Institute contains a unique QR code and cryptographic verification hash. Employers, regulators, and audit bodies can instantly verify credential authenticity.
             </p>
           </div>
@@ -295,7 +294,7 @@ export default async function HomePage() {
           <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/verify/VER-SADI-90412-AD"
-              className="w-full sm:w-auto gold-button px-6 py-3.5 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 shadow-lg shadow-[#060097]/10"
+              className="w-full sm:w-auto bg-udemy-purple hover:bg-udemy-darkPurple text-white px-6 py-3.5 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 shadow-lg transition-colors"
             >
               <Award className="w-4 h-4 text-white" />
               <span>Test Sample QR Verification</span>

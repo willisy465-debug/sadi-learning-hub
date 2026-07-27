@@ -9,30 +9,39 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        udemy: {
+          purple: '#5624d0',
+          darkPurple: '#401b9c',
+          black: '#1c1d1f',
+          gray: '#f7f9fa',
+          grayBorder: '#d1d7dc',
+          white: '#ffffff',
+          accent: '#401b9c',
+        },
         amber: {
-          500: '#060097', // Primary Dark Blue (was Gold)
-          400: '#00b1f8', // Cyan Accent (was Light Gold)
-          300: '#ffcd57', // Secondary Yellow Accent
+          500: '#5624d0', // Mapped to Udemy Purple
+          400: '#401b9c', // Mapped to Udemy Dark Purple
+          300: '#d1d7dc', // Mapped to gray border
         },
         emerald: {
-          500: '#61CE70', // Primary Green Accent
+          500: '#61CE70', 
           400: '#61CE70',
           300: '#61CE70',
         },
         sadi: {
-          navy: '#060097', // Updated to primary dark blue
-          darkNavy: '#171462', // Submenu background
-          card: '#F2F5F7', // Updated to light grey-blue
-          gold: '#00b1f8', // Updated to cyan accent
-          lightGold: '#ffcd57',
-          darkGold: '#060097',
-          accentBlue: '#00b1f8',
+          navy: '#1c1d1f', // Mapped to Udemy Black
+          darkNavy: '#1c1d1f', // Mapped to Udemy Black
+          card: '#f7f9fa', // Udemy light gray
+          gold: '#5624d0', // Udemy Purple
+          lightGold: '#401b9c', // Udemy Dark Purple
+          darkGold: '#5624d0',
+          accentBlue: '#5624d0',
         },
         brand: {
-          navy: '#060097',
-          gold: '#00b1f8',
-          slate: '#1e293b',
-          accent: '#00b1f8',
+          navy: '#1c1d1f',
+          gold: '#5624d0',
+          slate: '#1c1d1f',
+          accent: '#5624d0',
         },
       },
       fontFamily: {
