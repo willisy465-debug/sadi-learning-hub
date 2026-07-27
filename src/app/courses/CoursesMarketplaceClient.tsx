@@ -103,8 +103,8 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
               className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#5624d0] focus:outline-none focus:ring-1 focus:ring-[#5624d0]/30"
             >
               <option value="">All Online Delivery Modes</option>
-              <option value="SELF_PACED">100% Online Self-Paced Video</option>
-              <option value="ONLINE_VIRTUAL">Live Online Virtual Masterclass</option>
+              <option value="ONLINE_SELF_PACED">100% Online Self-Paced Video</option>
+              <option value="FACE_TO_FACE">Pretoria SADI Campus</option>
               <option value="BLENDED">Blended Online & Masterclass</option>
             </select>
           </div>
@@ -188,12 +188,12 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                   <div className="px-5 space-y-2.5">
                     
                     {/* Category & Duration */}
-                    <div className="flex items-center justify-between text-[11px]">
+                    <div className="flex items-center justify-between text-[11px] mb-1">
                       <span className="text-[#5624d0] font-bold uppercase tracking-wider">
                         {course.category?.name || 'Executive Online'}
                       </span>
-                      <span className="text-[#64748b] font-mono">
-                        {course.durationDays || 5} Days Access
+                      <span className="px-2 py-0.5 rounded-md bg-udemy-gray text-slate-700 border border-udemy-grayBorder uppercase tracking-wider font-bold text-[9px]">
+                        {course.deliveryMethod ? course.deliveryMethod.replace(/_/g, ' ') : 'SELF PACED'}
                       </span>
                     </div>
 

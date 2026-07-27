@@ -6,29 +6,29 @@ import { Shield, MapPin, Phone, Mail, Globe, Award, Lock, ExternalLink } from 'l
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-950 border-t border-slate-800 text-slate-400 pt-16 pb-12">
+    <footer className="bg-white border-t border-udemy-grayBorder text-slate-600 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-udemy-grayBorder">
           
           {/* Institutional Info & SADI Branding */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
               <img src="/logo.jpg" alt="SADI Logo" className="h-12 w-auto object-contain" />
               <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tight text-white">
+                <span className="text-xl font-black tracking-tight text-udemy-black">
                   SADI <span className="text-udemy-purple text-sm font-semibold ml-1">Learning Hub</span>
                 </span>
               </div>
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
               The Southern Africa Development Institute (SADI) is a premier Pan-African professional training and capacity-development institution providing public, online, and customised institutional programmes across Africa.
             </p>
-            <div className="pt-2 flex items-center space-x-3 text-xs text-slate-400">
-              <span className="px-2.5 py-1 rounded bg-udemy-black border border-slate-800 text-udemy-purple font-mono">
+            <div className="pt-2 flex items-center space-x-3 text-xs text-slate-500">
+              <span className="px-2.5 py-1 rounded bg-udemy-gray border border-udemy-grayBorder text-udemy-purple font-mono font-bold">
                 CIPC Reg: 2011/070892/23
               </span>
-              <span className="flex items-center text-slate-400">
-                <Lock className="w-3.5 h-3.5 text-emerald-400 mr-1" />
+              <span className="flex items-center text-slate-500 font-medium">
+                <Lock className="w-3.5 h-3.5 text-emerald-500 mr-1" />
                 ISO 9001 Compliant
               </span>
             </div>
@@ -36,10 +36,10 @@ export const Footer: React.FC = () => {
 
           {/* Training Delivery Models */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Programmes</h4>
+            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Programmes</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/courses" className="hover:text-udemy-purple transition-colors">Scheduled Public Training</Link></li>
-              <li><Link href="/courses?delivery=SELF_PACED" className="hover:text-udemy-purple transition-colors">Online Self-Paced E-Learning</Link></li>
+              <li><Link href="/courses?delivery=ONLINE_SELF_PACED" className="hover:text-udemy-purple transition-colors">Online Self-Paced E-Learning</Link></li>
               <li><Link href="/courses?delivery=FACE_TO_FACE" className="hover:text-udemy-purple transition-colors">Face-to-Face Workshops</Link></li>
               <li><Link href="/request-custom" className="hover:text-udemy-purple transition-colors">In-House Corporate Training</Link></li>
               <li><Link href="/courses?delivery=CERTIFICATION_PROGRAMME" className="hover:text-udemy-purple transition-colors">Certification Examinations</Link></li>
@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
 
           {/* Operational Support & Verification */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Services & Portal</h4>
+            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Services & Portal</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/verify/VER-SADI-90412-AD" className="hover:text-udemy-purple transition-colors flex items-center"><Award className="w-3.5 h-3.5 text-udemy-purple mr-1.5" /> Certificate Verification</Link></li>
               <li><Link href="/corporate/dashboard" className="hover:text-udemy-purple transition-colors">Corporate Client Portal</Link></li>
@@ -60,8 +60,8 @@ export const Footer: React.FC = () => {
 
           {/* Head Office Contact & Location */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Pretoria Headquarters</h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Pretoria Headquarters</h4>
+            <ul className="space-y-2.5 text-xs text-slate-500">
               <li className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-udemy-purple shrink-0 mt-0.5" />
                 <span>The Brooklyn Office Park, 105–107 Nicolson Street, Brooklyn, Pretoria, 0181, South Africa</span>
@@ -89,11 +89,11 @@ export const Footer: React.FC = () => {
           <p>© 2026 Southern Africa Development Institute (SADI). All rights reserved.</p>
           <div className="flex items-center space-x-4">
             <span>Accepted Currencies:</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-black text-slate-300 font-mono">ZAR</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-black text-slate-300 font-mono">USD</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-black text-slate-300 font-mono">KES</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-black text-slate-300 font-mono">EUR</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-black text-slate-300 font-mono">GBP</span>
+            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">ZAR</span>
+            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">USD</span>
+            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">KES</span>
+            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">EUR</span>
+            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">GBP</span>
           </div>
         </div>
       </div>

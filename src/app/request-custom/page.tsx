@@ -174,7 +174,7 @@ function CustomRequestForm() {
                   <option value="IN_HOUSE_CORPORATE">In-House On-Site (Client Premises)</option>
                   <option value="FACE_TO_FACE">Pretoria SADI Campus</option>
                   <option value="BLENDED">Blended Hybrid</option>
-                  <option value="SELF_PACED">Dedicated E-Learning Portal</option>
+                  <option value="ONLINE_SELF_PACED">Dedicated E-Learning Portal</option>
                 </select>
               </div>
             </div>

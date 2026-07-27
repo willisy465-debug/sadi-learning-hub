@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/courses"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                pathname === '/courses' ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname === '/courses' ? 'text-udemy-purple bg-udemy-gray border border-udemy-grayBorder' : 'text-slate-700 hover:text-udemy-purple hover:bg-udemy-gray'
               }`}
             >
               Course Catalogue
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/request-custom"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                pathname === '/request-custom' ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname === '/request-custom' ? 'text-udemy-purple bg-udemy-gray border border-udemy-grayBorder' : 'text-slate-700 hover:text-udemy-purple hover:bg-udemy-gray'
               }`}
             >
               In-House & Custom
@@ -81,10 +81,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/verify/VER-SADI-90412-AD"
               className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition-colors ${
-                pathname.startsWith('/verify') ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname.startsWith('/verify') ? 'text-udemy-purple bg-udemy-gray border border-udemy-grayBorder' : 'text-slate-700 hover:text-udemy-purple hover:bg-udemy-gray'
               }`}
             >
-              <CheckCircle className="w-4 h-4 text-emerald-400" />
+              <CheckCircle className="w-4 h-4 text-emerald-500" />
               <span>Verify Certificate</span>
             </Link>
           </nav>
@@ -95,29 +95,29 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-udemy-purple/40 transition-colors"
+                  className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow"
                 >
-                  <div className="w-8 h-8 rounded-full bg-udemy-purple/20 border border-udemy-purple/40 text-udemy-purple flex items-center justify-center font-bold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-udemy-purple/10 border border-udemy-purple/20 text-udemy-purple flex items-center justify-center font-bold text-sm">
                     {currentUser.firstName?.[0] || 'U'}
                     {currentUser.lastName?.[0] || ''}
                   </div>
                   <div className="text-left">
-                    <p className="text-xs font-semibold text-white">
+                    <p className="text-xs font-semibold text-udemy-black">
                       {currentUser.firstName} {currentUser.lastName}
                     </p>
                     <p className="text-[10px] text-udemy-purple font-mono">
                       {(roles[0] || 'LEARNER').replace(/_/g, ' ')}
                     </p>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-slate-600" />
+                  <ChevronDown className="w-4 h-4 text-slate-400" />
                 </button>
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 glass-panel rounded-2xl shadow-2xl py-2 z-50 border border-slate-700">
-                    <div className="px-4 py-2 border-b border-slate-700/60">
-                      <p className="text-xs text-slate-600">Signed in as</p>
-                      <p className="text-xs font-semibold text-white truncate">{currentUser.email}</p>
+                  <div className="absolute right-0 mt-2 w-64 glass-panel rounded-2xl shadow-2xl py-2 z-50 border border-udemy-grayBorder bg-white">
+                    <div className="px-4 py-2 border-b border-udemy-grayBorder">
+                      <p className="text-xs text-slate-500">Signed in as</p>
+                      <p className="text-xs font-semibold text-udemy-black truncate">{currentUser.email}</p>
                     </div>
 
                     <div className="py-1">
@@ -162,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       </Link>
                     </div>
 
-                    <div className="pt-1 border-t border-slate-700/60">
+                    <div className="pt-1 border-t border-udemy-grayBorder">
                       <button
                         onClick={handleLogout}
                         className="w-full flex items-center space-x-2.5 px-4 py-2 text-xs text-rose-400 hover:bg-rose-500/10"
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-udemy-black border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+        <div className="md:hidden bg-white border-b border-udemy-grayBorder px-4 pt-2 pb-6 space-y-3 shadow-md">
           <Link
             href="/courses"
             onClick={() => setMobileMenuOpen(false)}
@@ -224,32 +224,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
           <Link
             href="/verify/VER-SADI-90412-AD"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-emerald-400 font-medium"
+            className="block py-2 text-emerald-600 font-medium"
           >
             Verify Certificate
           </Link>
 
           {currentUser ? (
-            <div className="pt-4 border-t border-slate-800 space-y-2">
-              <p className="text-xs text-slate-600">Signed in as {currentUser.email}</p>
-              <Link href="/learner/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-slate-800">
+            <div className="pt-4 border-t border-udemy-grayBorder space-y-2">
+              <p className="text-xs text-slate-500">Signed in as {currentUser.email}</p>
+              <Link href="/learner/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-udemy-black font-medium hover:text-udemy-purple">
                 Learner Dashboard
               </Link>
               {isAdmin && (
-                <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-udemy-purple font-semibold">
+                <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-udemy-purple font-bold">
                   Admin Hub
                 </Link>
               )}
-              <button onClick={handleLogout} className="block text-sm text-rose-400 pt-2">
+              <button onClick={handleLogout} className="block text-sm text-rose-500 pt-2 font-medium">
                 Sign Out
               </button>
             </div>
           ) : (
-            <div className="pt-4 border-t border-slate-800 flex flex-col space-y-2">
+            <div className="pt-4 border-t border-udemy-grayBorder flex flex-col space-y-2">
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 rounded-xl text-slate-700 bg-slate-800"
+                className="w-full text-center py-2.5 rounded-xl text-udemy-black border border-udemy-grayBorder bg-udemy-gray hover:bg-slate-100 font-medium"
               >
                 Sign In
               </Link>
