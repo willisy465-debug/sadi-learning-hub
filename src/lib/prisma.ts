@@ -9,7 +9,9 @@ function getDbUrl() {
   if (envUrl && !envUrl.startsWith('file:')) {
     return envUrl;
   }
-  return envUrl || 'file:./prisma/dev.db';
+  // Ensure the Prisma Client finds the dev.db in the prisma/ directory
+  // when running from the Next.js root directory.
+  return 'file:./prisma/dev.db';
 }
 
 export const prisma =
