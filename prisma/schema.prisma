@@ -126,6 +126,8 @@ model CourseCategory {
   slug         String   @unique
   description  String?
   icon         String?
+  imageUrl     String?
+  pdfUrl       String?
   displayOrder Int      @default(0)
   courses      Course[]
   createdAt    DateTime @default(now())

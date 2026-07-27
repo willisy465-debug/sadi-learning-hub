@@ -89,16 +89,16 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Quick Navigation Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         
         <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
             <BookOpen className="w-6 h-6 text-udemy-purple" />
             <span className="text-xs font-mono font-bold text-slate-500">{coursesCount} Courses</span>
           </div>
-          <h3 className="text-lg font-bold text-udemy-black">Course & Curriculum Manager</h3>
+          <h3 className="text-lg font-bold text-udemy-black">Course Manager</h3>
           <p className="text-xs text-slate-500 leading-relaxed font-medium">
-            Create new training courses, schedule Pretoria/Johannesburg cohorts, manage modules and upload lecture videos.
+            Create new training courses, schedule cohorts, manage modules and upload lecture videos.
           </p>
           <Link href="/admin/courses" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
             <span>Manage Programmes</span>
@@ -108,14 +108,28 @@ export default async function AdminDashboardPage() {
 
         <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
+            <FileText className="w-6 h-6 text-udemy-purple" />
+          </div>
+          <h3 className="text-lg font-bold text-udemy-black">Course Categories</h3>
+          <p className="text-xs text-slate-500 leading-relaxed font-medium">
+            Manage course categories, AI-generated pictorials, and PDF training brochures.
+          </p>
+          <Link href="/admin/categories" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
+            <span>Manage Categories</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Link>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
+          <div className="flex items-center justify-between">
             <Building2 className="w-6 h-6 text-udemy-purple" />
             <span className="text-xs font-mono text-udemy-purple font-bold">{corporateLeadsCount} Custom Leads</span>
           </div>
-          <h3 className="text-lg font-bold text-udemy-black">Corporate In-House Requests</h3>
+          <h3 className="text-lg font-bold text-udemy-black">In-House Requests</h3>
           <p className="text-xs text-slate-500 leading-relaxed font-medium">
-            Review custom training quotes submitted by African government ministries, public utilities, and corporate clients.
+            Review custom training quotes submitted by government ministries and corporate clients.
           </p>
-          <Link href="/request-custom" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
+          <Link href="/admin/leads" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
             <span>View In-House Leads</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1" />
           </Link>
@@ -124,11 +138,11 @@ export default async function AdminDashboardPage() {
         <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
             <Activity className="w-6 h-6 text-udemy-purple" />
-            <span className="text-xs font-mono font-bold text-slate-500">Immutable Ledger</span>
+            <span className="text-xs font-mono font-bold text-slate-500">System Logs</span>
           </div>
-          <h3 className="text-lg font-bold text-udemy-black">System Security & Audit Logs</h3>
+          <h3 className="text-lg font-bold text-udemy-black">System Security Audit</h3>
           <p className="text-xs text-slate-500 leading-relaxed font-medium">
-            Inspect real-time security events, delegate logins, payment webhooks, exam completions, and certificate issuances.
+            Inspect real-time security events, delegate logins, and exam completions.
           </p>
           <Link href="/admin/audit" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
             <span>Inspect Audit Trail</span>
