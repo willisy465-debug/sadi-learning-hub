@@ -80,9 +80,8 @@ export default async function HomePage() {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl mx-auto leading-tight">
-            Pan-African Executive <br className="hidden sm:inline" />
-            <span className="gold-gradient-text">Capacity Development</span> & Learning Hub
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
+            Transforming <span className="gold-gradient-text">African Leadership</span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
