@@ -10,7 +10,7 @@ export default function CorporateDashboardPage() {
       
       {/* Header */}
       <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-4">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold border border-amber-500/20">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-udemy-purple/10 text-udemy-purple text-xs font-bold border border-udemy-purple/20">
           <Building2 className="w-4 h-4" />
           <span>SADI Institutional & Corporate Client Portal</span>
         </div>
@@ -24,8 +24,8 @@ export default function CorporateDashboardPage() {
 
       {/* Quick Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-amber-500/40 transition-all">
-          <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-all">
+          <div className="w-12 h-12 rounded-xl bg-udemy-purple/20 text-udemy-purple flex items-center justify-center">
             <Building2 className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">Custom In-House Request</h3>
@@ -41,7 +41,7 @@ export default function CorporateDashboardPage() {
           </Link>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-amber-500/40 transition-all">
+        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-all">
           <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
             <Users className="w-6 h-6" />
           </div>
@@ -51,15 +51,15 @@ export default function CorporateDashboardPage() {
           </p>
           <Link
             href="/courses"
-            className="w-full px-4 py-2.5 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700 font-bold text-xs inline-flex items-center justify-center space-x-2 border border-slate-700"
+            className="w-full px-4 py-2.5 rounded-xl bg-slate-800 text-udemy-grayBorder hover:bg-slate-700 font-bold text-xs inline-flex items-center justify-center space-x-2 border border-slate-700"
           >
             <span>Explore Catalogue</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-amber-500/40 transition-all">
-          <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
+        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-all">
+          <div className="w-12 h-12 rounded-xl bg-udemy-purple/20 text-blue-400 flex items-center justify-center">
             <FileText className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">Verification & Compliance</h3>
@@ -68,7 +68,7 @@ export default function CorporateDashboardPage() {
           </p>
           <Link
             href="/verify/VER-SADI-90412-AD"
-            className="w-full px-4 py-2.5 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700 font-bold text-xs inline-flex items-center justify-center space-x-2 border border-slate-700"
+            className="w-full px-4 py-2.5 rounded-xl bg-slate-800 text-udemy-grayBorder hover:bg-slate-700 font-bold text-xs inline-flex items-center justify-center space-x-2 border border-slate-700"
           >
             <span>Certificate Verification</span>
             <ShieldCheck className="w-3.5 h-3.5" />

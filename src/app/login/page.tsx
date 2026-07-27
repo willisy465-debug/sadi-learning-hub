@@ -83,7 +83,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
+    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-udemy-gray relative overflow-hidden">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00b1f8]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-md w-full space-y-8 relative z-10">
@@ -92,7 +92,7 @@ function LoginForm() {
           <h2 className="text-3xl font-black text-black tracking-tight">
             SADI <span className="text-[#060097]">Learning Hub</span>
           </h2>
-          <p className="mt-2 text-sm text-gray-900">
+          <p className="mt-2 text-sm text-udemy-black">
             {isRegister
               ? 'Create your Pan-African professional delegate account'
               : 'Sign in to access your courses, certificates & examinations'}
@@ -100,7 +100,7 @@ function LoginForm() {
         </div>
 
         {!isRegister && (
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white p-4 rounded-2xl border border-udemy-grayBorder shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-xs font-semibold text-[#00b1f8]">
               <KeyRound className="w-4 h-4" />
               <span>1-Click Demo Login Presets (Password: Password123!)</span>
@@ -109,21 +109,21 @@ function LoginForm() {
               <button
                 type="button"
                 onClick={() => handleQuickLogin('learner@saditraining.com')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-black text-left border border-slate-200 truncate"
+                className="px-2.5 py-1.5 rounded-lg bg-udemy-gray hover:bg-udemy-gray text-black text-left border border-udemy-grayBorder truncate"
               >
                 👤 Learner Delegate
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin@saditraining.com')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-[#060097] text-left border border-[#00b1f8]/30 truncate font-bold shadow-sm shadow-[#060097]/5"
+                className="px-2.5 py-1.5 rounded-lg bg-udemy-gray hover:bg-udemy-gray text-[#060097] text-left border border-[#00b1f8]/30 truncate font-bold shadow-sm shadow-[#060097]/5"
               >
                 👑 Super Admin
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('facilitator@saditraining.com')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-black text-left border border-slate-200 truncate"
+                className="px-2.5 py-1.5 rounded-lg bg-udemy-gray hover:bg-udemy-gray text-black text-left border border-udemy-grayBorder truncate"
               >
                 👨‍🏫 Facilitator
               </button>
@@ -131,7 +131,7 @@ function LoginForm() {
           </div>
         )}
 
-        <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-[#060097]/5">
+        <div className="bg-white p-8 rounded-3xl border border-udemy-grayBorder shadow-xl shadow-[#060097]/5">
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-medium flex items-center space-x-2">
               <div className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
@@ -151,7 +151,7 @@ function LoginForm() {
                       required
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                       placeholder="Kagiso"
                     />
                   </div>
@@ -163,7 +163,7 @@ function LoginForm() {
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                    className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                     placeholder="Dlamini"
                   />
                 </div>
@@ -179,7 +179,7 @@ function LoginForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                  className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                   placeholder="delegate@institution.gov"
                 />
               </div>
@@ -194,7 +194,7 @@ function LoginForm() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                  className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                   placeholder="••••••••"
                 />
               </div>
@@ -202,7 +202,7 @@ function LoginForm() {
 
             {isRegister && (
               <>
-                <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="space-y-2 pt-2 border-t border-udemy-gray">
                   <label className="block text-xs font-bold text-[#060097] uppercase tracking-wider">
                     Sponsorship / Funding Model *
                   </label>
@@ -213,7 +213,7 @@ function LoginForm() {
                       className={`p-3 rounded-xl border text-xs font-bold flex flex-col items-center justify-center space-y-1 transition-all ${
                         sponsorType === 'SELF'
                           ? 'bg-[#00b1f8]/10 border-[#00b1f8] text-[#060097] shadow-md shadow-[#00b1f8]/10'
-                          : 'bg-white border-slate-200 text-[#64748b] hover:border-slate-300 hover:bg-slate-50'
+                          : 'bg-white border-udemy-grayBorder text-[#64748b] hover:border-slate-300 hover:bg-udemy-gray'
                       }`}
                     >
                       <User className="w-5 h-5 mb-1" />
@@ -227,7 +227,7 @@ function LoginForm() {
                       className={`p-3 rounded-xl border text-xs font-bold flex flex-col items-center justify-center space-y-1 transition-all ${
                         sponsorType === 'ORGANISATION'
                           ? 'bg-[#00b1f8]/10 border-[#00b1f8] text-[#060097] shadow-md shadow-[#00b1f8]/10'
-                          : 'bg-white border-slate-200 text-[#64748b] hover:border-slate-300 hover:bg-slate-50'
+                          : 'bg-white border-udemy-grayBorder text-[#64748b] hover:border-slate-300 hover:bg-udemy-gray'
                       }`}
                     >
                       <Building className="w-5 h-5 mb-1" />
@@ -238,7 +238,7 @@ function LoginForm() {
                 </div>
 
                 {sponsorType === 'ORGANISATION' && (
-                  <div className="space-y-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="space-y-4 p-4 rounded-2xl bg-udemy-gray border border-udemy-grayBorder">
                     <div className="flex items-center space-x-2 text-xs font-bold text-[#060097]">
                       <Building className="w-4 h-4" />
                       <span>Sponsoring Organisation Details</span>
@@ -251,7 +251,7 @@ function LoginForm() {
                         required
                         value={organisationName}
                         onChange={(e) => setOrganisationName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                         placeholder="Eskom SOC / Ministry of Finance"
                       />
                     </div>
@@ -263,7 +263,7 @@ function LoginForm() {
                           type="text"
                           value={taxNumber}
                           onChange={(e) => setTaxNumber(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                           placeholder="4910293847"
                         />
                       </div>
@@ -273,7 +273,7 @@ function LoginForm() {
                           type="text"
                           value={jobTitle}
                           onChange={(e) => setJobTitle(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                           placeholder="Senior Engineer"
                         />
                       </div>
@@ -285,7 +285,7 @@ function LoginForm() {
                         type="email"
                         value={managerEmail}
                         onChange={(e) => setManagerEmail(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder text-black text-xs focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
                         placeholder="hr@organisation.com"
                       />
                     </div>
@@ -299,7 +299,7 @@ function LoginForm() {
                     <select
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
                     >
                       <option value="South Africa">South Africa</option>
                       <option value="Kenya">Kenya</option>
@@ -321,7 +321,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full gold-button py-3 rounded-xl font-bold flex items-center justify-center space-x-2 text-sm shadow-lg shadow-amber-500/20 disabled:opacity-50"
+              className="w-full gold-button py-3 rounded-xl font-bold flex items-center justify-center space-x-2 text-sm shadow-lg shadow-udemy-purple/20 disabled:opacity-50"
             >
               <span>{loading ? 'Authenticating...' : isRegister ? 'Create Delegate Account' : 'Sign In'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -367,7 +367,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-[85vh] flex items-center justify-center bg-slate-50">
+        <div className="min-h-[85vh] flex items-center justify-center bg-udemy-gray">
           <div className="text-[#060097] font-bold text-sm">Loading SADI Authentication Portal...</div>
         </div>
       }

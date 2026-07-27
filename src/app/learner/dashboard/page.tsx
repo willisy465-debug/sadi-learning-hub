@@ -76,7 +76,7 @@ export default async function LearnerDashboardPage() {
       {/* Welcome & Udemy "My Learning" Header */}
       <div className="glass-panel p-8 rounded-3xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-2 text-xs text-amber-400 font-semibold bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+          <div className="inline-flex items-center space-x-2 text-xs text-udemy-purple font-semibold bg-udemy-purple/10 px-3 py-1 rounded-full border border-udemy-purple/20">
             <Sparkles className="w-3.5 h-3.5" />
             <span>SADI "My Learning" Hub</span>
           </div>
@@ -91,9 +91,9 @@ export default async function LearnerDashboardPage() {
         <div className="flex items-center space-x-3">
           <Link
             href="/learner/certificates"
-            className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center space-x-2 border border-slate-800"
+            className="px-4 py-2.5 rounded-xl bg-udemy-black hover:bg-slate-800 text-udemy-grayBorder text-xs font-semibold flex items-center space-x-2 border border-slate-800"
           >
-            <Award className="w-4 h-4 text-amber-400" />
+            <Award className="w-4 h-4 text-udemy-purple" />
             <span>My Certificates ({certificates.length})</span>
           </Link>
           <Link
@@ -110,7 +110,7 @@ export default async function LearnerDashboardPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
           <h2 className="text-xl font-bold text-white flex items-center">
-            <BookOpen className="w-5 h-5 text-amber-400 mr-2" />
+            <BookOpen className="w-5 h-5 text-udemy-purple mr-2" />
             <span>My Enrolled Courses</span>
           </h2>
           <span className="text-xs text-slate-400 font-mono font-bold">
@@ -120,16 +120,16 @@ export default async function LearnerDashboardPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {enrolments.map((enrolment) => (
-            <div key={enrolment.id} className="glass-panel rounded-3xl border border-slate-800 overflow-hidden space-y-6 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300 group shadow-xl">
+            <div key={enrolment.id} className="glass-panel rounded-3xl border border-slate-800 overflow-hidden space-y-6 flex flex-col justify-between hover:border-udemy-purple/40 transition-all duration-300 group shadow-xl">
               
               <div className="space-y-4 p-6">
-                <div className="aspect-video rounded-2xl overflow-hidden relative bg-slate-900 border border-slate-800">
+                <div className="aspect-video rounded-2xl overflow-hidden relative bg-udemy-black border border-slate-800">
                   <img
                     src={enrolment.course.featuredImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'}
                     alt={enrolment.course.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-amber-500/30 text-amber-400 font-mono text-[10px] font-bold">
+                  <div className="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-udemy-purple/30 text-udemy-purple font-mono text-[10px] font-bold">
                     {enrolment.course.code}
                   </div>
                   <div className="absolute bottom-3 right-3 bg-emerald-950/85 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/30 text-emerald-400 text-[10px] font-bold flex items-center space-x-1">
@@ -139,7 +139,7 @@ export default async function LearnerDashboardPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-udemy-purple transition-colors">
                     {enrolment.course.title}
                   </h3>
                   <p className="text-xs text-slate-400 font-mono">
@@ -151,9 +151,9 @@ export default async function LearnerDashboardPage() {
                 <div className="space-y-2 pt-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-400 font-medium">Course Progress</span>
-                    <span className="font-bold text-amber-400 font-mono">{enrolment.progressPercent?.toFixed(0) || 0}% Complete</span>
+                    <span className="font-bold text-udemy-purple font-mono">{enrolment.progressPercent?.toFixed(0) || 0}% Complete</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden border border-slate-800">
+                  <div className="w-full h-2 rounded-full bg-udemy-black overflow-hidden border border-slate-800">
                     <div
                       className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-500"
                       style={{ width: `${enrolment.progressPercent || 0}%` }}
@@ -163,7 +163,7 @@ export default async function LearnerDashboardPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="p-6 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3 bg-slate-900/30">
+              <div className="p-6 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3 bg-udemy-black/30">
                 <Link
                   href={`/learner/courses/${enrolment.course.id}/learn`}
                   className="flex-1 gold-button py-3 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/10"
@@ -175,9 +175,9 @@ export default async function LearnerDashboardPage() {
                 {enrolment.course.examinations && enrolment.course.examinations.length > 0 && (
                   <Link
                     href={`/learner/exams/${enrolment.course.examinations[0].id}`}
-                    className="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center space-x-1.5 border border-slate-800"
+                    className="px-4 py-3 rounded-xl bg-udemy-black hover:bg-slate-800 text-udemy-grayBorder text-xs font-semibold flex items-center space-x-1.5 border border-slate-800"
                   >
-                    <FileText className="w-4 h-4 text-amber-400" />
+                    <FileText className="w-4 h-4 text-udemy-purple" />
                     <span>CPD Exam</span>
                   </Link>
                 )}

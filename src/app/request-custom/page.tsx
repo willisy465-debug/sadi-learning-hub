@@ -51,7 +51,7 @@ function CustomRequestForm() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-udemy-purple/10 text-udemy-purple text-xs font-semibold border border-udemy-purple/20">
           <Building2 className="w-4 h-4" />
           <span>In-House Institutional & Customized Training</span>
         </div>
@@ -91,7 +91,7 @@ function CustomRequestForm() {
                   value={formData.organisationName}
                   onChange={(e) => setFormData({ ...formData, organisationName: e.target.value })}
                   placeholder="e.g. Ministry of Finance / Eskom SOC"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 />
               </div>
 
@@ -103,7 +103,7 @@ function CustomRequestForm() {
                   value={formData.contactPerson}
                   onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
                   placeholder="Dr. Sibusiso Zwane (Head of HR)"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 />
               </div>
 
@@ -115,7 +115,7 @@ function CustomRequestForm() {
                   value={formData.contactEmail}
                   onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
                   placeholder="sibusiso.zwane@eskom.co.za"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 />
               </div>
 
@@ -127,7 +127,7 @@ function CustomRequestForm() {
                   value={formData.contactPhone}
                   onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
                   placeholder="+27 11 800 1111"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ function CustomRequestForm() {
                 <select
                   value={formData.country}
                   onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 >
                   <option value="South Africa">South Africa</option>
                   <option value="Kenya">Kenya</option>
@@ -159,7 +159,7 @@ function CustomRequestForm() {
                   required
                   value={formData.participantCount}
                   onChange={(e) => setFormData({ ...formData, participantCount: parseInt(e.target.value) })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 />
               </div>
 
@@ -168,7 +168,7 @@ function CustomRequestForm() {
                 <select
                   value={formData.deliveryMode}
                   onChange={(e) => setFormData({ ...formData, deliveryMode: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
                 >
                   <option value="IN_HOUSE_CORPORATE">In-House On-Site (Client Premises)</option>
                   <option value="FACE_TO_FACE">Pretoria SADI Campus</option>
@@ -186,7 +186,7 @@ function CustomRequestForm() {
                 value={formData.preferredCourse}
                 onChange={(e) => setFormData({ ...formData, preferredCourse: e.target.value })}
                 placeholder="e.g. Executive Leadership & Public Finance Audit"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
               />
             </div>
 
@@ -197,14 +197,14 @@ function CustomRequestForm() {
                 value={formData.comments}
                 onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
                 placeholder="Detail preferred dates, duration (e.g. 5 days), specific learning outcomes, or logistical requirements..."
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-white text-sm focus:border-udemy-purple focus:outline-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full gold-button py-3.5 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/20"
+              className="w-full gold-button py-3.5 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-udemy-purple/20"
             >
               <Send className="w-4 h-4 text-slate-950" />
               <span>{loading ? 'Submitting Request...' : 'Submit Institutional Training Request'}</span>
@@ -220,7 +220,7 @@ export default function CustomRequestPage() {
   return (
     <Suspense
       fallback={
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center text-amber-400 font-bold text-sm">
+        <div className="max-w-4xl mx-auto px-4 py-12 text-center text-udemy-purple font-bold text-sm">
           Loading Custom Programme Portal...
         </div>
       }

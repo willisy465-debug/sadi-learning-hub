@@ -43,7 +43,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
           className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
             selectedCategory === ''
               ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
-              : 'bg-white text-gray-900 border border-slate-200 hover:border-slate-300 hover:text-black'
+              : 'bg-white text-udemy-black border border-udemy-grayBorder hover:border-slate-300 hover:text-black'
           }`}
         >
           All Categories
@@ -55,7 +55,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
               selectedCategory === c.id
                 ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
-                : 'bg-white text-gray-900 border border-slate-200 hover:border-slate-300 hover:text-black'
+                : 'bg-white text-udemy-black border border-udemy-grayBorder hover:border-slate-300 hover:text-black'
             }`}
           >
             {c.name}
@@ -75,7 +75,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search executive online courses, skills, codes (e.g. FIN-801)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
             />
           </div>
 
@@ -84,7 +84,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
             >
               <option value="">All Executive Sectors</option>
               {categories.map((c) => (
@@ -100,7 +100,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedDelivery}
               onChange={(e) => setSelectedDelivery(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
             >
               <option value="">All Online Delivery Modes</option>
               <option value="SELF_PACED">100% Online Self-Paced Video</option>
@@ -112,7 +112,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
         </div>
 
         {(query || selectedCategory || selectedDelivery) && (
-          <div className="flex items-center justify-between pt-3 border-t border-slate-200 text-xs">
+          <div className="flex items-center justify-between pt-3 border-t border-udemy-grayBorder text-xs">
             <span className="text-[#64748b] font-medium">Showing {filteredCourses.length} executive online courses</span>
             <button
               onClick={() => {
@@ -149,11 +149,11 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                 key={course.id}
                 onMouseEnter={() => setHoveredCourseId(course.id)}
                 onMouseLeave={() => setHoveredCourseId(null)}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-[#00b1f8]/50 transition-all duration-300 group shadow-md hover:shadow-xl hover:shadow-[#00b1f8]/10 relative"
+                className="bg-white rounded-2xl border border-udemy-grayBorder overflow-hidden flex flex-col justify-between hover:border-[#00b1f8]/50 transition-all duration-300 group shadow-md hover:shadow-xl hover:shadow-[#00b1f8]/10 relative"
               >
                 {/* Udemy Course Card Header & Image */}
                 <div className="space-y-4">
-                  <div className="aspect-video rounded-t-2xl overflow-hidden relative bg-slate-100">
+                  <div className="aspect-video rounded-t-2xl overflow-hidden relative bg-udemy-gray">
                     <img
                       src={course.featuredImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'}
                       alt={course.title}
@@ -161,7 +161,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     />
                     
                     {/* Course Code Badge */}
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-slate-200 text-[#060097] font-mono text-[10px] font-bold">
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-udemy-grayBorder text-[#060097] font-mono text-[10px] font-bold">
                       {course.code}
                     </div>
 
@@ -205,7 +205,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     </h3>
 
                     {/* Instructor / Faculty */}
-                    <p className="text-xs text-gray-900 font-medium">
+                    <p className="text-xs text-udemy-black font-medium">
                       SADI Executive Faculty & Pan-African Experts
                     </p>
 
@@ -241,7 +241,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                 </div>
 
                 {/* Price & Purchase Actions */}
-                <div className="p-5 pt-4 border-t border-slate-100 space-y-3 bg-slate-50/50 mt-4 rounded-b-2xl">
+                <div className="p-5 pt-4 border-t border-udemy-gray space-y-3 bg-udemy-gray/50 mt-4 rounded-b-2xl">
                   
                   {/* Udemy Price Display */}
                   <div className="flex items-baseline space-x-2">
@@ -259,7 +259,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                   <div className="grid grid-cols-2 gap-2">
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="py-2.5 rounded-xl text-xs font-bold text-black bg-white border border-slate-200 hover:bg-slate-50 hover:text-[#060097] hover:border-slate-300 text-center transition-all"
+                      className="py-2.5 rounded-xl text-xs font-bold text-black bg-white border border-udemy-grayBorder hover:bg-udemy-gray hover:text-[#060097] hover:border-slate-300 text-center transition-all"
                     >
                       View Details
                     </Link>
@@ -277,18 +277,18 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
 
                 {/* Udemy Quick Hover Preview Popover */}
                 {hoveredCourseId === course.id && (
-                  <div className="hidden xl:block absolute left-full top-0 ml-4 w-80 bg-white border border-slate-200 p-5 rounded-2xl shadow-2xl z-50 space-y-4 animate-in fade-in slide-in-from-left-2 duration-200">
+                  <div className="hidden xl:block absolute left-full top-0 ml-4 w-80 bg-white border border-udemy-grayBorder p-5 rounded-2xl shadow-2xl z-50 space-y-4 animate-in fade-in slide-in-from-left-2 duration-200">
                     <h4 className="font-bold text-black text-sm leading-snug">
                       {course.title}
                     </h4>
 
-                    <p className="text-xs text-gray-900 line-clamp-3 leading-relaxed">
+                    <p className="text-xs text-udemy-black line-clamp-3 leading-relaxed">
                       {course.shortDescription || 'Master executive leadership, governance standards, and strategic skills through 100% online self-paced e-learning.'}
                     </p>
 
-                    <div className="space-y-2 border-t border-slate-100 pt-3">
+                    <div className="space-y-2 border-t border-udemy-gray pt-3">
                       <p className="text-[11px] font-bold text-[#00b1f8] uppercase tracking-wider">What you'll learn:</p>
-                      <div className="space-y-1.5 text-xs text-gray-900">
+                      <div className="space-y-1.5 text-xs text-udemy-black">
                         <div className="flex items-start space-x-2">
                           <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                           <span>Complete 100% online executive video modules</span>

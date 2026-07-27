@@ -142,12 +142,12 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
       {/* Udemy Classroom Top Bar */}
       <div className="glass-nav px-6 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center space-x-4">
-          <Link href="/learner/dashboard" className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors">
+          <Link href="/learner/dashboard" className="p-2 rounded-xl bg-udemy-black border border-slate-800 text-slate-300 hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-[10px] font-mono text-amber-400 uppercase font-bold">{course.code}</span>
+              <span className="text-[10px] font-mono text-udemy-purple uppercase font-bold">{course.code}</span>
               <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-bold border border-emerald-500/20">UDEMY PLAYER</span>
             </div>
             <h1 className="text-sm font-bold text-white truncate max-w-md">{course.title}</h1>
@@ -157,8 +157,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         {/* Udemy Progress Bar Indicator */}
         <div className="flex items-center space-x-6">
           <div className="hidden md:flex items-center space-x-3 text-xs">
-            <div className="w-32 bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
-              <div className="bg-amber-400 h-full transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+            <div className="w-32 bg-udemy-black rounded-full h-2 overflow-hidden border border-slate-800">
+              <div className="bg-udemy-purple h-full transition-all duration-300" style={{ width: `${progressPercent}%` }} />
             </div>
             <span className="text-slate-300 font-mono font-bold">{progressPercent}%</span>
             <span className="text-slate-500 text-[11px]">({completedCount}/{allLessons.length || 1} complete)</span>
@@ -169,11 +169,11 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               onClick={() => setLowBandwidthMode(!lowBandwidthMode)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 border transition-colors ${
                 lowBandwidthMode
-                  ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                  : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
+                  ? 'bg-udemy-purple/20 text-udemy-purple border-udemy-purple/40'
+                  : 'bg-udemy-black text-slate-300 border-slate-800 hover:border-slate-700'
               }`}
             >
-              {lowBandwidthMode ? <WifiOff className="w-3.5 h-3.5 text-amber-400" /> : <Wifi className="w-3.5 h-3.5 text-emerald-400" />}
+              {lowBandwidthMode ? <WifiOff className="w-3.5 h-3.5 text-udemy-purple" /> : <Wifi className="w-3.5 h-3.5 text-emerald-400" />}
               <span className="hidden sm:inline">{lowBandwidthMode ? 'Audio Mode' : 'HD Video'}</span>
             </button>
 
@@ -197,7 +197,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         <div className="lg:col-span-3 p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-60px)]">
           
           {/* Udemy Media Player Container */}
-          <div className="aspect-video bg-slate-900 rounded-3xl overflow-hidden relative border border-slate-800 shadow-2xl flex flex-col justify-between group">
+          <div className="aspect-video bg-udemy-black rounded-3xl overflow-hidden relative border border-slate-800 shadow-2xl flex flex-col justify-between group">
             
             {/* Dynamic Security Watermark */}
             <div className="absolute top-4 right-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400/50 select-none bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded border border-slate-800">
@@ -206,7 +206,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
 
             {lowBandwidthMode ? (
               <div className="flex-1 p-8 text-center flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
-                <Volume2 className="w-16 h-16 text-amber-400 animate-pulse" />
+                <Volume2 className="w-16 h-16 text-udemy-purple animate-pulse" />
                 <h3 className="text-lg font-bold text-white">Audio Stream Fallback Active</h3>
                 <p className="text-xs text-slate-400">
                   Consuming minimal internet data. Listen to the executive lecture audio stream while reviewing lesson notes below.
@@ -240,8 +240,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                     onClick={() => handleSpeedChange(s)}
                     className={`px-2 py-0.5 rounded font-mono text-[11px] transition-colors ${
                       playbackSpeed === s
-                        ? 'bg-amber-400 text-slate-950 font-bold'
-                        : 'bg-slate-900 text-slate-400 hover:text-white'
+                        ? 'bg-udemy-purple text-slate-950 font-bold'
+                        : 'bg-udemy-black text-slate-400 hover:text-white'
                     }`}
                   >
                     {s}x
@@ -250,7 +250,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               </div>
 
               <div className="flex items-center space-x-2 text-[11px] text-slate-400">
-                <Video className="w-3.5 h-3.5 text-amber-400" />
+                <Video className="w-3.5 h-3.5 text-udemy-purple" />
                 <span>HD 1080p Stream</span>
               </div>
             </div>
@@ -259,7 +259,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           {/* Lesson Header & Mark Complete Action */}
           <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider">Active Video Lecture</span>
+              <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Active Video Lecture</span>
               <h2 className="text-xl font-bold text-white">{activeLesson?.title}</h2>
               <p className="text-xs text-slate-400">{activeLesson?.summary}</p>
             </div>
@@ -281,12 +281,12 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden">
             
             {/* Tab Navigation Headers */}
-            <div className="flex items-center border-b border-slate-800 bg-slate-900/60 overflow-x-auto">
+            <div className="flex items-center border-b border-slate-800 bg-udemy-black/60 overflow-x-auto">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'overview'
-                    ? 'border-amber-400 text-amber-400 bg-slate-900'
+                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -298,7 +298,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('qa')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'qa'
-                    ? 'border-amber-400 text-amber-400 bg-slate-900'
+                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -310,7 +310,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('notes')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'notes'
-                    ? 'border-amber-400 text-amber-400 bg-slate-900'
+                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -322,7 +322,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('resources')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'resources'
-                    ? 'border-amber-400 text-amber-400 bg-slate-900'
+                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -343,11 +343,11 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                   </p>
                   
                   <div className="pt-4 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-                      <span className="font-bold text-amber-400 uppercase tracking-wider block mb-1">Instructor</span>
+                    <div className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800">
+                      <span className="font-bold text-udemy-purple uppercase tracking-wider block mb-1">Instructor</span>
                       <p className="text-white font-semibold">SADI Executive Panel & Pan-African Experts</p>
                     </div>
-                    <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+                    <div className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800">
                       <span className="font-bold text-emerald-400 uppercase tracking-wider block mb-1">CPD Credits</span>
                       <p className="text-white font-semibold">{course.cpdPoints || 20} Accredited CPD Points</p>
                     </div>
@@ -363,7 +363,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                       value={newQuestion}
                       onChange={(e) => setNewQuestion(e.target.value)}
                       placeholder="Ask a question about this lesson or regulatory concept..."
-                      className="w-full p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-amber-400 focus:outline-none"
+                      className="w-full p-4 rounded-2xl bg-udemy-black border border-slate-800 text-white text-xs focus:border-udemy-purple focus:outline-none"
                       rows={3}
                     />
                     <button
@@ -377,9 +377,9 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
 
                   <div className="space-y-3 border-t border-slate-800 pt-4">
                     {qaList.map((qa) => (
-                      <div key={qa.id} className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+                      <div key={qa.id} className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800 space-y-1.5">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-bold text-amber-400">{qa.user}</span>
+                          <span className="font-bold text-udemy-purple">{qa.user}</span>
                           <span className="text-[10px] text-slate-500 font-mono">{qa.date}</span>
                         </div>
                         <p className="text-xs text-slate-300">{qa.text}</p>
@@ -397,7 +397,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                       value={newNote}
                       onChange={(e) => setNewNote(e.target.value)}
                       placeholder="Type a personal study note... (will tag current video time)"
-                      className="w-full p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-amber-400 focus:outline-none"
+                      className="w-full p-4 rounded-2xl bg-udemy-black border border-slate-800 text-white text-xs focus:border-udemy-purple focus:outline-none"
                       rows={3}
                     />
                     <button
@@ -411,9 +411,9 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
 
                   <div className="space-y-3 border-t border-slate-800 pt-4">
                     {notesList.map((n) => (
-                      <div key={n.id} className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-start justify-between text-xs">
+                      <div key={n.id} className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800 flex items-start justify-between text-xs">
                         <div className="space-y-1">
-                          <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold border border-amber-500/20">
+                          <span className="px-2 py-0.5 rounded bg-udemy-purple/10 text-udemy-purple font-mono text-[10px] font-bold border border-udemy-purple/20">
                             Timestamp {n.timestamp}
                           </span>
                           <p className="text-slate-300 pt-1">{n.text}</p>
@@ -430,14 +430,14 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                   <h4 className="font-bold text-white text-sm">Available Downloads for {activeLesson?.title}</h4>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
+                    <div className="p-5 rounded-2xl bg-udemy-black/60 border border-slate-800 flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="font-bold text-white">Lesson Study Pack (PDF)</p>
                         <p className="text-[10px] text-slate-400">Includes executive slides & case study notes</p>
                       </div>
                       <button
                         onClick={() => handleDownloadMaterials(activeLesson?.title)}
-                        className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-colors"
+                        className="p-2.5 rounded-xl bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 hover:bg-udemy-purple/20 transition-colors"
                       >
                         <Download className="w-4 h-4" />
                       </button>
@@ -453,7 +453,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         </div>
 
         {/* Sidebar: Course Module Syllabus Navigation */}
-        <div className="lg:col-span-1 border-l border-slate-800/80 bg-slate-900/60 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-60px)]">
+        <div className="lg:col-span-1 border-l border-slate-800/80 bg-udemy-black/60 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-60px)]">
           <div className="space-y-1 pb-2 border-b border-slate-800">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">Course Syllabus</h3>
             <p className="text-[11px] text-slate-400">{allLessons.length || 1} Total Lessons</p>
@@ -477,7 +477,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                         onClick={() => setCurrentLessonIndex(lIndex >= 0 ? lIndex : 0)}
                         className={`w-full text-left p-3 rounded-xl text-xs transition-colors flex items-center justify-between ${
                           isActive
-                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold'
+                            ? 'bg-udemy-purple/20 text-amber-300 border border-udemy-purple/40 font-bold'
                             : 'bg-slate-950/40 text-slate-300 hover:bg-slate-800'
                         }`}
                       >
@@ -485,7 +485,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                           {isDone ? (
                             <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                           ) : (
-                            <Video className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                            <Video className="w-3.5 h-3.5 text-udemy-purple shrink-0" />
                           )}
                           <span className="truncate">{lesson.title}</span>
                         </div>

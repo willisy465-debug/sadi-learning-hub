@@ -72,20 +72,20 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-      <div className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl space-y-6 max-h-[95vh] overflow-y-auto relative">
+      <div className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl border border-udemy-purple/30 shadow-2xl space-y-6 max-h-[95vh] overflow-y-auto relative">
         
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
+          className="absolute top-5 right-5 p-2 rounded-xl bg-udemy-black text-slate-400 hover:text-white border border-slate-800"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Header */}
         <div className="flex items-start space-x-4 border-b border-slate-800 pb-5">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
-            <Sparkles className="w-6 h-6 text-amber-400" />
+          <div className="w-12 h-12 rounded-2xl bg-udemy-purple/10 border border-udemy-purple/30 flex items-center justify-center shrink-0">
+            <Sparkles className="w-6 h-6 text-udemy-purple" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
@@ -101,12 +101,12 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
         </div>
 
         {/* Selected Course Summary */}
-        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+        <div className="p-4 rounded-2xl bg-udemy-black/80 border border-slate-800 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-xs font-bold text-amber-400">{course.code}</span>
+            <span className="font-mono text-xs font-bold text-udemy-purple">{course.code}</span>
             <div className="flex items-center space-x-2 text-[11px]">
-              <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 font-bold flex items-center">
-                <Award className="w-3 h-3 mr-1 text-amber-400" />
+              <span className="px-2 py-0.5 rounded bg-udemy-purple/10 text-amber-300 font-bold flex items-center">
+                <Award className="w-3 h-3 mr-1 text-udemy-purple" />
                 {course.cpdPoints || 10} CPD Points
               </span>
               <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 font-bold flex items-center">
@@ -147,7 +147,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
         <form onSubmit={handleCheckout} className="space-y-4 text-xs">
           {!currentUser && (
             <div className="space-y-3">
-              <p className="text-amber-400 font-bold uppercase text-[10px] tracking-wider">
+              <p className="text-udemy-purple font-bold uppercase text-[10px] tracking-wider">
                 1. Delegate Credential Details (Auto-Created Account)
               </p>
               
@@ -159,7 +159,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                     placeholder="Jane"
                   />
                 </div>
@@ -170,7 +170,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                     placeholder="Moyo"
                   />
                 </div>
@@ -184,7 +184,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none font-mono"
                     placeholder="delegate@gov.za"
                   />
                 </div>
@@ -194,7 +194,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none font-mono"
                     placeholder="Leave blank for SadiOnline2026!"
                   />
                 </div>
@@ -207,7 +207,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                     placeholder="South Africa / Namibia / Kenya"
                   />
                 </div>
@@ -217,7 +217,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                     type="text"
                     value={organisationName}
                     onChange={(e) => setOrganisationName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white focus:border-amber-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-udemy-black border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                     placeholder="Department of National Treasury"
                   />
                 </div>
@@ -227,7 +227,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
 
           {/* Payment Method Selector */}
           <div className="space-y-3 pt-2">
-            <p className="text-amber-400 font-bold uppercase text-[10px] tracking-wider">
+            <p className="text-udemy-purple font-bold uppercase text-[10px] tracking-wider">
               2. Select Online Payment Gateway
             </p>
 
@@ -236,12 +236,12 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                 onClick={() => setPaymentMethod('CARD')}
                 className={`p-3 rounded-2xl border cursor-pointer flex flex-col justify-between transition-all ${
                   paymentMethod === 'CARD'
-                    ? 'bg-amber-500/10 border-amber-400 text-white'
-                    : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-udemy-purple/10 border-udemy-purple text-white'
+                    : 'bg-udemy-black/60 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <CreditCard className="w-4 h-4 text-amber-400" />
+                  <CreditCard className="w-4 h-4 text-udemy-purple" />
                   <input type="radio" name="pay" checked={paymentMethod === 'CARD'} readOnly />
                 </div>
                 <span className="font-bold text-[11px] mt-2">Credit / Debit Card</span>
@@ -252,8 +252,8 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                 onClick={() => setPaymentMethod('EFT')}
                 className={`p-3 rounded-2xl border cursor-pointer flex flex-col justify-between transition-all ${
                   paymentMethod === 'EFT'
-                    ? 'bg-amber-500/10 border-amber-400 text-white'
-                    : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-udemy-purple/10 border-udemy-purple text-white'
+                    : 'bg-udemy-black/60 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -268,8 +268,8 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                 onClick={() => setPaymentMethod('INSTANT_DEMO')}
                 className={`p-3 rounded-2xl border cursor-pointer flex flex-col justify-between transition-all ${
                   paymentMethod === 'INSTANT_DEMO'
-                    ? 'bg-amber-500/10 border-amber-400 text-white'
-                    : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-udemy-purple/10 border-udemy-purple text-white'
+                    : 'bg-udemy-black/60 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -282,7 +282,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center space-x-2 text-slate-400 text-[11px]">
+          <div className="p-3 rounded-xl bg-udemy-black border border-slate-800 flex items-center space-x-2 text-slate-400 text-[11px]">
             <Lock className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>256-Bit SSL Encrypted Instant Credential & Invoice Provisioning</span>
           </div>
@@ -292,7 +292,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
             <button
               type="submit"
               disabled={loading}
-              className="gold-button w-full py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/20"
+              className="gold-button w-full py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-udemy-purple/20"
             >
               <Sparkles className="w-4 h-4" />
               <span>

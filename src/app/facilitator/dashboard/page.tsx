@@ -37,7 +37,7 @@ export default async function FacilitatorDashboardPage() {
       {/* Facilitator Header */}
       <div className="glass-panel p-8 rounded-3xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-2 text-xs text-amber-400 font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 text-xs text-udemy-purple font-bold uppercase tracking-wider">
             <GraduationCap className="w-4 h-4" />
             <span>Academic Facilitator & Master Trainer Portal</span>
           </div>
@@ -50,7 +50,7 @@ export default async function FacilitatorDashboardPage() {
         </div>
 
         <div className="flex items-center space-x-3">
-          <span className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold">
+          <span className="px-3.5 py-1.5 rounded-xl bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 text-xs font-mono font-bold">
             {cohorts.length} Active Cohorts
           </span>
         </div>
@@ -62,15 +62,15 @@ export default async function FacilitatorDashboardPage() {
         {/* Active Workshop Cohorts */}
         <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
           <h2 className="text-lg font-bold text-white flex items-center">
-            <Calendar className="w-5 h-5 text-amber-400 mr-2" />
+            <Calendar className="w-5 h-5 text-udemy-purple mr-2" />
             <span>Assigned Training Cohorts (Pretoria & Virtual)</span>
           </h2>
 
           <div className="space-y-4">
             {cohorts.map((cohort) => (
-              <div key={cohort.id} className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div key={cohort.id} className="p-5 rounded-2xl bg-udemy-black/80 border border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold border border-amber-500/20">
+                  <span className="px-2.5 py-0.5 rounded bg-udemy-purple/10 text-udemy-purple font-mono text-[10px] font-bold border border-udemy-purple/20">
                     {cohort.code}
                   </span>
                   <span className="text-[11px] text-slate-400 flex items-center">
@@ -96,12 +96,12 @@ export default async function FacilitatorDashboardPage() {
         {/* Pending Assessment Grading */}
         <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
           <h2 className="text-lg font-bold text-white flex items-center">
-            <FileCheck className="w-5 h-5 text-amber-400 mr-2" />
+            <FileCheck className="w-5 h-5 text-udemy-purple mr-2" />
             <span>Submitted Delegate Assessments</span>
           </h2>
 
           {pendingAttempts.length === 0 ? (
-            <div className="p-8 rounded-2xl bg-slate-900/50 text-center space-y-2 border border-slate-800">
+            <div className="p-8 rounded-2xl bg-udemy-black/50 text-center space-y-2 border border-slate-800">
               <CheckSquare className="w-8 h-8 text-emerald-400 mx-auto" />
               <p className="text-xs text-slate-300 font-medium">All submitted assessments graded!</p>
               <p className="text-[11px] text-slate-500">Automated MCQ evaluations and certificates are up to date.</p>
@@ -109,7 +109,7 @@ export default async function FacilitatorDashboardPage() {
           ) : (
             <div className="space-y-4">
               {pendingAttempts.map((attempt) => (
-                <div key={attempt.id} className="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <div key={attempt.id} className="p-5 rounded-2xl bg-udemy-black border border-slate-800 flex items-center justify-between">
                   <div className="space-y-1">
                     <p className="text-xs font-bold text-white">
                       {attempt.user.firstName} {attempt.user.lastName}

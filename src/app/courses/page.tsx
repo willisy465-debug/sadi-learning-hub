@@ -105,7 +105,7 @@ export default async function CoursesPage() {
       
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center space-x-2 text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+        <div className="inline-flex items-center space-x-2 text-xs font-semibold text-udemy-purple bg-udemy-purple/10 px-3 py-1 rounded-full border border-udemy-purple/20">
           <Sparkles className="w-3.5 h-3.5" />
           <span>SADI 100% Executive Online Marketplace</span>
         </div>
@@ -120,15 +120,15 @@ export default async function CoursesPage() {
 
         {/* Feature Badges */}
         <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300 pt-2">
-          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
-            <Video className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
+            <Video className="w-4 h-4 text-udemy-purple" />
             <span>Hosted HD Video Lectures</span>
           </div>
-          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
             <Download className="w-4 h-4 text-emerald-400" />
             <span>Digital Study Guides & PDFs</span>
           </div>
-          <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
             <ShieldCheck className="w-4 h-4 text-blue-400" />
             <span>Instant Auto-Credentials</span>
           </div>

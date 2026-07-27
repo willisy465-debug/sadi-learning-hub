@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <div className="hidden sm:block">
               <div className="flex items-center space-x-1.5">
                 <span className="font-black text-lg text-black tracking-tight">SADI</span>
-                <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-[10px] tracking-wider uppercase">
+                <span className="px-2 py-0.5 rounded-full bg-udemy-purple/10 border border-udemy-purple/20 text-udemy-purple font-bold text-[10px] tracking-wider uppercase">
                   Learning Hub
                 </span>
               </div>
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/courses"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                pathname === '/courses' ? 'text-amber-400 bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname === '/courses' ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
               }`}
             >
               Course Catalogue
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/request-custom"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                pathname === '/request-custom' ? 'text-amber-400 bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname === '/request-custom' ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
               }`}
             >
               In-House & Custom
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <Link
               href="/verify/VER-SADI-90412-AD"
               className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition-colors ${
-                pathname.startsWith('/verify') ? 'text-amber-400 bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
+                pathname.startsWith('/verify') ? 'text-udemy-purple bg-slate-800/80' : 'text-slate-700 hover:text-white hover:bg-slate-800/40'
               }`}
             >
               <CheckCircle className="w-4 h-4 text-emerald-400" />
@@ -95,9 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-500/40 transition-colors"
+                  className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-udemy-purple/40 transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-bold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-udemy-purple/20 border border-udemy-purple/40 text-udemy-purple flex items-center justify-center font-bold text-sm">
                     {currentUser.firstName?.[0] || 'U'}
                     {currentUser.lastName?.[0] || ''}
                   </div>
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                     <p className="text-xs font-semibold text-white">
                       {currentUser.firstName} {currentUser.lastName}
                     </p>
-                    <p className="text-[10px] text-amber-400 font-mono">
+                    <p className="text-[10px] text-udemy-purple font-mono">
                       {(roles[0] || 'LEARNER').replace(/_/g, ' ')}
                     </p>
                   </div>
@@ -124,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       <Link
                         href="/learner/dashboard"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-amber-400"
+                        className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-udemy-purple"
                       >
                         <BookOpen className="w-4 h-4" />
                         <span>Learner Dashboard</span>
@@ -134,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         <Link
                           href="/facilitator/dashboard"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-amber-400"
+                          className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-udemy-purple"
                         >
                           <User className="w-4 h-4" />
                           <span>Facilitator Portal</span>
@@ -145,17 +145,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         <Link
                           href="/admin/dashboard"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-amber-400"
+                          className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-udemy-purple"
                         >
-                          <Shield className="w-4 h-4 text-amber-400" />
-                          <span className="font-semibold text-amber-400">Admin Operations Hub</span>
+                          <Shield className="w-4 h-4 text-udemy-purple" />
+                          <span className="font-semibold text-udemy-purple">Admin Operations Hub</span>
                         </Link>
                       )}
 
                       <Link
                         href="/learner/certificates"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-amber-400"
+                        className="flex items-center space-x-2.5 px-4 py-2 text-xs text-slate-800 hover:bg-slate-700/50 hover:text-udemy-purple"
                       >
                         <Award className="w-4 h-4" />
                         <span>My Certificates</span>
@@ -206,18 +206,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+        <div className="md:hidden bg-udemy-black border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
           <Link
             href="/courses"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-700 hover:text-amber-400"
+            className="block py-2 text-slate-700 hover:text-udemy-purple"
           >
             Course Catalogue
           </Link>
           <Link
             href="/request-custom"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-700 hover:text-amber-400"
+            className="block py-2 text-slate-700 hover:text-udemy-purple"
           >
             In-House & Custom Requests
           </Link>
@@ -236,7 +236,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                 Learner Dashboard
               </Link>
               {isAdmin && (
-                <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-amber-400 font-semibold">
+                <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-udemy-purple font-semibold">
                   Admin Hub
                 </Link>
               )}

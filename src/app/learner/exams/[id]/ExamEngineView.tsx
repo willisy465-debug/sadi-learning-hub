@@ -114,7 +114,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
       {/* Exam Header Bar */}
       <div className="glass-nav px-6 py-4 border-b border-slate-800 flex items-center justify-between sticky top-0 z-30">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 font-mono font-bold flex items-center justify-center border border-amber-500/30">
+          <div className="w-9 h-9 rounded-xl bg-udemy-purple/10 text-udemy-purple font-mono font-bold flex items-center justify-center border border-udemy-purple/30">
             {exam.code}
           </div>
           <div>
@@ -132,7 +132,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
             <span>{isOnline ? 'Auto-Syncing Answers' : 'Offline (Saved Locally)'}</span>
           </div>
 
-          <div className="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/40 text-amber-400 font-mono font-bold text-sm flex items-center space-x-2 shadow-lg shadow-amber-500/10">
+          <div className="px-4 py-2 rounded-xl bg-udemy-black border border-udemy-purple/40 text-udemy-purple font-mono font-bold text-sm flex items-center space-x-2 shadow-lg shadow-amber-500/10">
             <Clock className="w-4 h-4 animate-pulse" />
             <span>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span>
           </div>
@@ -144,7 +144,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
         
         {submittedResult ? (
           /* Result Summary & Certificate Access */
-          <div className="glass-panel p-10 rounded-3xl border border-amber-500/30 text-center space-y-6">
+          <div className="glass-panel p-10 rounded-3xl border border-udemy-purple/30 text-center space-y-6">
             <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center ${
               submittedResult.isPassed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
             }`}>
@@ -156,7 +156,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                 {submittedResult.isPassed ? 'Congratulations! Examination Passed' : 'Examination Attempt Complete'}
               </h2>
               <p className="text-sm text-slate-300">
-                Final Score: <span className="font-bold text-amber-400 font-mono text-xl">{submittedResult.scorePercent}%</span> (Required Pass Mark: {exam.passMarkPercent}%)
+                Final Score: <span className="font-bold text-udemy-purple font-mono text-xl">{submittedResult.scorePercent}%</span> (Required Pass Mark: {exam.passMarkPercent}%)
               </p>
             </div>
 
@@ -198,10 +198,10 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                     onClick={() => setActiveQuestionIndex(idx)}
                     className={`w-9 h-9 rounded-xl font-mono text-xs font-bold transition-all ${
                       isCurrent
-                        ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
+                        ? 'bg-udemy-purple text-slate-950 shadow-lg shadow-udemy-purple/20'
                         : isAnswered
                         ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-slate-900 text-slate-400 border border-slate-800'
+                        : 'bg-udemy-black text-slate-400 border border-slate-800'
                     }`}
                   >
                     {idx + 1}
@@ -215,7 +215,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
               <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
                 
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider font-mono">
+                  <span className="text-xs font-bold text-udemy-purple uppercase tracking-wider font-mono">
                     Question {activeQuestionIndex + 1} of {exam.questions.length} • {currentQuestion.points} Points
                   </span>
                   <span className="text-xs text-slate-400 uppercase">{currentQuestion.questionType.replace(/_/g, ' ')}</span>
@@ -237,12 +237,12 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                           onClick={() => handleSelectOption(currentQuestion.id, opt.id)}
                           className={`w-full text-left p-4 rounded-2xl text-xs font-medium transition-all flex items-center justify-between ${
                             isSelected
-                              ? 'bg-amber-500/20 text-amber-300 border-2 border-amber-500 shadow-md shadow-amber-500/10'
-                              : 'bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-700'
+                              ? 'bg-udemy-purple/20 text-amber-300 border-2 border-udemy-purple shadow-md shadow-amber-500/10'
+                              : 'bg-udemy-black/80 text-slate-300 border border-slate-800 hover:border-slate-700'
                           }`}
                         >
                           <span>{opt.optionText}</span>
-                          {isSelected && <CheckCircle className="w-4 h-4 text-amber-400 shrink-0 ml-2" />}
+                          {isSelected && <CheckCircle className="w-4 h-4 text-udemy-purple shrink-0 ml-2" />}
                         </button>
                       );
                     })}
@@ -258,7 +258,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                       value={answers[currentQuestion.id]?.essayAnswer || ''}
                       onChange={(e) => handleEssayChange(currentQuestion.id, e.target.value)}
                       placeholder="Type your response here..."
-                      className="w-full p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-amber-400 focus:outline-none"
+                      className="w-full p-4 rounded-2xl bg-udemy-black border border-slate-800 text-white text-xs focus:border-udemy-purple focus:outline-none"
                     />
                   </div>
                 )}
@@ -268,7 +268,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                   <button
                     disabled={activeQuestionIndex === 0}
                     onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
-                    className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold disabled:opacity-30 flex items-center space-x-1"
+                    className="px-4 py-2.5 rounded-xl bg-udemy-black border border-slate-800 text-slate-300 text-xs font-semibold disabled:opacity-30 flex items-center space-x-1"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Previous Question</span>
@@ -277,7 +277,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                   {activeQuestionIndex < exam.questions.length - 1 ? (
                     <button
                       onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
-                      className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold flex items-center space-x-1 border border-amber-500/30"
+                      className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-udemy-purple text-xs font-bold flex items-center space-x-1 border border-udemy-purple/30"
                     >
                       <span>Next Question</span>
                       <ArrowRight className="w-4 h-4" />
@@ -286,7 +286,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                     <button
                       onClick={handleSubmitExam}
                       disabled={isSubmitting}
-                      className="gold-button px-6 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 shadow-lg shadow-amber-500/20"
+                      className="gold-button px-6 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 shadow-lg shadow-udemy-purple/20"
                     >
                       <Send className="w-4 h-4 text-slate-950" />
                       <span>{isSubmitting ? 'Submitting Examination...' : 'Submit Examination'}</span>

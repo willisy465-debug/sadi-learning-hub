@@ -35,11 +35,11 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
       
       {/* Top Breadcrumb */}
       <div className="flex items-center space-x-2 text-xs text-slate-400">
-        <Link href="/courses" className="hover:text-amber-400">Courses</Link>
+        <Link href="/courses" className="hover:text-udemy-purple">Courses</Link>
         <span>/</span>
-        <span className="text-slate-200">{course.category?.name || 'Executive Online'}</span>
+        <span className="text-udemy-grayBorder">{course.category?.name || 'Executive Online'}</span>
         <span>/</span>
-        <span className="text-amber-400 font-mono">{course.code}</span>
+        <span className="text-udemy-purple font-mono">{course.code}</span>
       </div>
 
       {/* Main Course Hero Banner */}
@@ -50,10 +50,10 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
           
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-udemy-purple text-slate-950 text-xs font-black uppercase tracking-wider">
                 Bestseller
               </span>
-              <span className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold font-mono">
+              <span className="px-3 py-1 rounded-full bg-udemy-purple/10 border border-udemy-purple/30 text-udemy-purple text-xs font-bold font-mono">
                 {course.code}
               </span>
               <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center space-x-1">
@@ -73,8 +73,8 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
             {/* Udemy Star Rating & Student Enrolments */}
             <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center space-x-1.5">
-                <span className="font-black text-amber-400 text-sm">4.9</span>
-                <div className="flex items-center text-amber-400">
+                <span className="font-black text-udemy-purple text-sm">4.9</span>
+                <div className="flex items-center text-udemy-purple">
                   <Star className="w-4 h-4 fill-amber-400" />
                   <Star className="w-4 h-4 fill-amber-400" />
                   <Star className="w-4 h-4 fill-amber-400" />
@@ -98,14 +98,14 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
             </div>
 
             <p className="text-xs text-slate-400 font-medium">
-              Created by <span className="text-amber-400 font-semibold">SADI Executive Faculty & Pan-African Experts</span>
+              Created by <span className="text-udemy-purple font-semibold">SADI Executive Faculty & Pan-African Experts</span>
             </p>
           </div>
 
           {/* Udemy "What You'll Learn" Highlight Box */}
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/20 bg-slate-900/60 space-y-4">
+          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-udemy-purple/20 bg-udemy-black/60 space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mr-2" />
+              <CheckCircle2 className="w-5 h-5 text-udemy-purple mr-2" />
               <span>What you'll learn in this executive course</span>
             </h3>
 
@@ -142,7 +142,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <h3 className="text-xl font-bold text-white flex items-center">
-                  <BookOpen className="w-5 h-5 text-amber-400 mr-2" />
+                  <BookOpen className="w-5 h-5 text-udemy-purple mr-2" />
                   <span>Course Content & Online Modules</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-1">
@@ -155,7 +155,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                   const allExpanded = Object.keys(expandedModules).length > 0;
                   setExpandedModules(allExpanded ? {} : { 'mod-0': true, 'mod-1': true });
                 }}
-                className="text-xs font-bold text-amber-400 hover:underline"
+                className="text-xs font-bold text-udemy-purple hover:underline"
               >
                 Toggle sections
               </button>
@@ -184,14 +184,14 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                 const isOpen = expandedModules[modKey] !== false;
 
                 return (
-                  <div key={modKey} className="rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden">
+                  <div key={modKey} className="rounded-2xl border border-slate-800 bg-udemy-black/60 overflow-hidden">
                     <button
                       onClick={() => toggleModule(modKey)}
                       className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-800/40 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
                         {isOpen ? (
-                          <ChevronUp className="w-4 h-4 text-amber-400 shrink-0" />
+                          <ChevronUp className="w-4 h-4 text-udemy-purple shrink-0" />
                         ) : (
                           <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
                         )}
@@ -207,9 +207,9 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                     {isOpen && mod.lessons && mod.lessons.length > 0 && (
                       <div className="p-4 pt-0 border-t border-slate-800/60 space-y-2 bg-slate-950/40">
                         {mod.lessons.map((lesson: any) => (
-                          <div key={lesson.id} className="flex items-center justify-between text-xs py-2 px-3 rounded-xl hover:bg-slate-900/80">
-                            <div className="flex items-center space-x-2 text-slate-200">
-                              <Play className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                          <div key={lesson.id} className="flex items-center justify-between text-xs py-2 px-3 rounded-xl hover:bg-udemy-black/80">
+                            <div className="flex items-center space-x-2 text-udemy-grayBorder">
+                              <Play className="w-3.5 h-3.5 text-udemy-purple shrink-0" />
                               <span>{lesson.title}</span>
                             </div>
                             <div className="flex items-center space-x-2 text-slate-400 font-mono text-[11px]">
@@ -231,14 +231,14 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
           {/* Student Ratings Histogram */}
           <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
             <h3 className="text-xl font-bold text-white flex items-center">
-              <Star className="w-5 h-5 text-amber-400 mr-2 fill-amber-400" />
+              <Star className="w-5 h-5 text-udemy-purple mr-2 fill-amber-400" />
               <span>Student Feedback & Executive Reviews</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
               <div className="text-center space-y-1 sm:border-r border-slate-800 sm:pr-6">
-                <p className="text-5xl font-black text-amber-400">4.9</p>
-                <div className="flex justify-center text-amber-400">
+                <p className="text-5xl font-black text-udemy-purple">4.9</p>
+                <div className="flex justify-center text-udemy-purple">
                   <Star className="w-4 h-4 fill-amber-400" />
                   <Star className="w-4 h-4 fill-amber-400" />
                   <Star className="w-4 h-4 fill-amber-400" />
@@ -252,21 +252,21 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                 <div className="flex items-center space-x-3">
                   <div className="w-20 text-slate-300 font-semibold">5 stars</div>
                   <div className="flex-1 h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div className="h-full bg-amber-400 w-[88%]" />
+                    <div className="h-full bg-udemy-purple w-[88%]" />
                   </div>
                   <span className="w-10 text-right text-slate-400 font-mono">88%</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-20 text-slate-300 font-semibold">4 stars</div>
                   <div className="flex-1 h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div className="h-full bg-amber-400 w-[9%]" />
+                    <div className="h-full bg-udemy-purple w-[9%]" />
                   </div>
                   <span className="w-10 text-right text-slate-400 font-mono">9%</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-20 text-slate-300 font-semibold">3 stars</div>
                   <div className="flex-1 h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div className="h-full bg-amber-400 w-[2%]" />
+                    <div className="h-full bg-udemy-purple w-[2%]" />
                   </div>
                   <span className="w-10 text-right text-slate-400 font-mono">2%</span>
                 </div>
@@ -278,20 +278,20 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
 
         {/* Right Column: Udemy Sticky Floating Purchase Card */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl space-y-6 sticky top-24">
+          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-udemy-purple/30 shadow-2xl space-y-6 sticky top-24">
             
             {/* Udemy Video Preview Poster */}
-            <div className="aspect-video rounded-2xl overflow-hidden relative bg-slate-900 border border-slate-800 group cursor-pointer" onClick={() => setShowCheckoutModal(true)}>
+            <div className="aspect-video rounded-2xl overflow-hidden relative bg-udemy-black border border-slate-800 group cursor-pointer" onClick={() => setShowCheckoutModal(true)}>
               <img
                 src={course.featuredImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'}
                 alt={course.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-slate-950/50 flex flex-col items-center justify-center space-y-2">
-                <div className="w-14 h-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-xl shadow-amber-400/40 transform group-hover:scale-110 transition-transform">
-                  <Play className="w-6 h-6 ml-1 fill-slate-950 text-amber-400" />
+                <div className="w-14 h-14 rounded-full bg-udemy-purple text-slate-950 flex items-center justify-center shadow-xl shadow-amber-400/40 transform group-hover:scale-110 transition-transform">
+                  <Play className="w-6 h-6 ml-1 fill-slate-950 text-udemy-purple" />
                 </div>
-                <span className="text-xs font-bold text-white bg-slate-950/80 px-3 py-1 rounded-full border border-amber-500/30">
+                <span className="text-xs font-bold text-white bg-slate-950/80 px-3 py-1 rounded-full border border-udemy-purple/30">
                   Preview Course
                 </span>
               </div>
@@ -299,7 +299,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
 
             {/* Udemy Price Display */}
             <div className="space-y-2">
-              <p className="text-xs uppercase text-amber-400 font-bold">100% Online Instant Access</p>
+              <p className="text-xs uppercase text-udemy-purple font-bold">100% Online Instant Access</p>
               <div className="flex items-baseline space-x-3">
                 <span className="text-3xl font-black text-white font-mono">
                   ZAR {course.priceZar?.toLocaleString()}
@@ -326,7 +326,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
 
                 <Link
                   href={`/learner/courses/${course.id}/learn`}
-                  className="gold-button w-full py-3.5 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/20"
+                  className="gold-button w-full py-3.5 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-udemy-purple/20"
                 >
                   <Video className="w-4 h-4" />
                   <span>Go to Course Classroom</span>
@@ -353,7 +353,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
               <p className="text-xs font-bold text-white uppercase tracking-wider">This course includes:</p>
               
               <div className="flex items-center space-x-2.5 text-slate-300">
-                <Video className="w-4 h-4 text-amber-400 shrink-0" />
+                <Video className="w-4 h-4 text-udemy-purple shrink-0" />
                 <span>HD Video Lectures on-demand</span>
               </div>
               <div className="flex items-center space-x-2.5 text-slate-300">
@@ -369,7 +369,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                 <span>Access on Mobile and Desktop</span>
               </div>
               <div className="flex items-center space-x-2.5 text-slate-300">
-                <Award className="w-4 h-4 text-amber-400 shrink-0" />
+                <Award className="w-4 h-4 text-udemy-purple shrink-0" />
                 <span>SADI Verified CPD Certificate</span>
               </div>
             </div>

@@ -31,13 +31,13 @@ export default async function CertificateVerificationPage({
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-xl shadow-amber-500/20 mb-2">
+        <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-xl shadow-udemy-purple/20 mb-2">
           <Shield className="w-8 h-8 text-slate-950 font-bold" />
         </div>
         <h1 className="text-3xl font-black text-white tracking-tight">
           Southern Africa Development Institute
         </h1>
-        <p className="text-xs text-amber-400 font-semibold uppercase tracking-widest">
+        <p className="text-xs text-udemy-purple font-semibold uppercase tracking-widest">
           Official Credential Verification Portal
         </p>
       </div>
@@ -62,32 +62,32 @@ export default async function CertificateVerificationPage({
           {/* Certificate Detail Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
             
-            <div className="space-y-1 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="space-y-1 p-4 rounded-2xl bg-udemy-black border border-slate-800">
               <p className="text-slate-500 font-semibold uppercase text-[10px]">Certificate Holder</p>
               <p className="text-base font-bold text-white">{certificate.learnerName}</p>
               <p className="text-slate-400">{certificate.user.email}</p>
             </div>
 
-            <div className="space-y-1 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="space-y-1 p-4 rounded-2xl bg-udemy-black border border-slate-800">
               <p className="text-slate-500 font-semibold uppercase text-[10px]">Certificate Number</p>
-              <p className="text-base font-bold text-amber-400 font-mono">{certificate.certificateNumber}</p>
+              <p className="text-base font-bold text-udemy-purple font-mono">{certificate.certificateNumber}</p>
               <p className="text-slate-400">Verification Code: {certificate.verificationCode}</p>
             </div>
 
-            <div className="md:col-span-2 space-y-1 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="md:col-span-2 space-y-1 p-4 rounded-2xl bg-udemy-black border border-slate-800">
               <p className="text-slate-500 font-semibold uppercase text-[10px]">Awarded Programme Title</p>
               <p className="text-base font-bold text-white">{certificate.courseTitle}</p>
               <p className="text-slate-400 font-mono">Course Code: {certificate.course.code}</p>
             </div>
 
-            <div className="space-y-1 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="space-y-1 p-4 rounded-2xl bg-udemy-black border border-slate-800">
               <p className="text-slate-500 font-semibold uppercase text-[10px]">Date of Issuance</p>
-              <p className="text-sm font-bold text-slate-200">
+              <p className="text-sm font-bold text-udemy-grayBorder">
                 {new Date(certificate.issueDate).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
 
-            <div className="space-y-1 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="space-y-1 p-4 rounded-2xl bg-udemy-black border border-slate-800">
               <p className="text-slate-500 font-semibold uppercase text-[10px]">CPD Points Accredited</p>
               <p className="text-sm font-bold text-emerald-400 flex items-center">
                 <Award className="w-4 h-4 mr-1 text-emerald-400" />
@@ -98,9 +98,9 @@ export default async function CertificateVerificationPage({
           </div>
 
           {/* Cryptographic Hash Security Signature */}
-          <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+          <div className="p-4 rounded-2xl bg-udemy-black/90 border border-slate-800 space-y-2">
             <div className="flex items-center space-x-2 text-slate-400 text-[11px] font-semibold">
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-udemy-purple" />
               <span>Digital SHA-256 Cryptographic Signature</span>
             </div>
             <p className="font-mono text-[10px] text-slate-500 break-all bg-slate-950 p-2 rounded-lg">
@@ -111,7 +111,7 @@ export default async function CertificateVerificationPage({
           {/* Action buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
             <div className="text-[11px] text-slate-400 flex items-center space-x-2">
-              <Building className="w-4 h-4 text-amber-400" />
+              <Building className="w-4 h-4 text-udemy-purple" />
               <span>Issued by SADI Academic Governance Council, Brooklyn Office Park, Pretoria</span>
             </div>
 

@@ -37,7 +37,7 @@ export default async function AdminAuditPage() {
       <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-900 text-slate-400 font-semibold uppercase text-[10px] border-b border-slate-800">
+            <thead className="bg-udemy-black text-slate-400 font-semibold uppercase text-[10px] border-b border-slate-800">
               <tr>
                 <th className="p-3">Log ID</th>
                 <th className="p-3">Timestamp</th>
@@ -49,11 +49,11 @@ export default async function AdminAuditPage() {
             </thead>
             <tbody className="divide-y divide-slate-800">
               {auditLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-slate-900/50 font-mono">
+                <tr key={log.id} className="hover:bg-udemy-black/50 font-mono">
                   <td className="p-3 text-slate-500 text-[10px]">{log.id.substring(0, 8)}...</td>
                   <td className="p-3 text-slate-400 text-[11px]">{new Date(log.createdAt).toISOString()}</td>
                   <td className="p-3 text-white font-semibold font-sans">{log.actorEmail}</td>
-                  <td className="p-3 font-bold text-amber-400">{log.action}</td>
+                  <td className="p-3 font-bold text-udemy-purple">{log.action}</td>
                   <td className="p-3 text-slate-400">{log.entityType}</td>
                   <td className="p-3 text-slate-300 font-sans max-w-sm truncate">{log.details || '—'}</td>
                 </tr>

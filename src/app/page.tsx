@@ -201,13 +201,13 @@ export default async function HomePage() {
               )}
 
               <div className="p-4 pb-0">
-                <div className="aspect-[16/10] rounded-2xl overflow-hidden relative bg-slate-100 shadow-inner">
+                <div className="aspect-[16/10] rounded-2xl overflow-hidden relative bg-udemy-gray shadow-inner">
                   <img
                     src={course.featuredImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'}
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 text-[#060097] font-mono text-[10px] font-bold shadow-sm">
+                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-udemy-grayBorder text-[#060097] font-mono text-[10px] font-bold shadow-sm">
                     {course.code}
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default async function HomePage() {
 
               <div className="p-6 space-y-4 flex-grow">
                 <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#64748b] font-medium">
-                  <span className="px-2 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 uppercase tracking-wide">
+                  <span className="px-2 py-1 rounded-md bg-udemy-gray text-slate-700 border border-udemy-grayBorder uppercase tracking-wide">
                     {course.deliveryMethod.replace(/_/g, ' ')}
                   </span>
                   <span>•</span>

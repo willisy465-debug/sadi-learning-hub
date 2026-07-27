@@ -20,7 +20,7 @@ export default async function CertificatesPage() {
       {/* Header */}
       <div className="glass-panel p-8 rounded-3xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-2 text-xs text-amber-400 font-semibold">
+          <div className="inline-flex items-center space-x-2 text-xs text-udemy-purple font-semibold">
             <Award className="w-4 h-4" />
             <span>SADI Certified Academic Credentials</span>
           </div>
@@ -47,13 +47,13 @@ export default async function CertificatesPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {certificates.map((cert) => (
-            <div key={cert.id} className="glass-panel p-8 rounded-3xl border border-amber-500/30 space-y-6 flex flex-col justify-between hover:border-amber-500/60 transition-colors shadow-xl">
+            <div key={cert.id} className="glass-panel p-8 rounded-3xl border border-udemy-purple/30 space-y-6 flex flex-col justify-between hover:border-udemy-purple/60 transition-colors shadow-xl">
               
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Shield className="w-5 h-5 text-amber-400" />
-                    <span className="font-mono text-xs font-bold text-amber-400">{cert.certificateNumber}</span>
+                    <Shield className="w-5 h-5 text-udemy-purple" />
+                    <span className="font-mono text-xs font-bold text-udemy-purple">{cert.certificateNumber}</span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/20">
                     STATUS: {cert.status}
@@ -66,11 +66,11 @@ export default async function CertificatesPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-xs pt-2">
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="p-3 rounded-xl bg-udemy-black border border-slate-800">
                     <p className="text-slate-500 text-[10px]">Issued Date</p>
-                    <p className="font-bold text-slate-200">{new Date(cert.issueDate).toLocaleDateString()}</p>
+                    <p className="font-bold text-udemy-grayBorder">{new Date(cert.issueDate).toLocaleDateString()}</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="p-3 rounded-xl bg-udemy-black border border-slate-800">
                     <p className="text-slate-500 text-[10px]">CPD Credits</p>
                     <p className="font-bold text-emerald-400">{cert.cpdPoints} CPD Points</p>
                   </div>
