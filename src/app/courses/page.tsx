@@ -101,34 +101,35 @@ export default async function CoursesPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-      
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="inline-flex items-center space-x-2 text-xs font-semibold text-udemy-purple bg-udemy-purple/10 px-3 py-1 rounded-full border border-udemy-purple/20">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>SADI 100% Executive Online Marketplace</span>
-        </div>
+    <div className="bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+        
+        {/* Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center space-x-2 text-xs font-semibold text-udemy-purple bg-udemy-purple/10 px-3 py-1 rounded-full border border-udemy-purple/20">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>SADI 100% Executive Online Marketplace</span>
+          </div>
 
-        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-          Hosted Online Courses & <span className="gold-gradient-text">Video Streaming</span>
-        </h1>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-udemy-black">
+            Hosted Online Courses & <span className="gold-gradient-text">Video Streaming</span>
+          </h1>
 
-        <p className="text-sm text-slate-300 max-w-3xl leading-relaxed">
+          <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
           Explore our executive online e-learning marketplace. Select your course to trigger instant automated registration, payment receipt, credential issuance, and immediate access to HD streaming video lectures and digital materials.
         </p>
 
         {/* Feature Badges */}
-        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300 pt-2">
-          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600 pt-2">
+          <div className="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-xl border border-udemy-grayBorder">
             <Video className="w-4 h-4 text-udemy-purple" />
             <span>Hosted HD Video Lectures</span>
           </div>
-          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
-            <Download className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-xl border border-udemy-grayBorder">
+            <Download className="w-4 h-4 text-emerald-600" />
             <span>Digital Study Guides & PDFs</span>
           </div>
-          <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
+          <div className="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-xl border border-udemy-grayBorder">
             <ShieldCheck className="w-4 h-4 text-udemy-purple" />
             <span>Instant Auto-Credentials</span>
           </div>
@@ -142,6 +143,7 @@ export default async function CoursesPage() {
         currentUser={currentUser}
       />
 
+      </div>
     </div>
   );
 }
