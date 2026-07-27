@@ -4,14 +4,15 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+import path from 'path';
+
 function getDbUrl() {
   const envUrl = process.env.DATABASE_URL;
   if (envUrl && !envUrl.startsWith('file:')) {
     return envUrl;
   }
-  // Ensure the Prisma Client finds the dev.db in the prisma/ directory
-  // when running from the Next.js root directory.
-  return 'file:./prisma/dev.db';
+  // Ensure the Prisma Client finds the dev.db with an absolute path
+  return 'file:' + path.join(process.cwd(), 'prisma', 'dev.db');
 }
 
 export const prisma =
