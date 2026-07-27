@@ -24,8 +24,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" className="dark">
-      <body className="flex flex-col min-h-screen bg-slate-950 text-udemy-gray antialiased">
+    <html lang="en">
+      <body className="flex flex-col min-h-screen bg-white text-slate-800 antialiased">
         <Navbar currentUser={user} />
         <main className="flex-grow">{children}</main>
         <Footer />

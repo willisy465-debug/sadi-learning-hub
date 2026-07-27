@@ -17,16 +17,16 @@ export default function GlobalError({
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
-      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-udemy-purple/30 max-w-xl w-full text-center space-y-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 shadow-2xl">
+      <div className="p-8 sm:p-12 rounded-3xl border border-udemy-grayBorder max-w-xl w-full text-center space-y-6 bg-white shadow-2xl">
         <div className="w-16 h-16 rounded-2xl bg-udemy-purple/10 text-udemy-purple flex items-center justify-center mx-auto border border-udemy-purple/20">
           <AlertTriangle className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-udemy-black tracking-tight">
             Temporary System Error
           </h2>
-          <p className="text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             The SADI Learning Hub encountered an unexpected issue while loading this page. Our engineers have been notified.
           </p>
           {error.digest && (
@@ -47,7 +47,7 @@ export default function GlobalError({
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-udemy-black border border-slate-800 hover:border-udemy-purple/40 text-udemy-grayBorder text-xs font-semibold flex items-center justify-center space-x-2 transition-colors"
+            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-udemy-gray border border-udemy-grayBorder hover:border-udemy-purple/40 text-slate-700 text-xs font-semibold flex items-center justify-center space-x-2 transition-colors"
           >
             <Home className="w-4 h-4 text-udemy-purple" />
             <span>Return to Home</span>

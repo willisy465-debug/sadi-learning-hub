@@ -137,12 +137,12 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       
       {/* Udemy Classroom Top Bar */}
-      <div className="glass-nav px-6 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white px-6 py-3 border-b border-udemy-grayBorder flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center space-x-4">
-          <Link href="/learner/dashboard" className="p-2 rounded-xl bg-udemy-black border border-slate-800 text-slate-300 hover:text-white transition-colors">
+          <Link href="/learner/dashboard" className="p-2 rounded border border-udemy-grayBorder bg-white text-slate-500 hover:text-udemy-black hover:border-udemy-purple/30 transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
@@ -150,18 +150,18 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               <span className="text-[10px] font-mono text-udemy-purple uppercase font-bold">{course.code}</span>
               <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-bold border border-emerald-500/20">UDEMY PLAYER</span>
             </div>
-            <h1 className="text-sm font-bold text-white truncate max-w-md">{course.title}</h1>
+            <h1 className="text-sm font-bold text-udemy-black truncate max-w-md">{course.title}</h1>
           </div>
         </div>
 
         {/* Udemy Progress Bar Indicator */}
         <div className="flex items-center space-x-6">
           <div className="hidden md:flex items-center space-x-3 text-xs">
-            <div className="w-32 bg-udemy-black rounded-full h-2 overflow-hidden border border-slate-800">
+            <div className="w-32 bg-slate-100 rounded-full h-2 overflow-hidden border border-udemy-grayBorder">
               <div className="bg-udemy-purple h-full transition-all duration-300" style={{ width: `${progressPercent}%` }} />
             </div>
-            <span className="text-slate-300 font-mono font-bold">{progressPercent}%</span>
-            <span className="text-slate-500 text-[11px]">({completedCount}/{allLessons.length || 1} complete)</span>
+            <span className="text-udemy-black font-mono font-bold">{progressPercent}%</span>
+            <span className="text-slate-500 font-medium text-[11px]">({completedCount}/{allLessons.length || 1} complete)</span>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -169,20 +169,20 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               onClick={() => setLowBandwidthMode(!lowBandwidthMode)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 border transition-colors ${
                 lowBandwidthMode
-                  ? 'bg-udemy-purple/20 text-udemy-purple border-udemy-purple/40'
-                  : 'bg-udemy-black text-slate-300 border-slate-800 hover:border-slate-700'
+                  ? 'bg-udemy-purple/10 text-udemy-purple border-udemy-purple/30'
+                  : 'bg-white text-slate-500 border-udemy-grayBorder hover:border-udemy-purple/30 hover:text-udemy-black'
               }`}
             >
-              {lowBandwidthMode ? <WifiOff className="w-3.5 h-3.5 text-udemy-purple" /> : <Wifi className="w-3.5 h-3.5 text-emerald-400" />}
+              {lowBandwidthMode ? <WifiOff className="w-3.5 h-3.5 text-udemy-purple" /> : <Wifi className="w-3.5 h-3.5 text-emerald-600" />}
               <span className="hidden sm:inline">{lowBandwidthMode ? 'Audio Mode' : 'HD Video'}</span>
             </button>
 
             {course.examinations && course.examinations.length > 0 && (
               <Link
                 href={`/learner/exams/${course.examinations[0].id}`}
-                className="gold-button px-4 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1"
+                className="udemy-button-primary px-4 py-1.5 rounded text-xs flex items-center space-x-1"
               >
-                <Award className="w-3.5 h-3.5 text-slate-950" />
+                <Award className="w-3.5 h-3.5" />
                 <span>CPD Exam</span>
               </Link>
             )}
@@ -197,10 +197,10 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         <div className="lg:col-span-3 p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-60px)]">
           
           {/* Udemy Media Player Container */}
-          <div className="aspect-video bg-udemy-black rounded-3xl overflow-hidden relative border border-slate-800 shadow-2xl flex flex-col justify-between group">
+          <div className="aspect-video bg-black rounded-xl overflow-hidden relative border border-udemy-grayBorder shadow-sm flex flex-col justify-between group">
             
             {/* Dynamic Security Watermark */}
-            <div className="absolute top-4 right-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400/50 select-none bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded border border-slate-800">
+            <div className="absolute top-4 right-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400/50 select-none bg-black/50 backdrop-blur-md px-2.5 py-1 rounded border border-slate-800">
               SADI Udemy Player • {userEmail} • {userName}
             </div>
 
@@ -257,19 +257,19 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           </div>
 
           {/* Lesson Header & Mark Complete Action */}
-          <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div className="space-y-1">
               <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Active Video Lecture</span>
-              <h2 className="text-xl font-bold text-white">{activeLesson?.title}</h2>
-              <p className="text-xs text-slate-400">{activeLesson?.summary}</p>
+              <h2 className="text-xl font-bold text-udemy-black">{activeLesson?.title}</h2>
+              <p className="text-xs text-slate-500 font-medium">{activeLesson?.summary}</p>
             </div>
 
             <button
               onClick={() => handleToggleComplete(activeLesson.id)}
-              className={`px-5 py-3 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
+              className={`px-5 py-3 rounded text-xs font-bold flex items-center space-x-2 transition-all ${
                 completedLessons[activeLesson?.id]
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                  : 'gold-button shadow-lg shadow-amber-500/10'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                  : 'udemy-button-primary shadow-sm'
               }`}
             >
               <CheckCircle className="w-4 h-4" />
@@ -278,16 +278,16 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           </div>
 
           {/* Udemy Multi-Tab Navigation */}
-          <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden">
+          <div className="bg-white rounded-xl border border-udemy-grayBorder overflow-hidden shadow-sm">
             
             {/* Tab Navigation Headers */}
-            <div className="flex items-center border-b border-slate-800 bg-udemy-black/60 overflow-x-auto">
+            <div className="flex items-center border-b border-udemy-grayBorder bg-slate-50 overflow-x-auto">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'overview'
-                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
-                    : 'border-transparent text-slate-400 hover:text-white'
+                    ? 'border-udemy-purple text-udemy-purple bg-white'
+                    : 'border-transparent text-slate-500 hover:text-udemy-black hover:bg-slate-100'
                 }`}
               >
                 <FileText className="w-4 h-4" />
@@ -298,8 +298,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('qa')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'qa'
-                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
-                    : 'border-transparent text-slate-400 hover:text-white'
+                    ? 'border-udemy-purple text-udemy-purple bg-white'
+                    : 'border-transparent text-slate-500 hover:text-udemy-black hover:bg-slate-100'
                 }`}
               >
                 <MessageSquare className="w-4 h-4" />
@@ -310,8 +310,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('notes')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'notes'
-                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
-                    : 'border-transparent text-slate-400 hover:text-white'
+                    ? 'border-udemy-purple text-udemy-purple bg-white'
+                    : 'border-transparent text-slate-500 hover:text-udemy-black hover:bg-slate-100'
                 }`}
               >
                 <Edit3 className="w-4 h-4" />
@@ -322,8 +322,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 onClick={() => setActiveTab('resources')}
                 className={`px-6 py-4 text-xs font-bold flex items-center space-x-2 border-b-2 whitespace-nowrap transition-all ${
                   activeTab === 'resources'
-                    ? 'border-udemy-purple text-udemy-purple bg-udemy-black'
-                    : 'border-transparent text-slate-400 hover:text-white'
+                    ? 'border-udemy-purple text-udemy-purple bg-white'
+                    : 'border-transparent text-slate-500 hover:text-udemy-black hover:bg-slate-100'
                 }`}
               >
                 <Download className="w-4 h-4" />
@@ -336,20 +336,20 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               
               {/* Overview Tab */}
               {activeTab === 'overview' && (
-                <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
-                  <h4 className="font-bold text-white text-base">About this lesson</h4>
+                <div className="space-y-4 text-sm text-slate-700 leading-relaxed">
+                  <h4 className="font-bold text-udemy-black text-base">About this lesson</h4>
                   <p>
                     {activeLesson?.textContent || `This executive online video lecture covers fundamental concepts for ${course.title}.`}
                   </p>
                   
-                  <div className="pt-4 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800">
+                  <div className="pt-4 border-t border-udemy-grayBorder grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div className="p-4 rounded-xl bg-slate-50 border border-udemy-grayBorder">
                       <span className="font-bold text-udemy-purple uppercase tracking-wider block mb-1">Instructor</span>
-                      <p className="text-white font-semibold">SADI Executive Panel & Pan-African Experts</p>
+                      <p className="text-udemy-black font-semibold">SADI Executive Panel & Pan-African Experts</p>
                     </div>
-                    <div className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800">
-                      <span className="font-bold text-emerald-400 uppercase tracking-wider block mb-1">CPD Credits</span>
-                      <p className="text-white font-semibold">{course.cpdPoints || 20} Accredited CPD Points</p>
+                    <div className="p-4 rounded-xl bg-slate-50 border border-udemy-grayBorder">
+                      <span className="font-bold text-emerald-700 uppercase tracking-wider block mb-1">CPD Credits</span>
+                      <p className="text-udemy-black font-semibold">{course.cpdPoints || 20} Accredited CPD Points</p>
                     </div>
                   </div>
                 </div>
@@ -363,26 +363,26 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                       value={newQuestion}
                       onChange={(e) => setNewQuestion(e.target.value)}
                       placeholder="Ask a question about this lesson or regulatory concept..."
-                      className="w-full p-4 rounded-2xl bg-udemy-black border border-slate-800 text-white text-xs focus:border-udemy-purple focus:outline-none"
+                      className="w-full p-4 rounded-xl bg-white border border-udemy-grayBorder text-udemy-black text-xs focus:border-udemy-purple focus:outline-none focus:ring-1 focus:ring-udemy-purple/20"
                       rows={3}
                     />
                     <button
                       type="submit"
-                      className="gold-button px-5 py-2.5 rounded-xl font-bold text-xs flex items-center space-x-2"
+                      className="udemy-button-primary px-5 py-2.5 rounded font-bold text-xs flex items-center space-x-2"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Post Question</span>
                     </button>
                   </form>
 
-                  <div className="space-y-3 border-t border-slate-800 pt-4">
+                  <div className="space-y-3 border-t border-udemy-grayBorder pt-4">
                     {qaList.map((qa) => (
-                      <div key={qa.id} className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800 space-y-1.5">
+                      <div key={qa.id} className="p-4 rounded-xl bg-slate-50 border border-udemy-grayBorder space-y-1.5">
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-udemy-purple">{qa.user}</span>
                           <span className="text-[10px] text-slate-500 font-mono">{qa.date}</span>
                         </div>
-                        <p className="text-xs text-slate-300">{qa.text}</p>
+                        <p className="text-xs text-slate-700">{qa.text}</p>
                       </div>
                     ))}
                   </div>
@@ -397,26 +397,26 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                       value={newNote}
                       onChange={(e) => setNewNote(e.target.value)}
                       placeholder="Type a personal study note... (will tag current video time)"
-                      className="w-full p-4 rounded-2xl bg-udemy-black border border-slate-800 text-white text-xs focus:border-udemy-purple focus:outline-none"
+                      className="w-full p-4 rounded-xl bg-white border border-udemy-grayBorder text-udemy-black text-xs focus:border-udemy-purple focus:outline-none focus:ring-1 focus:ring-udemy-purple/20"
                       rows={3}
                     />
                     <button
                       type="submit"
-                      className="gold-button px-5 py-2.5 rounded-xl font-bold text-xs flex items-center space-x-2"
+                      className="udemy-button-primary px-5 py-2.5 rounded font-bold text-xs flex items-center space-x-2"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>Save Study Note</span>
                     </button>
                   </form>
 
-                  <div className="space-y-3 border-t border-slate-800 pt-4">
+                  <div className="space-y-3 border-t border-udemy-grayBorder pt-4">
                     {notesList.map((n) => (
-                      <div key={n.id} className="p-4 rounded-2xl bg-udemy-black/60 border border-slate-800 flex items-start justify-between text-xs">
+                      <div key={n.id} className="p-4 rounded-xl bg-slate-50 border border-udemy-grayBorder flex items-start justify-between text-xs">
                         <div className="space-y-1">
                           <span className="px-2 py-0.5 rounded bg-udemy-purple/10 text-udemy-purple font-mono text-[10px] font-bold border border-udemy-purple/20">
                             Timestamp {n.timestamp}
                           </span>
-                          <p className="text-slate-300 pt-1">{n.text}</p>
+                          <p className="text-slate-700 pt-1 font-medium">{n.text}</p>
                         </div>
                       </div>
                     ))}
@@ -427,17 +427,17 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               {/* Downloads Tab */}
               {activeTab === 'resources' && (
                 <div className="space-y-4">
-                  <h4 className="font-bold text-white text-sm">Available Downloads for {activeLesson?.title}</h4>
+                  <h4 className="font-bold text-udemy-black text-sm">Available Downloads for {activeLesson?.title}</h4>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-5 rounded-2xl bg-udemy-black/60 border border-slate-800 flex items-center justify-between">
+                    <div className="p-5 rounded-xl bg-slate-50 border border-udemy-grayBorder flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="font-bold text-white">Lesson Study Pack (PDF)</p>
-                        <p className="text-[10px] text-slate-400">Includes executive slides & case study notes</p>
+                        <p className="font-bold text-udemy-black">Lesson Study Pack (PDF)</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Includes executive slides & case study notes</p>
                       </div>
                       <button
                         onClick={() => handleDownloadMaterials(activeLesson?.title)}
-                        className="p-2.5 rounded-xl bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 hover:bg-udemy-purple/20 transition-colors"
+                        className="p-2.5 rounded-lg bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 hover:bg-udemy-purple/20 transition-colors"
                       >
                         <Download className="w-4 h-4" />
                       </button>
@@ -453,16 +453,16 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         </div>
 
         {/* Sidebar: Course Module Syllabus Navigation */}
-        <div className="lg:col-span-1 border-l border-slate-800/80 bg-udemy-black/60 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-60px)]">
-          <div className="space-y-1 pb-2 border-b border-slate-800">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Course Syllabus</h3>
-            <p className="text-[11px] text-slate-400">{allLessons.length || 1} Total Lessons</p>
+        <div className="lg:col-span-1 border-l border-udemy-grayBorder bg-white p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-60px)]">
+          <div className="space-y-1 pb-2 border-b border-udemy-grayBorder">
+            <h3 className="text-xs font-bold text-udemy-black uppercase tracking-wider">Course Syllabus</h3>
+            <p className="text-[11px] text-slate-500 font-medium">{allLessons.length || 1} Total Lessons</p>
           </div>
 
           <div className="space-y-4">
             {(course.modules || []).map((mod: any, mIdx: number) => (
               <div key={mod.id || mIdx} className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                   Module {mIdx + 1}: {mod.title}
                 </h4>
                 <div className="space-y-1">
@@ -475,15 +475,15 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                       <button
                         key={lesson.id}
                         onClick={() => setCurrentLessonIndex(lIndex >= 0 ? lIndex : 0)}
-                        className={`w-full text-left p-3 rounded-xl text-xs transition-colors flex items-center justify-between ${
+                        className={`w-full text-left p-3 rounded text-xs transition-colors flex items-center justify-between border ${
                           isActive
-                            ? 'bg-udemy-purple/20 text-udemy-purple border border-udemy-purple/40 font-bold'
-                            : 'bg-slate-950/40 text-slate-300 hover:bg-slate-800'
+                            ? 'bg-udemy-purple/5 text-udemy-purple border-udemy-purple/20 font-bold'
+                            : 'bg-white border-transparent text-slate-600 hover:bg-slate-50 hover:border-udemy-grayBorder hover:text-udemy-black font-medium'
                         }`}
                       >
                         <div className="flex items-center space-x-2 truncate">
                           {isDone ? (
-                            <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                            <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           ) : (
                             <Video className="w-3.5 h-3.5 text-udemy-purple shrink-0" />
                           )}

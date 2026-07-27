@@ -39,26 +39,26 @@ export default async function AdminDashboardPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
       {/* Admin Executive Header */}
-      <div className="glass-panel p-8 rounded-3xl border border-udemy-purple/30 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
+      <div className="p-8 rounded-xl border border-udemy-grayBorder bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-2 text-xs text-udemy-purple font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 text-xs text-udemy-purple font-bold uppercase tracking-wider bg-udemy-purple/10 px-3 py-1 rounded-full border border-udemy-purple/20">
             <Shield className="w-4 h-4" />
             <span>SADI Executive Governance & LMS Operations</span>
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">
+          <h1 className="text-3xl font-black text-udemy-black tracking-tight">
             Directorate Command Hub
           </h1>
-          <p className="text-xs text-slate-400">
-            Logged in as {user.firstName} {user.lastName} • Access Level: <span className="font-mono text-udemy-purple font-bold">{user.roles[0]}</span>
+          <p className="text-xs text-slate-500 font-medium">
+            Logged in as <span className="font-semibold text-udemy-black">{user.firstName} {user.lastName}</span> • Access Level: <span className="font-mono text-udemy-purple font-bold">{user.roles[0]}</span>
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
           <Link
             href="/admin/courses"
-            className="gold-button px-5 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 shadow-lg shadow-udemy-purple/20"
+            className="udemy-button-primary px-5 py-2.5 rounded text-xs flex items-center space-x-2"
           >
-            <PlusCircle className="w-4 h-4 text-slate-950" />
+            <PlusCircle className="w-4 h-4" />
             <span>Manage Course Catalogue</span>
           </Link>
         </div>
@@ -66,24 +66,24 @@ export default async function AdminDashboardPage() {
 
       {/* Institutional Core Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1">
-          <p className="text-[10px] uppercase text-slate-500 font-semibold">Active Courses</p>
+        <div className="bg-white p-5 rounded-xl border border-udemy-grayBorder space-y-1 shadow-sm">
+          <p className="text-[10px] uppercase text-slate-500 font-bold">Active Courses</p>
           <p className="text-2xl font-black text-udemy-purple">{coursesCount}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1">
-          <p className="text-[10px] uppercase text-slate-500 font-semibold">Total Enrolments</p>
-          <p className="text-2xl font-black text-white">{enrolmentsCount}</p>
+        <div className="bg-white p-5 rounded-xl border border-udemy-grayBorder space-y-1 shadow-sm">
+          <p className="text-[10px] uppercase text-slate-500 font-bold">Total Enrolments</p>
+          <p className="text-2xl font-black text-udemy-black">{enrolmentsCount}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1">
-          <p className="text-[10px] uppercase text-slate-500 font-semibold">Registered Delegates</p>
-          <p className="text-2xl font-black text-white">{delegatesCount}</p>
+        <div className="bg-white p-5 rounded-xl border border-udemy-grayBorder space-y-1 shadow-sm">
+          <p className="text-[10px] uppercase text-slate-500 font-bold">Registered Delegates</p>
+          <p className="text-2xl font-black text-udemy-black">{delegatesCount}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1">
-          <p className="text-[10px] uppercase text-slate-500 font-semibold">Issued Certificates</p>
-          <p className="text-2xl font-black text-emerald-400">{certificatesCount}</p>
+        <div className="bg-white p-5 rounded-xl border border-udemy-grayBorder space-y-1 shadow-sm">
+          <p className="text-[10px] uppercase text-slate-500 font-bold">Issued Certificates</p>
+          <p className="text-2xl font-black text-emerald-600">{certificatesCount}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1 col-span-2 md:col-span-1">
-          <p className="text-[10px] uppercase text-slate-500 font-semibold">Total Revenue (ZAR)</p>
+        <div className="bg-white p-5 rounded-xl border border-udemy-grayBorder space-y-1 col-span-2 md:col-span-1 shadow-sm">
+          <p className="text-[10px] uppercase text-slate-500 font-bold">Total Revenue (ZAR)</p>
           <p className="text-2xl font-black text-udemy-purple">ZAR {totalRevenueZar.toLocaleString()}</p>
         </div>
       </div>
@@ -91,13 +91,13 @@ export default async function AdminDashboardPage() {
       {/* Quick Navigation Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-colors">
+        <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
             <BookOpen className="w-6 h-6 text-udemy-purple" />
-            <span className="text-xs font-mono text-slate-500">{coursesCount} Courses</span>
+            <span className="text-xs font-mono font-bold text-slate-500">{coursesCount} Courses</span>
           </div>
-          <h3 className="text-lg font-bold text-white">Course & Curriculum Manager</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <h3 className="text-lg font-bold text-udemy-black">Course & Curriculum Manager</h3>
+          <p className="text-xs text-slate-500 leading-relaxed font-medium">
             Create new training courses, schedule Pretoria/Johannesburg cohorts, manage modules and upload lecture videos.
           </p>
           <Link href="/admin/courses" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
@@ -106,13 +106,13 @@ export default async function AdminDashboardPage() {
           </Link>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-colors">
+        <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
             <Building2 className="w-6 h-6 text-udemy-purple" />
             <span className="text-xs font-mono text-udemy-purple font-bold">{corporateLeadsCount} Custom Leads</span>
           </div>
-          <h3 className="text-lg font-bold text-white">Corporate In-House Requests</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <h3 className="text-lg font-bold text-udemy-black">Corporate In-House Requests</h3>
+          <p className="text-xs text-slate-500 leading-relaxed font-medium">
             Review custom training quotes submitted by African government ministries, public utilities, and corporate clients.
           </p>
           <Link href="/request-custom" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
@@ -121,13 +121,13 @@ export default async function AdminDashboardPage() {
           </Link>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-colors">
+        <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder space-y-4 hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow-md">
           <div className="flex items-center justify-between">
             <Activity className="w-6 h-6 text-udemy-purple" />
-            <span className="text-xs font-mono text-slate-500">Immutable Ledger</span>
+            <span className="text-xs font-mono font-bold text-slate-500">Immutable Ledger</span>
           </div>
-          <h3 className="text-lg font-bold text-white">System Security & Audit Logs</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <h3 className="text-lg font-bold text-udemy-black">System Security & Audit Logs</h3>
+          <p className="text-xs text-slate-500 leading-relaxed font-medium">
             Inspect real-time security events, delegate logins, payment webhooks, exam completions, and certificate issuances.
           </p>
           <Link href="/admin/audit" className="text-xs font-bold text-udemy-purple hover:underline flex items-center pt-2">
@@ -139,9 +139,9 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Recent Audit Logs Feed */}
-      <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
+      <div className="bg-white p-8 rounded-xl border border-udemy-grayBorder space-y-6 shadow-sm">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white flex items-center">
+          <h2 className="text-lg font-bold text-udemy-black flex items-center">
             <Activity className="w-5 h-5 text-udemy-purple mr-2" />
             <span>Recent System Operations & Audit Trail</span>
           </h2>
@@ -150,9 +150,9 @@ export default async function AdminDashboardPage() {
           </Link>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-udemy-black text-slate-400 font-semibold uppercase text-[10px] border-b border-slate-800">
+        <div className="overflow-x-auto rounded-lg border border-udemy-grayBorder">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] border-b border-udemy-grayBorder">
               <tr>
                 <th className="p-3">Timestamp</th>
                 <th className="p-3">Actor</th>
@@ -161,14 +161,14 @@ export default async function AdminDashboardPage() {
                 <th className="p-3">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="divide-y divide-udemy-grayBorder">
               {recentAuditLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-udemy-black/50">
+                <tr key={log.id} className="hover:bg-slate-50 transition-colors">
                   <td className="p-3 font-mono text-slate-500">{new Date(log.createdAt).toLocaleString()}</td>
-                  <td className="p-3 font-semibold text-white">{log.actorEmail}</td>
+                  <td className="p-3 font-semibold text-udemy-black">{log.actorEmail}</td>
                   <td className="p-3 font-mono font-bold text-udemy-purple">{log.action}</td>
-                  <td className="p-3 text-slate-400">{log.entityType}</td>
-                  <td className="p-3 text-slate-300 max-w-xs truncate">{log.details || '—'}</td>
+                  <td className="p-3 text-slate-500 font-medium">{log.entityType}</td>
+                  <td className="p-3 text-slate-600 max-w-xs truncate">{log.details || '—'}</td>
                 </tr>
               ))}
             </tbody>
