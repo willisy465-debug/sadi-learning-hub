@@ -42,7 +42,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
           onClick={() => setSelectedCategory('')}
           className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
             selectedCategory === ''
-              ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
+              ? 'bg-[#5624d0] text-white shadow-lg shadow-[#5624d0]/20'
               : 'bg-white text-udemy-black border border-udemy-grayBorder hover:border-slate-300 hover:text-black'
           }`}
         >
@@ -54,7 +54,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             onClick={() => setSelectedCategory(selectedCategory === c.id ? '' : c.id)}
             className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
               selectedCategory === c.id
-                ? 'bg-[#060097] text-white shadow-lg shadow-[#060097]/20'
+                ? 'bg-[#5624d0] text-white shadow-lg shadow-[#5624d0]/20'
                 : 'bg-white text-udemy-black border border-udemy-grayBorder hover:border-slate-300 hover:text-black'
             }`}
           >
@@ -75,7 +75,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search executive online courses, skills, codes (e.g. FIN-801)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30 placeholder-slate-400"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#5624d0] focus:outline-none focus:ring-1 focus:ring-[#5624d0]/30 placeholder-slate-400"
             />
           </div>
 
@@ -84,7 +84,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#5624d0] focus:outline-none focus:ring-1 focus:ring-[#5624d0]/30"
             >
               <option value="">All Executive Sectors</option>
               {categories.map((c) => (
@@ -100,7 +100,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
             <select
               value={selectedDelivery}
               onChange={(e) => setSelectedDelivery(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#00b1f8] focus:outline-none focus:ring-1 focus:ring-[#00b1f8]/30"
+              className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#5624d0] focus:outline-none focus:ring-1 focus:ring-[#5624d0]/30"
             >
               <option value="">All Online Delivery Modes</option>
               <option value="SELF_PACED">100% Online Self-Paced Video</option>
@@ -120,7 +120,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                 setSelectedCategory('');
                 setSelectedDelivery('');
               }}
-              className="text-[#060097] hover:underline font-semibold"
+              className="text-[#5624d0] hover:underline font-semibold"
             >
               Clear Filters
             </button>
@@ -149,7 +149,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                 key={course.id}
                 onMouseEnter={() => setHoveredCourseId(course.id)}
                 onMouseLeave={() => setHoveredCourseId(null)}
-                className="bg-white rounded-2xl border border-udemy-grayBorder overflow-hidden flex flex-col justify-between hover:border-[#00b1f8]/50 transition-all duration-300 group shadow-md hover:shadow-xl hover:shadow-[#00b1f8]/10 relative"
+                className="bg-white rounded-2xl border border-udemy-grayBorder overflow-hidden flex flex-col justify-between hover:border-[#5624d0]/50 transition-all duration-300 group shadow-md hover:shadow-xl hover:shadow-[#5624d0]/10 relative"
               >
                 {/* Udemy Course Card Header & Image */}
                 <div className="space-y-4">
@@ -161,25 +161,25 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     />
                     
                     {/* Course Code Badge */}
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-udemy-grayBorder text-[#060097] font-mono text-[10px] font-bold">
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-udemy-grayBorder text-[#5624d0] font-mono text-[10px] font-bold">
                       {course.code}
                     </div>
 
                     {/* Udemy Badge (Bestseller / Highest Rated) */}
                     <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
                       badgeType === 'Bestseller'
-                        ? 'bg-[#00b1f8] text-white shadow-md'
+                        ? 'bg-[#5624d0] text-white shadow-md'
                         : badgeType === 'Highest Rated'
                         ? 'bg-emerald-500 text-white shadow-md'
-                        : 'bg-[#060097] text-white shadow-md'
+                        : 'bg-[#5624d0] text-white shadow-md'
                     }`}>
                       {badgeType}
                     </div>
 
                     {/* Play Overlay Preview */}
-                    <div className="absolute inset-0 bg-[#060097]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <div className="w-12 h-12 rounded-full bg-white text-[#060097] flex items-center justify-center shadow-lg shadow-white/30 transform group-hover:scale-110 transition-transform">
-                        <PlayCircle className="w-7 h-7 fill-[#060097] text-white" />
+                    <div className="absolute inset-0 bg-[#5624d0]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-white text-[#5624d0] flex items-center justify-center shadow-lg shadow-white/30 transform group-hover:scale-110 transition-transform">
+                        <PlayCircle className="w-7 h-7 fill-[#5624d0] text-white" />
                       </div>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     
                     {/* Category & Duration */}
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="text-[#00b1f8] font-bold uppercase tracking-wider">
+                      <span className="text-[#5624d0] font-bold uppercase tracking-wider">
                         {course.category?.name || 'Executive Online'}
                       </span>
                       <span className="text-[#64748b] font-mono">
@@ -198,7 +198,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base font-bold text-black group-hover:text-[#060097] transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-base font-bold text-black group-hover:text-[#5624d0] transition-colors line-clamp-2 leading-snug">
                       <Link href={`/courses/${course.slug}`}>
                         {course.title}
                       </Link>
@@ -211,13 +211,13 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
 
                     {/* Udemy Star Rating */}
                     <div className="flex items-center space-x-1 text-xs">
-                      <span className="font-black text-[#00b1f8]">{rating}</span>
-                      <div className="flex items-center text-[#00b1f8]">
-                        <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
-                        <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
-                        <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
-                        <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
-                        <Star className="w-3.5 h-3.5 fill-[#00b1f8]" />
+                      <span className="font-black text-[#5624d0]">{rating}</span>
+                      <div className="flex items-center text-[#5624d0]">
+                        <Star className="w-3.5 h-3.5 fill-[#5624d0]" />
+                        <Star className="w-3.5 h-3.5 fill-[#5624d0]" />
+                        <Star className="w-3.5 h-3.5 fill-[#5624d0]" />
+                        <Star className="w-3.5 h-3.5 fill-[#5624d0]" />
+                        <Star className="w-3.5 h-3.5 fill-[#5624d0]" />
                       </div>
                       <span className="text-[#64748b] font-mono text-[11px]">({reviewCount})</span>
                     </div>
@@ -225,7 +225,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     {/* Quick Specs Pills */}
                     <div className="flex items-center space-x-3 text-[11px] text-[#64748b] pt-1">
                       <span className="flex items-center space-x-1">
-                        <Video className="w-3.5 h-3.5 text-[#00b1f8]" />
+                        <Video className="w-3.5 h-3.5 text-[#5624d0]" />
                         <span>HD Video</span>
                       </span>
                       <span>•</span>
@@ -259,14 +259,14 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                   <div className="grid grid-cols-2 gap-2">
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="py-2.5 rounded-xl text-xs font-bold text-black bg-white border border-udemy-grayBorder hover:bg-udemy-gray hover:text-[#060097] hover:border-slate-300 text-center transition-all"
+                      className="py-2.5 rounded-xl text-xs font-bold text-black bg-white border border-udemy-grayBorder hover:bg-udemy-gray hover:text-[#5624d0] hover:border-slate-300 text-center transition-all"
                     >
                       View Details
                     </Link>
 
                     <button
                       onClick={() => setSelectedCourseForCheckout(course)}
-                      className="gold-button py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-1 shadow-lg shadow-[#060097]/10"
+                      className="gold-button py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-1 shadow-lg shadow-[#5624d0]/10"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>Buy Now</span>
@@ -287,7 +287,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
                     </p>
 
                     <div className="space-y-2 border-t border-udemy-gray pt-3">
-                      <p className="text-[11px] font-bold text-[#00b1f8] uppercase tracking-wider">What you'll learn:</p>
+                      <p className="text-[11px] font-bold text-[#5624d0] uppercase tracking-wider">What you'll learn:</p>
                       <div className="space-y-1.5 text-xs text-udemy-black">
                         <div className="flex items-start space-x-2">
                           <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -306,7 +306,7 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
 
                     <button
                       onClick={() => setSelectedCourseForCheckout(course)}
-                      className="gold-button w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-[#060097]/20"
+                      className="gold-button w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-[#5624d0]/20"
                     >
                       <Sparkles className="w-4 h-4" />
                       <span>Buy & Start Online Immediately</span>

@@ -207,7 +207,7 @@ export default async function HomePage() {
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-udemy-grayBorder text-[#060097] font-mono text-[10px] font-bold shadow-sm">
+                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-udemy-grayBorder text-[#5624d0] font-mono text-[10px] font-bold shadow-sm">
                     {course.code}
                   </div>
                 </div>
@@ -230,7 +230,7 @@ export default async function HomePage() {
                 
                 {/* Trust Signals (Mocked for Sales) */}
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center text-yellow-500">
+                  <div className="flex items-center text-udemy-purple">
                     <Star className="w-4 h-4 fill-current" />
                     <Star className="w-4 h-4 fill-current" />
                     <Star className="w-4 h-4 fill-current" />

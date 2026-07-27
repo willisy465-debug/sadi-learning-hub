@@ -287,7 +287,7 @@ export default function AdminCoursesPage() {
               {/* Live Meeting details (if instructor-led or virtual in-house) */}
               {(deliveryMethod === 'INSTRUCTOR_LED_LIVE' || deliveryMethod === 'VIRTUAL_IN_HOUSE') && (
                 <div className="p-4 rounded-2xl bg-udemy-purple/5 border border-udemy-purple/20 space-y-3">
-                  <div className="flex items-center space-x-2 text-indigo-400 font-bold">
+                  <div className="flex items-center space-x-2 text-udemy-purple font-bold">
                     <Video className="w-4 h-4" />
                     <span>Live Session Setup (Auto-creates initial Cohort)</span>
                   </div>
@@ -298,7 +298,7 @@ export default function AdminCoursesPage() {
                       <select
                         value={meetingPlatform}
                         onChange={(e) => setMeetingPlatform(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-indigo-400 focus:outline-none"
+                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                       >
                         <option value="ZOOM">Zoom</option>
                         <option value="TEAMS">Microsoft Teams</option>
@@ -311,7 +311,7 @@ export default function AdminCoursesPage() {
                         type="url"
                         value={meetingUrl}
                         onChange={(e) => setMeetingUrl(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-indigo-400 focus:outline-none"
+                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-udemy-purple focus:outline-none"
                         placeholder="https://zoom.us/j/..."
                       />
                     </div>

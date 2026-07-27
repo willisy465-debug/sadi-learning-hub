@@ -237,7 +237,7 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                           onClick={() => handleSelectOption(currentQuestion.id, opt.id)}
                           className={`w-full text-left p-4 rounded-2xl text-xs font-medium transition-all flex items-center justify-between ${
                             isSelected
-                              ? 'bg-udemy-purple/20 text-amber-300 border-2 border-udemy-purple shadow-md shadow-amber-500/10'
+                              ? 'bg-udemy-purple/20 text-udemy-purple border-2 border-udemy-purple shadow-md shadow-amber-500/10'
                               : 'bg-udemy-black/80 text-slate-300 border border-slate-800 hover:border-slate-700'
                           }`}
                         >

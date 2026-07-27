@@ -59,7 +59,7 @@ export default function CorporateDashboardPage() {
         </div>
 
         <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-udemy-purple/40 transition-all">
-          <div className="w-12 h-12 rounded-xl bg-udemy-purple/20 text-blue-400 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-udemy-purple/20 text-udemy-purple flex items-center justify-center">
             <FileText className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">Verification & Compliance</h3>

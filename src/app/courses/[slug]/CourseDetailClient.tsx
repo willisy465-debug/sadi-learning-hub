@@ -92,7 +92,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
 
               <span className="text-slate-600">•</span>
               <div className="flex items-center space-x-1 text-slate-300 font-medium">
-                <Globe className="w-4 h-4 text-blue-400" />
+                <Globe className="w-4 h-4 text-udemy-purple" />
                 <span>English (Pan-African Edition)</span>
               </div>
             </div>
@@ -361,7 +361,7 @@ export function CourseDetailClient({ course, isEnrolled, currentUser }: CourseDe
                 <span>Downloadable Study Notes & Slide Decks</span>
               </div>
               <div className="flex items-center space-x-2.5 text-slate-300">
-                <Infinity className="w-4 h-4 text-blue-400 shrink-0" />
+                <Infinity className="w-4 h-4 text-udemy-purple shrink-0" />
                 <span>Full Lifetime Access</span>
               </div>
               <div className="flex items-center space-x-2.5 text-slate-300">

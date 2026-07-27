@@ -155,7 +155,7 @@ export default async function LearnerDashboardPage() {
                   </div>
                   <div className="w-full h-2 rounded-full bg-udemy-black overflow-hidden border border-slate-800">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r from-udemy-purple to-udemy-darkPurple rounded-full transition-all duration-500"
                       style={{ width: `${enrolment.progressPercent || 0}%` }}
                     />
                   </div>

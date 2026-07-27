@@ -105,7 +105,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs font-bold text-udemy-purple">{course.code}</span>
             <div className="flex items-center space-x-2 text-[11px]">
-              <span className="px-2 py-0.5 rounded bg-udemy-purple/10 text-amber-300 font-bold flex items-center">
+              <span className="px-2 py-0.5 rounded bg-udemy-purple/10 text-udemy-purple font-bold flex items-center">
                 <Award className="w-3 h-3 mr-1 text-udemy-purple" />
                 {course.cpdPoints || 10} CPD Points
               </span>
@@ -273,7 +273,7 @@ export function InstantCheckoutModal({ course, isOpen, onClose, currentUser }: I
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <ShieldCheck className="w-4 h-4 text-blue-400" />
+                  <ShieldCheck className="w-4 h-4 text-udemy-purple" />
                   <input type="radio" name="pay" checked={paymentMethod === 'INSTANT_DEMO'} readOnly />
                 </div>
                 <span className="font-bold text-[11px] mt-2">Instant Activation</span>

@@ -31,7 +31,7 @@ export default async function CertificateVerificationPage({
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-xl shadow-udemy-purple/20 mb-2">
+        <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-udemy-purple to-udemy-darkPurple flex items-center justify-center shadow-xl shadow-udemy-purple/20 mb-2">
           <Shield className="w-8 h-8 text-slate-950 font-bold" />
         </div>
         <h1 className="text-3xl font-black text-white tracking-tight">

@@ -129,7 +129,7 @@ export default async function CoursesPage() {
             <span>Digital Study Guides & PDFs</span>
           </div>
           <div className="flex items-center space-x-1.5 bg-udemy-black px-3 py-1.5 rounded-xl border border-slate-800">
-            <ShieldCheck className="w-4 h-4 text-blue-400" />
+            <ShieldCheck className="w-4 h-4 text-udemy-purple" />
             <span>Instant Auto-Credentials</span>
           </div>
         </div>

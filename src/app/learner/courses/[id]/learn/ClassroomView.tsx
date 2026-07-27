@@ -477,7 +477,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                         onClick={() => setCurrentLessonIndex(lIndex >= 0 ? lIndex : 0)}
                         className={`w-full text-left p-3 rounded-xl text-xs transition-colors flex items-center justify-between ${
                           isActive
-                            ? 'bg-udemy-purple/20 text-amber-300 border border-udemy-purple/40 font-bold'
+                            ? 'bg-udemy-purple/20 text-udemy-purple border border-udemy-purple/40 font-bold'
                             : 'bg-slate-950/40 text-slate-300 hover:bg-slate-800'
                         }`}
                       >

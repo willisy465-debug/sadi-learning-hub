@@ -114,7 +114,7 @@ export default async function FacilitatorDashboardPage() {
                     <p className="text-xs font-bold text-white">
                       {attempt.user.firstName} {attempt.user.lastName}
                     </p>
-                    <p className="text-[11px] text-amber-300">{attempt.examination.title}</p>
+                    <p className="text-[11px] text-udemy-purple">{attempt.examination.title}</p>
                     <p className="text-[10px] text-slate-500 font-mono">
                       Score: {attempt.scorePercent || 0}% ({attempt.isPassed ? 'PASSED' : 'FAILED'})
                     </p>
