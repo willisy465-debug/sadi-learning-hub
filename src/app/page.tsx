@@ -2,6 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { Shield, BookOpen, Award, Users, Globe2, Building2, CheckCircle2, ArrowRight, Star, Cpu, Calculator, ShieldAlert, Sparkles } from 'lucide-react';
+import { FeaturedCourseBuy } from '@/components/checkout/FeaturedCourseBuy';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   let categories: any[] = [];
@@ -264,12 +267,7 @@ export default async function HomePage() {
                   >
                     View Details
                   </Link>
-                  <Link
-                    href={`/courses/${course.slug}/checkout`}
-                    className="col-span-1 px-4 py-3 rounded-xl bg-udemy-purple text-white text-xs font-bold flex items-center justify-center shadow-lg shadow-udemy-purple/20 hover:bg-udemy-darkPurple transition-colors"
-                  >
-                    Buy Course
-                  </Link>
+                  <FeaturedCourseBuy course={course} />
                 </div>
               </div>
             </div>

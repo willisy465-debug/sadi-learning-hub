@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
 import { Shield, BookOpen, Users, Building2, DollarSign, FileText, Activity, Award, PlusCircle, ArrowRight } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;

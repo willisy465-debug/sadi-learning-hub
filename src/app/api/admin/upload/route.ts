@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
+import { getCurrentUser } from '@/lib/auth';
+import { canManageCourses } from '@/lib/rbac';
 
 export async function POST(request: Request) {
   try {
+    const user = await getCurrentUser();
+    if (!canManageCourses(user)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
 

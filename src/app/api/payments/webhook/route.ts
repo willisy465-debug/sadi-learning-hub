@@ -4,6 +4,16 @@ import { logAuditEvent } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
+    const webhookSecret = process.env.PAYMENT_WEBHOOK_SECRET;
+    if (webhookSecret) {
+      const provided =
+        request.headers.get('x-webhook-secret') ||
+        request.headers.get('authorization')?.replace(/^Bearer\s+/i, '');
+      if (provided !== webhookSecret) {
+        return NextResponse.json({ error: 'Unauthorized webhook' }, { status: 401 });
+      }
+    }
+
     const body = await request.json();
     const { invoiceNumber, gatewayTransactionId, idempotencyKey, amount, currency, status } = body;
 
@@ -11,7 +21,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing invoice number or idempotency key' }, { status: 400 });
     }
 
-    // Check Idempotency Key
     const existingPayment = await prisma.payment.findUnique({
       where: { idempotencyKey },
     });
@@ -26,31 +35,39 @@ export async function POST(request: Request) {
 
     if (!invoice) return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
 
-    // Record Payment
+    const paidAmount = Number(amount) || invoice.totalAmount;
+
     const payment = await prisma.payment.create({
       data: {
         receiptNumber: `SADI-REC-2026-${Math.floor(10000 + Math.random() * 90000)}`,
         payerEmail: invoice.billedToEmail,
         invoiceId: invoice.id,
-        amount: Number(amount) || invoice.totalAmount,
+        amount: paidAmount,
         currency: currency || invoice.currency,
         paymentMethod: 'CREDIT_CARD_PAYFAST',
         transactionRef: gatewayTransactionId || `GATEWAY-TX-${Date.now()}`,
         idempotencyKey,
-        status: status || 'SUCCESS',
+        status: status || 'COMPLETED',
       },
     });
 
-    // Update Invoice Status
     await prisma.invoice.update({
       where: { id: invoice.id },
       data: {
-        paidAmount: invoice.totalAmount,
-        status: 'PAID',
+        paidAmount,
+        balanceDue: Math.max(0, invoice.totalAmount - paidAmount),
+        status: paidAmount >= invoice.totalAmount ? 'PAID' : invoice.status,
       },
     });
 
-    await logAuditEvent('SYSTEM_PAYMENT_WEBHOOK', 'PAYMENT_RECEIVED', 'PAYMENT', `Payment of ${currency} ${amount} received for invoice ${invoiceNumber}`, undefined, payment.id);
+    await logAuditEvent(
+      'SYSTEM_PAYMENT_WEBHOOK',
+      'PAYMENT_RECEIVED',
+      'PAYMENT',
+      `Payment of ${currency || invoice.currency} ${paidAmount} received for invoice ${invoiceNumber}`,
+      undefined,
+      payment.id
+    );
 
     return NextResponse.json({ success: true, payment });
   } catch (error) {

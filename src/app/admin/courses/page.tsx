@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, PlusCircle, Calendar, Award, Edit, Trash2, ArrowLeft, Upload, Video, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
-
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +15,7 @@ export default function AdminCoursesPage() {
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [shortDescription, setShortDescription] = useState('');
-  const [deliveryMethod, setDeliveryMethod] = useState('BLENDED');
+  const [deliveryMethod, setDeliveryMethod] = useState('SELF_PACED_VIDEOS');
   const [durationDays, setDurationDays] = useState('5');
   const [cpdPoints, setCpdPoints] = useState('10');
   const [priceZar, setPriceZar] = useState('15000');
@@ -30,10 +28,12 @@ export default function AdminCoursesPage() {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch('/api/enrolments'); // or catalogue fetch
+      const res = await fetch('/api/admin/courses');
       const data = await res.json();
-      if (data.courses) {
+      if (res.ok && data.courses) {
         setCourses(data.courses);
+      } else {
+        console.error(data.error || 'Failed to load courses');
       }
     } catch (e) {
       console.error(e);
@@ -103,9 +103,9 @@ export default function AdminCoursesPage() {
           </Link>
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl font-black text-udemy-black">Super Admin Course & Video Manager</h1>
+              <h1 className="text-2xl font-black text-udemy-black">Course & Video Manager</h1>
               <span className="px-2.5 py-0.5 rounded-full bg-udemy-purple/10 border border-udemy-purple/20 text-udemy-purple font-bold text-[10px]">
-                RESTRICTED TO SUPER ADMIN
+                ADMIN
               </span>
             </div>
             <p className="text-xs text-slate-500 font-medium">Upload new training curricula, streaming lecture videos, and set tuition pricing.</p>
@@ -363,6 +363,15 @@ export default function AdminCoursesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-udemy-grayBorder">
+              {loading ? (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-slate-500">Loading courses...</td>
+                </tr>
+              ) : courses.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-slate-500">No courses yet. Upload your first course to get started.</td>
+                </tr>
+              ) : null}
               {courses.map((course) => (
                 <tr key={course.id} className="hover:bg-slate-50 transition-colors">
                   <td className="p-3 font-mono font-bold text-udemy-purple">{course.code}</td>

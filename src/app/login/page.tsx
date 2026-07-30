@@ -63,10 +63,18 @@ function LoginForm() {
         return;
       }
 
-      if (data.roles?.includes('SUPER_ADMIN') || data.roles?.includes('PROGRAMME_DIRECTOR')) {
+      if (searchParams.get('redirect') && searchParams.get('redirect') !== '/learner/dashboard') {
+        router.push(redirect);
+      } else if (
+        data.roles?.some((r: string) =>
+          ['SUPER_ADMIN', 'PROGRAMME_DIRECTOR', 'OPERATIONS_MANAGER', 'LMS_ADMIN', 'PROGRAMME_MANAGER', 'FINANCE_OFFICER'].includes(r)
+        )
+      ) {
         router.push('/admin/dashboard');
-      } else if (data.roles?.includes('FACILITATOR')) {
+      } else if (data.roles?.includes('FACILITATOR') || data.roles?.includes('ASSESSOR')) {
         router.push('/facilitator/dashboard');
+      } else if (data.roles?.includes('CORPORATE_ADMIN')) {
+        router.push('/corporate/dashboard');
       } else {
         router.push(redirect);
       }
@@ -88,7 +96,7 @@ function LoginForm() {
 
       <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
-          <img src="/logo.jpg" alt="SADI Logo" className="mx-auto h-20 w-auto object-contain mb-4" />
+          <img src="/logo.svg" alt="SADI Logo" className="mx-auto h-20 w-auto object-contain mb-4" />
           <h2 className="text-3xl font-black text-black tracking-tight">
             SADI <span className="text-[#5624d0]">Learning Hub</span>
           </h2>

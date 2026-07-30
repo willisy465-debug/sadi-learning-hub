@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
           {/* Institutional Info & SADI Branding */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <img src="/logo.jpg" alt="SADI Logo" className="h-12 w-auto object-contain" />
+              <img src="/logo.svg" alt="SADI Logo" className="h-12 w-auto object-contain" />
               <div className="flex flex-col">
                 <span className="text-xl font-black tracking-tight text-udemy-black">
                   SADI <span className="text-udemy-purple text-sm font-semibold ml-1">Learning Hub</span>
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
             <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Programmes</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/courses" className="hover:text-udemy-purple transition-colors">Scheduled Public Training</Link></li>
-              <li><Link href="/courses?delivery=ONLINE_SELF_PACED" className="hover:text-udemy-purple transition-colors">Online Self-Paced E-Learning</Link></li>
+              <li><Link href="/courses?delivery=SELF_PACED" className="hover:text-udemy-purple transition-colors">Online Self-Paced E-Learning</Link></li>
               <li><Link href="/courses?delivery=FACE_TO_FACE" className="hover:text-udemy-purple transition-colors">Face-to-Face Workshops</Link></li>
               <li><Link href="/request-custom" className="hover:text-udemy-purple transition-colors">In-House Corporate Training</Link></li>
               <li><Link href="/courses?delivery=CERTIFICATION_PROGRAMME" className="hover:text-udemy-purple transition-colors">Certification Examinations</Link></li>

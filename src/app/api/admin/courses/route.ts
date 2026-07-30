@@ -1,12 +1,32 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getCurrentUser, logAuditEvent } from '@/lib/auth';
+import { canManageCourses } from '@/lib/rbac';
+
+export async function GET() {
+  try {
+    const user = await getCurrentUser();
+    if (!canManageCourses(user)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    const courses = await prisma.course.findMany({
+      include: { category: true, modules: { include: { lessons: true } } },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return NextResponse.json({ courses });
+  } catch (error: any) {
+    console.error('Admin courses list error:', error);
+    return NextResponse.json({ error: error.message || 'Failed to load courses' }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {
     const user = await getCurrentUser();
-    if (!user || !user.roles.includes('SUPER_ADMIN')) {
-      return NextResponse.json({ error: 'Unauthorized. Super Admin access required.' }, { status: 403 });
+    if (!user || !canManageCourses(user)) {
+      return NextResponse.json({ error: 'Unauthorized. Course management access required.' }, { status: 403 });
     }
 
     const {
@@ -85,7 +105,8 @@ export async function POST(request: Request) {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() + 14); // starts in 14 days by default
       const endDate = new Date(startDate);
-      endDate.setDate(endDate.getDate() + parseInt(durationDays) || 5);
+      const days = Number.parseInt(String(durationDays), 10);
+      endDate.setDate(endDate.getDate() + (Number.isFinite(days) && days > 0 ? days : 5));
       
       await prisma.cohort.create({
         data: {
@@ -106,7 +127,8 @@ export async function POST(request: Request) {
       user.email,
       'COURSE_CREATE',
       'COURSE',
-      `Super Admin created course ${code}: "${title}" with video stream material`,
+      `Admin created course ${code}: "${title}" with video stream material`,
+      user.userId,
       newCourse.id
     );
 

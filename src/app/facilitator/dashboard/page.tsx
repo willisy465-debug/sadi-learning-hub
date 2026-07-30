@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
 import { GraduationCap, Users, Calendar, CheckSquare, BookOpen, Clock, FileCheck, Award } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function FacilitatorDashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;
@@ -21,11 +23,18 @@ export default async function FacilitatorDashboardPage() {
     });
 
     pendingAttempts = await prisma.examAttempt.findMany({
-      where: { status: 'SUBMITTED' },
+      where: {
+        OR: [
+          { status: 'SUBMITTED' },
+          { status: 'FAILED', examination: { questions: { some: { questionType: 'ESSAY' } } } },
+        ],
+      },
       include: {
         examination: { include: { course: true } },
         user: true,
       },
+      take: 20,
+      orderBy: { submittedAt: 'desc' },
     });
   } catch (dbErr) {
     console.error('Error fetching facilitator dashboard data:', dbErr);
@@ -119,8 +128,14 @@ export default async function FacilitatorDashboardPage() {
                       Score: {attempt.scorePercent || 0}% ({attempt.isPassed ? 'PASSED' : 'FAILED'})
                     </p>
                   </div>
-                  <span className="px-3 py-1.5 rounded bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
-                    Graded ✓
+                  <span className={`px-3 py-1.5 rounded font-bold text-xs border ${
+                    attempt.status === 'SUBMITTED'
+                      ? 'bg-amber-50 text-amber-700 border-amber-200'
+                      : attempt.isPassed
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        : 'bg-rose-50 text-rose-700 border-rose-200'
+                  }`}>
+                    {attempt.status === 'SUBMITTED' ? 'Needs Review' : attempt.isPassed ? 'Passed' : 'Failed'}
                   </span>
                 </div>
               ))}

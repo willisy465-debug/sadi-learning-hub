@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
 import { ExamEngineView } from './ExamEngineView';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ExamPage({
   params,
 }: {

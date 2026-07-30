@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
 import { Award, Shield, CheckCircle, ExternalLink, Calendar, Download, Printer } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CertificatesPage() {
   const user = await getCurrentUser();
   if (!user) return null;

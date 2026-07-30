@@ -225,8 +225,8 @@ export const ExamEngineView: React.FC<ExamEngineViewProps> = ({ exam, attempt, u
                   {currentQuestion.questionText}
                 </h3>
 
-                {/* Multiple Choice Options */}
-                {currentQuestion.questionType === 'MULTIPLE_CHOICE' && (
+                {/* Multiple Choice / True-False Options */}
+                {(currentQuestion.questionType === 'MULTIPLE_CHOICE' || currentQuestion.questionType === 'TRUE_FALSE') && (
                   <div className="space-y-3 pt-2">
                     {currentQuestion.options.map((opt: any) => {
                       const isSelected = answers[currentQuestion.id]?.selectedOptionId === opt.id;

@@ -4,6 +4,8 @@ import { getCurrentUser } from '@/lib/auth';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'SADI Learning Hub | Southern Africa Development Institute',
   description: 'Enterprise Learning Management System for Pan-African executive development, public sector capacity building, online certifications, and institutional training.',

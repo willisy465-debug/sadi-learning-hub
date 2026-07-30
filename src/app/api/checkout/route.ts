@@ -231,7 +231,8 @@ export async function POST(request: Request) {
         },
       });
 
-      await prisma.invoice.create({
+      const totalWithTax = course.priceZar * 1.15;
+      const invoice = await prisma.invoice.create({
         data: {
           invoiceNumber,
           registrationId: reg.id,
@@ -240,11 +241,26 @@ export async function POST(request: Request) {
           currency: 'ZAR',
           subtotal: course.priceZar,
           taxAmount: course.priceZar * 0.15,
-          totalAmount: course.priceZar * 1.15,
-          paidAmount: course.priceZar * 1.15,
+          totalAmount: totalWithTax,
+          paidAmount: totalWithTax,
           balanceDue: 0,
           dueDate: new Date(),
           status: 'PAID',
+        },
+      });
+
+      await prisma.payment.create({
+        data: {
+          receiptNumber: `SADI-REC-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+          invoiceId: invoice.id,
+          registrationId: reg.id,
+          paymentMethod: paymentMethod || 'INSTANT_DEMO',
+          transactionRef: `TX-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          currency: 'ZAR',
+          amount: totalWithTax,
+          status: 'COMPLETED',
+          payerEmail: targetUser.email,
+          idempotencyKey: `checkout-${targetUser.id}-${course.id}-${Date.now()}`,
         },
       });
     } catch (billingErr) {
@@ -256,7 +272,8 @@ export async function POST(request: Request) {
       'MARKETPLACE_ONLINE_PURCHASE',
       'ENROLMENT',
       `Purchased 100% Online Access to ${course.code} via ${paymentMethod} - Invoice ${invoiceNumber}`,
-      targetUser.id
+      targetUser.id,
+      enrolment?.id
     );
 
     return NextResponse.json({

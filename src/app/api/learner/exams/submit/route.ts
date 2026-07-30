@@ -13,6 +13,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Attempt ID and Examination ID required' }, { status: 400 });
     }
 
+    const attempt = await prisma.examAttempt.findUnique({
+      where: { id: attemptId },
+    });
+
+    if (!attempt) {
+      return NextResponse.json({ error: 'Exam attempt not found' }, { status: 404 });
+    }
+
+    if (attempt.userId !== user.userId) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    if (attempt.examinationId !== examinationId) {
+      return NextResponse.json({ error: 'Attempt does not match examination' }, { status: 400 });
+    }
+
+    if (attempt.status !== 'IN_PROGRESS') {
+      return NextResponse.json({ error: 'This attempt has already been submitted' }, { status: 409 });
+    }
+
     const exam = await prisma.examination.findUnique({
       where: { id: examinationId },
       include: {
@@ -30,9 +50,9 @@ export async function POST(request: Request) {
 
     for (const q of exam.questions) {
       totalMaxPoints += q.points;
-      const ans = answers[q.id];
+      const ans = answers?.[q.id];
 
-      if (q.questionType === 'MULTIPLE_CHOICE' && ans?.selectedOptionId) {
+      if ((q.questionType === 'MULTIPLE_CHOICE' || q.questionType === 'TRUE_FALSE') && ans?.selectedOptionId) {
         const correctOption = q.options.find((opt) => opt.isCorrect);
         const isCorrect = correctOption?.id === ans.selectedOptionId;
         const score = isCorrect ? q.points : 0;
@@ -46,7 +66,6 @@ export async function POST(request: Request) {
           isCorrect,
         });
       } else if (q.questionType === 'ESSAY' && ans?.essayAnswer) {
-        // Essay assigned default points pending manual review or 80% passing preview
         const essayScore = q.points * 0.8;
         totalPointsAwarded += essayScore;
 
@@ -63,26 +82,25 @@ export async function POST(request: Request) {
     const scorePercent = totalMaxPoints > 0 ? (totalPointsAwarded / totalMaxPoints) * 100 : 0;
     const isPassed = scorePercent >= exam.passMarkPercent;
 
-    // Update attempt
-    const updatedAttempt = await prisma.examAttempt.update({
+    await prisma.examAttempt.update({
       where: { id: attemptId },
       data: {
-        status: isPassed ? 'PASSED' : 'SUBMITTED',
+        status: isPassed ? 'PASSED' : 'FAILED',
         submittedAt: new Date(),
         scorePercent,
         isPassed,
       },
     });
 
-    // Save individual question responses
     for (const r of responseRecords) {
       await prisma.examResponse.create({ data: r });
     }
 
-    // Auto-generate certificate if passed!
     if (isPassed) {
+      const firstInitial = (user.firstName?.[0] || 'X').toUpperCase();
+      const lastInitial = (user.lastName?.[0] || 'X').toUpperCase();
       const certNumber = `SADI-CERT-2026-${Math.floor(10000 + Math.random() * 90000)}`;
-      const verCode = `VER-SADI-${Math.floor(10000 + Math.random() * 90000)}-${user.firstName[0]}${user.lastName[0]}`;
+      const verCode = `VER-SADI-${Math.floor(10000 + Math.random() * 90000)}-${firstInitial}${lastInitial}`;
 
       const existingCert = await prisma.certificate.findFirst({
         where: {
@@ -92,6 +110,7 @@ export async function POST(request: Request) {
       });
 
       if (!existingCert) {
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
         const cert = await prisma.certificate.create({
           data: {
             certificateNumber: certNumber,
@@ -99,16 +118,23 @@ export async function POST(request: Request) {
             userId: user.userId,
             courseId: exam.courseId,
             courseTitle: exam.course.title,
-            learnerName: `${user.firstName} ${user.lastName}`,
+            learnerName: `${user.firstName} ${user.lastName}`.trim() || user.email,
             issueDate: new Date(),
             status: 'VALID',
             cpdPoints: exam.course.cpdPoints,
             digitalSignature: `SHA256:${Math.random().toString(36).substring(2)}${Date.now()}`,
-            qrVerificationUrl: `http://localhost:3000/verify/${verCode}`,
+            qrVerificationUrl: `${baseUrl}/verify/${verCode}`,
           },
         });
 
-        await logAuditEvent(user.email, 'CERTIFICATE_GENERATED', 'CERTIFICATE', `Auto-generated certificate ${certNumber} for ${user.firstName} ${user.lastName}`, user.userId, cert.id);
+        await logAuditEvent(
+          user.email,
+          'CERTIFICATE_GENERATED',
+          'CERTIFICATE',
+          `Auto-generated certificate ${certNumber} for ${user.firstName} ${user.lastName}`,
+          user.userId,
+          cert.id
+        );
       }
     }
 

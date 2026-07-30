@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getCurrentUser } from '@/lib/auth';
+import { canManageCourses } from '@/lib/rbac';
 
 export async function GET() {
   try {
+    const user = await getCurrentUser();
+    if (!canManageCourses(user)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const categories = await prisma.courseCategory.findMany({
       orderBy: { displayOrder: 'asc' },
     });
@@ -15,6 +22,11 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const user = await getCurrentUser();
+    if (!canManageCourses(user)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const body = await request.json();
     const { name, slug, description, icon, imageUrl, pdfUrl, displayOrder } = body;
 

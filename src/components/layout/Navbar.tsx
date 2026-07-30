@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="h-12 w-auto flex items-center">
               <img
-                src="/logo.jpg"
+                src="/logo.svg"
                 alt="SADI Logo"
                 className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
               />
@@ -178,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               <div className="flex items-center space-x-3">
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-white transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-udemy-purple transition-colors"
                 >
                   Sign In
                 </Link>

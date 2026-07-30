@@ -38,36 +38,7 @@ export default async function LearnerDashboardPage() {
 
   // Fallback Udemy-style Enrolled Courses if user is newly registered or DB is empty
   if (!enrolments || enrolments.length === 0) {
-    enrolments = [
-      {
-        id: 'enr-demo-1',
-        progressPercent: 35,
-        cohort: { name: '2026 Online Cohort A' },
-        course: {
-          id: 'demo-1',
-          code: 'FIN-801',
-          title: 'Executive Public Finance Management & IPSAS Standards',
-          featuredImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop',
-          durationDays: 5,
-          cpdPoints: 20,
-          examinations: [{ id: 'exam-demo-1' }],
-        },
-      },
-      {
-        id: 'enr-demo-2',
-        progressPercent: 75,
-        cohort: { name: '2026 Executive Self-Paced' },
-        course: {
-          id: 'demo-2',
-          code: 'GOV-902',
-          title: 'Corporate Governance, Risk & Board Leadership',
-          featuredImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
-          durationDays: 5,
-          cpdPoints: 25,
-          examinations: [{ id: 'exam-demo-2' }],
-        },
-      },
-    ];
+    enrolments = [];
   }
 
   return (
@@ -119,6 +90,19 @@ export default async function LearnerDashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {enrolments.length === 0 && (
+            <div className="md:col-span-2 p-10 rounded-xl border border-dashed border-udemy-grayBorder bg-slate-50 text-center space-y-4">
+              <BookOpen className="w-10 h-10 text-udemy-purple mx-auto" />
+              <h3 className="text-lg font-bold text-udemy-black">No enrolments yet</h3>
+              <p className="text-sm text-slate-500 max-w-md mx-auto">
+                Browse the course catalogue and complete checkout to start learning in your classroom.
+              </p>
+              <Link href="/courses" className="inline-flex items-center space-x-2 gold-button px-5 py-2.5 rounded-xl text-xs font-bold">
+                <span>Explore Catalogue</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          )}
           {enrolments.map((enrolment) => (
             <div key={enrolment.id} className="bg-white rounded-xl border border-udemy-grayBorder overflow-hidden space-y-6 flex flex-col justify-between hover:border-udemy-purple/40 transition-all duration-300 group shadow-md hover:shadow-lg">
               

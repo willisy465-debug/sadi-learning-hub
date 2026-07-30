@@ -127,9 +127,22 @@ export async function POST(request: Request) {
       user = await ensureDemoUser(cleanEmail);
     }
 
-    // Auto-provision demo account if missing
+    // Auto-provision only known demo accounts if missing
+    const knownDemoEmails = [
+      'admin@saditraining.com',
+      'director@saditraining.com',
+      'finance@saditraining.com',
+      'facilitator@saditraining.com',
+      'corporate@eskom.co.za',
+      'learner@saditraining.com',
+    ];
+
     if (!user) {
-      user = await ensureDemoUser(cleanEmail);
+      if (knownDemoEmails.includes(cleanEmail)) {
+        user = await ensureDemoUser(cleanEmail);
+      } else {
+        return NextResponse.json({ error: 'Invalid credentials or inactive account' }, { status: 401 });
+      }
     }
 
     if (!user || !user.isActive) {
