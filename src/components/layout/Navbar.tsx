@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               In-House & Custom
             </Link>
             <Link
-              href="/verify/VER-SADI-90412-AD"
+              href="/verify"
               className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition-colors ${
                 pathname.startsWith('/verify') ? 'text-udemy-purple bg-udemy-gray border border-udemy-grayBorder' : 'text-slate-700 hover:text-udemy-purple hover:bg-udemy-gray'
               }`}
@@ -222,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             In-House & Custom Requests
           </Link>
           <Link
-            href="/verify/VER-SADI-90412-AD"
+            href="/verify"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-emerald-600 font-medium"
           >

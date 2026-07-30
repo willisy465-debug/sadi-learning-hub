@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Services & Portal</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/verify/VER-SADI-90412-AD" className="hover:text-udemy-purple transition-colors flex items-center"><Award className="w-3.5 h-3.5 text-udemy-purple mr-1.5" /> Certificate Verification</Link></li>
+              <li><Link href="/verify" className="hover:text-udemy-purple transition-colors flex items-center"><Award className="w-3.5 h-3.5 text-udemy-purple mr-1.5" /> Certificate Verification</Link></li>
               <li><Link href="/corporate/dashboard" className="hover:text-udemy-purple transition-colors">Corporate Client Portal</Link></li>
               <li><Link href="/learner/dashboard" className="hover:text-udemy-purple transition-colors">Learner Classroom</Link></li>
               <li><Link href="/login" className="hover:text-udemy-purple transition-colors">Staff & Facilitator Login</Link></li>
