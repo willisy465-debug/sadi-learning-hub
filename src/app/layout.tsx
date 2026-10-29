@@ -1,8 +1,21 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { DM_Sans, Fraunces } from 'next/font/google';
 import { getCurrentUser } from '@/lib/auth';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
 
 export const dynamic = 'force-dynamic';
 
@@ -26,8 +39,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className="flex flex-col min-h-screen bg-white text-slate-800 antialiased">
+    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`}>
+      <body className="flex flex-col min-h-screen text-slate-800 antialiased font-sans">
         <Navbar currentUser={user} />
         <main className="flex-grow">{children}</main>
         <Footer />

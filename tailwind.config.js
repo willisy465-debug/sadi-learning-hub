@@ -9,43 +9,59 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Kept `udemy.*` keys for compatibility; values remapped to SADI brand
         udemy: {
-          purple: '#5624d0',
-          darkPurple: '#401b9c',
-          black: '#1c1d1f',
-          gray: '#f7f9fa',
-          grayBorder: '#d1d7dc',
+          purple: '#2B3960',      // Brand navy (primary)
+          darkPurple: '#1F2A48',  // Deeper navy for hover
+          black: '#1A2238',
+          gray: '#F4F7F5',        // Soft sage-tinted surface
+          grayBorder: '#D5E0DA',
           white: '#ffffff',
-          accent: '#401b9c',
+          accent: '#A2CEB7',      // Brand sage
         },
         amber: {
-          500: '#5624d0', // Mapped to Udemy Purple
-          400: '#401b9c', // Mapped to Udemy Dark Purple
-          300: '#d1d7dc', // Mapped to gray border
+          500: '#2B3960',
+          400: '#1F2A48',
+          300: '#D5E0DA',
         },
         emerald: {
-          500: '#61CE70', 
-          400: '#61CE70',
-          300: '#61CE70',
+          50: '#F0F8F4',
+          100: '#DCEFE6',
+          200: '#B8DEC9',
+          300: '#A2CEB7',
+          400: '#7FBA9A',
+          500: '#5A9F7C',
+          600: '#457A5F',
+          700: '#365E49',
         },
         sadi: {
-          navy: '#1c1d1f', // Mapped to Udemy Black
-          darkNavy: '#1c1d1f', // Mapped to Udemy Black
-          card: '#f7f9fa', // Udemy light gray
-          gold: '#5624d0', // Udemy Purple
-          lightGold: '#401b9c', // Udemy Dark Purple
-          darkGold: '#5624d0',
-          accentBlue: '#5624d0',
+          navy: '#2B3960',
+          darkNavy: '#1F2A48',
+          card: '#F4F7F5',
+          gold: '#A2CEB7',
+          lightGold: '#C5E2D3',
+          darkGold: '#5A9F7C',
+          accentBlue: '#2B3960',
+          sage: '#A2CEB7',
+          sageDeep: '#5A9F7C',
         },
         brand: {
-          navy: '#1c1d1f',
-          gold: '#5624d0',
-          slate: '#1c1d1f',
-          accent: '#5624d0',
+          navy: '#2B3960',
+          navyDark: '#1F2A48',
+          sage: '#A2CEB7',
+          sageDeep: '#5A9F7C',
+          slate: '#1A2238',
+          accent: '#A2CEB7',
+          surface: '#F4F7F5',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Segoe UI', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        brand: '0 10px 30px -12px rgba(43, 57, 96, 0.35)',
+        sage: '0 8px 24px -10px rgba(162, 206, 183, 0.55)',
       },
     },
   },

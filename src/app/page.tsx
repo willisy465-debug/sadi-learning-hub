@@ -67,26 +67,25 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="space-y-24 pb-20 bg-udemy-white">
+    <div className="space-y-24 pb-20">
       
       {/* 1. HERO SECTION */}
-      <section className="relative pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-udemy-purple to-udemy-darkPurple rounded-b-[2rem] sm:rounded-b-[4rem] shadow-2xl mb-12">
-        {/* Background glow effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <section className="relative pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navyDark to-[#365E49] rounded-b-[2rem] sm:rounded-b-[4rem] shadow-brand mb-12">
+        <div className="absolute inset-0 opacity-40 pointer-events-none" style={{ background: 'radial-gradient(circle at 20% 20%, rgba(162,206,183,0.35), transparent 42%), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.12), transparent 35%)' }} />
         
         <div className="max-w-7xl mx-auto relative z-10 text-center space-y-8">
           
           {/* Institution Tagline */}
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-udemy-black/40 border border-white/20 text-white text-xs font-semibold tracking-wide shadow-lg">
-            <Sparkles className="w-4 h-4 text-udemy-grayBorder" />
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 border border-brand-sage/40 text-white text-xs font-semibold tracking-wide shadow-lg backdrop-blur-sm">
+            <Sparkles className="w-4 h-4 text-brand-sage" />
             <span>Southern Africa Development Institute — Fully Online Global Learning</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
-            Transforming <span className="text-white drop-shadow-md">African Leadership</span>
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
+            Transforming <span className="text-brand-sage drop-shadow-md">African Leadership</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-udemy-gray max-w-3xl mx-auto leading-relaxed font-normal">
+          <p className="text-base sm:text-lg text-white/85 max-w-3xl mx-auto leading-relaxed font-normal">
             Empowering executives, public sector leadership, boards, financial regulators, and corporate professionals across Africa through accredited fully online training, self-paced video e-learning, and interactive virtual instructor-led sessions via Zoom and Microsoft Teams.
           </p>
 
@@ -94,7 +93,7 @@ export default async function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               href="/courses"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white text-udemy-purple text-base font-bold flex items-center justify-center space-x-3 shadow-xl hover:bg-udemy-gray transition-all"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-sage text-brand-navyDark text-base font-bold flex items-center justify-center space-x-3 shadow-sage hover:bg-[#8FC4A8] transition-all"
             >
               <BookOpen className="w-5 h-5" />
               <span>Explore 2026 Online Catalogue</span>
@@ -103,7 +102,7 @@ export default async function HomePage() {
 
             <Link
               href="/request-custom"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-transparent border-2 border-white hover:bg-white/10 text-white text-base font-semibold flex items-center justify-center space-x-3 transition-colors"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-transparent border-2 border-white/80 hover:bg-white/10 text-white text-base font-semibold flex items-center justify-center space-x-3 transition-colors"
             >
               <Building2 className="w-5 h-5" />
               <span>Request Virtual In-House Training</span>
@@ -210,7 +209,7 @@ export default async function HomePage() {
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-udemy-grayBorder text-[#5624d0] font-mono text-[10px] font-bold shadow-sm">
+                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-udemy-grayBorder text-[#2B3960] font-mono text-[10px] font-bold shadow-sm">
                     {course.code}
                   </div>
                 </div>
@@ -277,13 +276,14 @@ export default async function HomePage() {
 
       {/* 4. PUBLIC CERTIFICATE VERIFICATION BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border-udemy-grayBorder border flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm">
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-udemy-grayBorder flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm relative overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-brand-navy to-brand-sage" />
           <div className="space-y-4 max-w-2xl">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-semibold border border-emerald-200">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-sage/25 text-brand-navy text-xs font-semibold border border-brand-sage/50">
+              <CheckCircle2 className="w-4 h-4 text-brand-sageDeep" />
               <span>Tamper-Proof Cryptographic Credentials</span>
             </div>
-            <h2 className="text-3xl font-black text-udemy-black tracking-tight">Public QR Certificate Verification</h2>
+            <h2 className="font-display text-3xl font-black text-brand-navy tracking-tight">Public QR Certificate Verification</h2>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Every certificate issued by the Southern Africa Development Institute contains a unique QR code and cryptographic verification hash. Employers, regulators, and audit bodies can instantly verify credential authenticity.
             </p>

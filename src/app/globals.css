@@ -3,20 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --sadi-navy-dark: #1c1d1f; /* Replaced with Udemy Dark Purple */
-  --sadi-navy-main: #1c1d1f;
-  --sadi-navy-card: #f7f9fa; /* Light card bg */
-  --sadi-gold-main: #5624d0; /* Replaced with Udemy Purple */
-  --sadi-gold-light: #6a35ff;
-  --sadi-gold-dark: #3b198f;
-  --sadi-blue-accent: #0056d2; /* Udemy Accent Blue */
-  --sadi-bg-light: #ffffff;
-  --sadi-text-dark: #1c1d1f;
+  --font-sans: var(--font-sans), 'Segoe UI', sans-serif;
+  --sadi-navy: #2B3960;
+  --sadi-navy-dark: #1F2A48;
+  --sadi-navy-main: #2B3960;
+  --sadi-navy-card: #F4F7F5;
+  --sadi-sage: #A2CEB7;
+  --sadi-sage-deep: #5A9F7C;
+  --sadi-gold-main: #2B3960;
+  --sadi-gold-light: #A2CEB7;
+  --sadi-gold-dark: #1F2A48;
+  --sadi-blue-accent: #2B3960;
+  --sadi-bg-light: #F7FAF8;
+  --sadi-text-dark: #1A2238;
+  --sadi-border: #D5E0DA;
 }
 
 body {
-  background-color: var(--sadi-bg-light);
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(162, 206, 183, 0.28), transparent 55%),
+    radial-gradient(900px 420px at 95% 0%, rgba(43, 57, 96, 0.08), transparent 50%),
+    var(--sadi-bg-light);
   color: var(--sadi-text-dark);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -25,41 +32,39 @@ body {
   overflow-x: hidden;
 }
 
-/* SADI Premium Glassmorphism & Card Primitives */
+/* Surfaces */
 .glass-panel {
-  background: #ffffff;
-  border: 1px solid #d1d7dc;
-  box-shadow: 0 4px 6px -1px rgba(28, 29, 31, 0.05), 0 2px 4px -1px rgba(28, 29, 31, 0.03);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--sadi-border);
+  box-shadow: 0 8px 24px -12px rgba(43, 57, 96, 0.18);
 }
 
 .glass-nav {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid #d1d7dc;
-  box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.08);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--sadi-border);
+  box-shadow: 0 1px 0 rgba(162, 206, 183, 0.35), 0 8px 20px -16px rgba(43, 57, 96, 0.35);
 }
 
-/* SADI Brand Gradients */
+/* Brand gradients */
 .gold-gradient-text {
-  /* Re-mapped to Udemy purple gradient */
-  background: linear-gradient(135deg, #5624d0 0%, #3b198f 100%);
+  background: linear-gradient(135deg, #2B3960 0%, #5A9F7C 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-bg {
-  /* Re-mapped to Udemy purple gradient */
-  background: linear-gradient(135deg, #5624d0 0%, #3b198f 100%);
+  background: linear-gradient(135deg, #2B3960 0%, #1F2A48 55%, #5A9F7C 100%);
 }
 
 .gold-border {
-  border-color: rgba(86, 36, 208, 0.5); /* Purple border */
+  border-color: rgba(43, 57, 96, 0.35);
 }
 
-/* SADI Corporate Buttons */
+/* Primary CTA — navy */
 .gold-button {
-  background: #5624d0; /* Primary Brand Color (Udemy Purple) */
+  background: var(--sadi-navy);
   color: #FFFFFF;
   font-weight: 700;
   transition: all 0.2s ease-in-out;
@@ -67,20 +72,51 @@ body {
 }
 
 .gold-button:hover {
-  background: #3b198f; /* Dark Purple on hover */
-  box-shadow: 0 0 15px rgba(86, 36, 208, 0.45);
+  background: var(--sadi-navy-dark);
+  box-shadow: 0 10px 24px -10px rgba(43, 57, 96, 0.55);
+}
+
+/* Secondary — sage */
+.sage-button {
+  background: var(--sadi-sage);
+  color: var(--sadi-navy-dark);
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+  border: none;
+}
+
+.sage-button:hover {
+  background: #8FC4A8;
+  box-shadow: 0 8px 20px -10px rgba(90, 159, 124, 0.55);
 }
 
 .navy-button {
-  background: #1c1d1f; /* Charcoal secondary button */
+  background: var(--sadi-navy-dark);
   color: #FFFFFF;
-  border: 1px solid rgba(28, 29, 31, 0.3);
+  border: 1px solid rgba(43, 57, 96, 0.35);
   transition: all 0.2s ease-in-out;
 }
 
 .navy-button:hover {
-  background: #000000;
-  border-color: #5624d0;
+  background: #162038;
+  border-color: var(--sadi-sage);
+}
+
+/* Compatibility alias used across pages */
+.udemy-button-primary {
+  background: var(--sadi-navy);
+  color: #fff;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+
+.udemy-button-primary:hover {
+  background: var(--sadi-navy-dark);
+}
+
+/* Soft brand section strip */
+.brand-strip {
+  background: linear-gradient(90deg, rgba(43, 57, 96, 0.95), rgba(90, 159, 124, 0.85));
 }
 
 /* Custom Scrollbar */
@@ -90,14 +126,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f7f9fa;
+  background: #F4F7F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d7dc;
+  background: #B8C9C0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5624d0;
+  background: #2B3960;
 }

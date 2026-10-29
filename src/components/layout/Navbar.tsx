@@ -38,26 +38,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <header className="sticky top-0 z-50 glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           
-          {/* Brand Logo & Name */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="h-12 w-auto flex items-center">
-              <img
-                src="/logo.svg"
-                alt="SADI Logo"
-                className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
-              />
-            </div>
-            <div className="hidden sm:block">
-              <div className="flex items-center space-x-1.5">
-                <span className="font-black text-lg text-black tracking-tight">SADI</span>
-                <span className="px-2 py-0.5 rounded-full bg-udemy-purple/10 border border-udemy-purple/20 text-udemy-purple font-bold text-[10px] tracking-wider uppercase">
-                  Learning Hub
-                </span>
-              </div>
-              <p className="text-[10px] text-slate-600 font-medium">Southern Africa Development Institute</p>
-            </div>
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center group">
+            <img
+              src="/logo-login.webp"
+              alt="Southern Africa Development Institute"
+              className="h-16 sm:h-20 w-auto object-contain transition-transform group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Main Navigation */}
@@ -97,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-white border border-udemy-grayBorder hover:border-udemy-purple/40 transition-colors shadow-sm hover:shadow"
                 >
-                  <div className="w-8 h-8 rounded-full bg-udemy-purple/10 border border-udemy-purple/20 text-udemy-purple flex items-center justify-center font-bold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-brand-sage/40 border border-brand-sage text-brand-navy flex items-center justify-center font-bold text-sm">
                     {currentUser.firstName?.[0] || 'U'}
                     {currentUser.lastName?.[0] || ''}
                   </div>

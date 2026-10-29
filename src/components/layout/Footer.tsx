@@ -2,98 +2,93 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, MapPin, Phone, Mail, Globe, Award, Lock, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, Award, Lock, ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white border-t border-udemy-grayBorder text-slate-600 pt-16 pb-12">
+    <footer className="bg-brand-navy text-white/80 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-udemy-grayBorder">
+        <div className="h-1 w-full rounded-full bg-gradient-to-r from-brand-sage via-white/30 to-brand-sage mb-12 opacity-80" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           
-          {/* Institutional Info & SADI Branding */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <img src="/logo.svg" alt="SADI Logo" className="h-12 w-auto object-contain" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tight text-udemy-black">
-                  SADI <span className="text-udemy-purple text-sm font-semibold ml-1">Learning Hub</span>
-                </span>
-              </div>
+            <div className="flex items-center">
+              <img
+                src="/sadi-logo-exact.png"
+                alt="Southern Africa Development Institute"
+                className="h-20 w-auto object-contain"
+              />
             </div>
-            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+            <p className="text-xs text-white/70 leading-relaxed max-w-sm">
               The Southern Africa Development Institute (SADI) is a premier Pan-African professional training and capacity-development institution providing public, online, and customised institutional programmes across Africa.
             </p>
-            <div className="pt-2 flex items-center space-x-3 text-xs text-slate-500">
-              <span className="px-2.5 py-1 rounded bg-udemy-gray border border-udemy-grayBorder text-udemy-purple font-mono font-bold">
+            <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-white/70">
+              <span className="px-2.5 py-1 rounded bg-white/10 border border-brand-sage/40 text-brand-sage font-mono font-bold">
                 CIPC Reg: 2011/070892/23
               </span>
-              <span className="flex items-center text-slate-500 font-medium">
-                <Lock className="w-3.5 h-3.5 text-emerald-500 mr-1" />
+              <span className="flex items-center font-medium">
+                <Lock className="w-3.5 h-3.5 text-brand-sage mr-1" />
                 ISO 9001 Compliant
               </span>
             </div>
           </div>
 
-          {/* Training Delivery Models */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Programmes</h4>
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Programmes</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/courses" className="hover:text-udemy-purple transition-colors">Scheduled Public Training</Link></li>
-              <li><Link href="/courses?delivery=SELF_PACED" className="hover:text-udemy-purple transition-colors">Online Self-Paced E-Learning</Link></li>
-              <li><Link href="/courses?delivery=FACE_TO_FACE" className="hover:text-udemy-purple transition-colors">Face-to-Face Workshops</Link></li>
-              <li><Link href="/request-custom" className="hover:text-udemy-purple transition-colors">In-House Corporate Training</Link></li>
-              <li><Link href="/courses?delivery=CERTIFICATION_PROGRAMME" className="hover:text-udemy-purple transition-colors">Certification Examinations</Link></li>
+              <li><Link href="/courses" className="hover:text-brand-sage transition-colors">Scheduled Public Training</Link></li>
+              <li><Link href="/courses?delivery=SELF_PACED" className="hover:text-brand-sage transition-colors">Online Self-Paced E-Learning</Link></li>
+              <li><Link href="/courses?delivery=FACE_TO_FACE" className="hover:text-brand-sage transition-colors">Face-to-Face Workshops</Link></li>
+              <li><Link href="/request-custom" className="hover:text-brand-sage transition-colors">In-House Corporate Training</Link></li>
+              <li><Link href="/courses?delivery=CERTIFICATION_PROGRAMME" className="hover:text-brand-sage transition-colors">Certification Examinations</Link></li>
             </ul>
           </div>
 
-          {/* Operational Support & Verification */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Services & Portal</h4>
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Services & Portal</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/verify" className="hover:text-udemy-purple transition-colors flex items-center"><Award className="w-3.5 h-3.5 text-udemy-purple mr-1.5" /> Certificate Verification</Link></li>
-              <li><Link href="/corporate/dashboard" className="hover:text-udemy-purple transition-colors">Corporate Client Portal</Link></li>
-              <li><Link href="/learner/dashboard" className="hover:text-udemy-purple transition-colors">Learner Classroom</Link></li>
-              <li><Link href="/login" className="hover:text-udemy-purple transition-colors">Staff & Facilitator Login</Link></li>
-              <li><Link href="/request-custom" className="hover:text-udemy-purple transition-colors">Custom Quotation Request</Link></li>
+              <li><Link href="/verify" className="hover:text-brand-sage transition-colors flex items-center"><Award className="w-3.5 h-3.5 text-brand-sage mr-1.5" /> Certificate Verification</Link></li>
+              <li><Link href="/corporate/dashboard" className="hover:text-brand-sage transition-colors">Corporate Client Portal</Link></li>
+              <li><Link href="/learner/dashboard" className="hover:text-brand-sage transition-colors">Learner Classroom</Link></li>
+              <li><Link href="/login" className="hover:text-brand-sage transition-colors">Staff & Facilitator Login</Link></li>
+              <li><Link href="/request-custom" className="hover:text-brand-sage transition-colors">Custom Quotation Request</Link></li>
             </ul>
           </div>
 
-          {/* Head Office Contact & Location */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-udemy-black tracking-wider uppercase">Pretoria Headquarters</h4>
-            <ul className="space-y-2.5 text-xs text-slate-500">
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Pretoria Headquarters</h4>
+            <ul className="space-y-2.5 text-xs text-white/70">
               <li className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-udemy-purple shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-brand-sage shrink-0 mt-0.5" />
                 <span>The Brooklyn Office Park, 105–107 Nicolson Street, Brooklyn, Pretoria, 0181, South Africa</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-udemy-purple shrink-0" />
+                <Phone className="w-4 h-4 text-brand-sage shrink-0" />
                 <span>+27 12 846 7118 / +27 10 007 1811 / +27 68 179 9104</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-udemy-purple shrink-0" />
+                <Mail className="w-4 h-4 text-brand-sage shrink-0" />
                 <span>info@saditraining.com</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Globe className="w-4 h-4 text-udemy-purple shrink-0" />
-                <a href="https://saditraining.com" target="_blank" rel="noopener noreferrer" className="hover:text-udemy-purple flex items-center">
-                  www.saditraining.com <ExternalLink className="w-3 h-3 ml-1 text-slate-500" />
+                <Globe className="w-4 h-4 text-brand-sage shrink-0" />
+                <a href="https://saditraining.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-sage flex items-center">
+                  www.saditraining.com <ExternalLink className="w-3 h-3 ml-1 text-white/50" />
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Rights & Currencies */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 space-y-4 md:space-y-0">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/60 space-y-4 md:space-y-0">
           <p>© 2026 Southern Africa Development Institute (SADI). All rights reserved.</p>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 flex-wrap justify-center">
             <span>Accepted Currencies:</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">ZAR</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">USD</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">KES</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">EUR</span>
-            <span className="px-2 py-0.5 rounded bg-udemy-gray border border-udemy-grayBorder text-slate-700 font-mono font-medium">GBP</span>
+            {['ZAR', 'USD', 'KES', 'EUR', 'GBP'].map((c) => (
+              <span key={c} className="px-2 py-0.5 rounded bg-white/10 border border-white/15 text-brand-sage font-mono font-medium">
+                {c}
+              </span>
+            ))}
           </div>
         </div>
       </div>

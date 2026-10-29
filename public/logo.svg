@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="SADI">
   <defs>
     <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5624d0"/>
-      <stop offset="100%" stop-color="#401b9c"/>
+      <stop offset="0%" stop-color="#2B3960"/>
+      <stop offset="100%" stop-color="#5A9F7C"/>
     </linearGradient>
   </defs>
   <rect width="120" height="120" rx="24" fill="url(#g)"/>
-  <text x="60" y="72" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#ffffff">SADI</text>
+  <rect x="8" y="8" width="104" height="104" rx="18" fill="none" stroke="#A2CEB7" stroke-width="2" opacity="0.55"/>
+  <text x="60" y="72" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#ffffff">SADI</text>
 </svg>
