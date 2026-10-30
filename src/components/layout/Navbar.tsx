@@ -38,14 +38,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <header className="sticky top-0 z-50 glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-[7.5rem] py-3">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center group shrink-0">
+          {/* Brand Logo — transparent so it blends with nav background */}
+          <Link href="/" className="flex items-center group shrink-0 bg-transparent">
             <img
               src="/sadi-logo.png"
               alt="Southern Africa Development Institute"
-              className="h-[4.75rem] sm:h-[6.3rem] md:h-[7.35rem] w-auto max-w-[min(92vw,504px)] object-contain object-left transition-transform group-hover:scale-[1.02]"
+              className="h-[1.45rem] sm:h-[1.9rem] md:h-[2.2rem] w-auto max-w-[min(55vw,160px)] object-contain object-left bg-transparent mix-blend-multiply transition-opacity group-hover:opacity-90"
             />
           </Link>
 
