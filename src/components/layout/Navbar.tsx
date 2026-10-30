@@ -40,12 +40,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           
-          {/* Brand Logo — transparent so it blends with nav background */}
-          <Link href="/" className="flex items-center group shrink-0 bg-transparent">
+          {/* Brand Logo — transparent + blend into light nav */}
+          <Link href="/" className="flex items-center group shrink-0 bg-transparent isolation-auto">
             <img
               src="/sadi-logo.png"
               alt="Southern Africa Development Institute"
-              className="h-[1.45rem] sm:h-[1.9rem] md:h-[2.2rem] w-auto max-w-[min(55vw,160px)] object-contain object-left bg-transparent mix-blend-multiply transition-opacity group-hover:opacity-90"
+              className="h-[1.67rem] sm:h-[2.185rem] md:h-[2.53rem] w-auto max-w-[min(55vw,184px)] object-contain object-left bg-transparent border-0 shadow-none outline-none mix-blend-multiply transition-opacity group-hover:opacity-90"
             />
           </Link>
 

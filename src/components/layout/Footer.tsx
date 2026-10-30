@@ -12,11 +12,12 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           
           <div className="lg:col-span-2 space-y-4">
+            {/* Footer logo stays solid on white card (no blend) for contrast on navy */}
             <div className="inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-sm">
               <img
-                src="/sadi-logo.png"
+                src="/sadi-logo-solid.png"
                 alt="Southern Africa Development Institute"
-                className="h-[1.6rem] sm:h-[1.9rem] md:h-[2.2rem] w-auto max-w-[150px] object-contain object-left"
+                className="h-[1.84rem] sm:h-[2.185rem] md:h-[2.53rem] w-auto max-w-[172px] object-contain object-left mix-blend-normal"
               />
             </div>
             <p className="text-xs text-white/70 leading-relaxed max-w-sm">
