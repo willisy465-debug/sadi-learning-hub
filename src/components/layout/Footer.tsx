@@ -12,11 +12,11 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center">
+            <div className="inline-flex items-center rounded-2xl bg-white px-6 py-5 shadow-md ring-1 ring-brand-sage/40">
               <img
-                src="/sadi-logo-exact.png"
+                src="/sadi-logo.png"
                 alt="Southern Africa Development Institute"
-                className="h-20 w-auto object-contain"
+                className="h-[5.25rem] sm:h-[6.3rem] md:h-[7.35rem] w-auto max-w-[min(90vw,462px)] object-contain object-left"
               />
             </div>
             <p className="text-xs text-white/70 leading-relaxed max-w-sm">

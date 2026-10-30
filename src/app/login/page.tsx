@@ -97,7 +97,7 @@ function LoginForm() {
 
       <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
-          <img src="/logo-login.webp" alt="Southern Africa Development Institute" className="mx-auto h-24 w-auto object-contain mb-4" />
+          <img src="/sadi-logo.png" alt="Southern Africa Development Institute" className="mx-auto h-[5.25rem] sm:h-[6.3rem] w-auto max-w-[441px] object-contain mb-4" />
           <p className="mt-2 text-sm text-udemy-black">
             {isRegister
               ? 'Create your Pan-African professional delegate account'
