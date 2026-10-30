@@ -2,9 +2,31 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { upload } from '@vercel/blob/client';
 import { BookOpen, PlusCircle, ArrowLeft, Upload, Video, CheckCircle2, FileText, Trash2, Loader2 } from 'lucide-react';
 
 type UploadedDoc = { url: string; name: string; contentType: string };
+
+async function readApiJson(res: Response) {
+  const text = await res.text();
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch {
+    const preview = text.slice(0, 120).trim() || res.statusText || 'Unknown error';
+    throw new Error(
+      preview.startsWith('Request Entity')
+        ? 'File is too large for upload. Try a smaller PDF/Word file (under 50MB).'
+        : preview
+    );
+  }
+}
+
+function docContentType(name: string) {
+  const lower = name.toLowerCase();
+  if (lower.endsWith('.pdf')) return 'PDF';
+  if (lower.endsWith('.doc') || lower.endsWith('.docx')) return 'DOC';
+  return 'FILE';
+}
 
 const SELF_PACED_METHODS = new Set([
   'ONLINE_SELF_PACED',
@@ -67,20 +89,20 @@ export default function AdminCoursesPage() {
     try {
       const uploaded: UploadedDoc[] = [];
       for (const file of Array.from(files)) {
-        const formData = new FormData();
-        formData.append('file', file);
-        const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || `Failed to upload ${file.name}`);
+        // Client-side Blob upload bypasses Vercel function body size limits
+        const blob = await upload(`course-materials/${file.name}`, file, {
+          access: 'public',
+          handleUploadUrl: '/api/admin/upload',
+        });
         uploaded.push({
-          url: data.url,
-          name: data.name || file.name,
-          contentType: data.contentType || 'PDF',
+          url: blob.url,
+          name: file.name,
+          contentType: docContentType(file.name),
         });
       }
       setDocuments((prev) => [...prev, ...uploaded]);
     } catch (err: any) {
-      setMessage(`Error: ${err.message}`);
+      setMessage(`Error: ${err.message || 'Document upload failed'}`);
     } finally {
       setUploadingDoc(false);
       e.target.value = '';
@@ -118,7 +140,7 @@ export default function AdminCoursesPage() {
         }),
       });
 
-      const data = await res.json();
+      const data = await readApiJson(res);
       if (!res.ok) {
         throw new Error(data.error || 'Failed to upload course');
       }
