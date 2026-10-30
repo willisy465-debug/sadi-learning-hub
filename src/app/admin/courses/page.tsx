@@ -7,6 +7,9 @@ import { BookOpen, PlusCircle, ArrowLeft, Upload, Video, CheckCircle2, FileText,
 
 type UploadedDoc = { url: string; name: string; contentType: string };
 
+const DOC_MAX_BYTES = 50 * 1024 * 1024;
+const VIDEO_MAX_BYTES = 1024 * 1024 * 1024;
+
 async function readApiJson(res: Response) {
   const text = await res.text();
   try {
@@ -15,7 +18,7 @@ async function readApiJson(res: Response) {
     const preview = text.slice(0, 120).trim() || res.statusText || 'Unknown error';
     throw new Error(
       preview.startsWith('Request Entity')
-        ? 'File is too large for upload. Try a smaller PDF/Word file (under 50MB).'
+        ? 'File is too large for this upload path. Documents max 50 MB; videos max 1 GB.'
         : preview
     );
   }
@@ -26,6 +29,11 @@ function docContentType(name: string) {
   if (lower.endsWith('.pdf')) return 'PDF';
   if (lower.endsWith('.doc') || lower.endsWith('.docx')) return 'DOC';
   return 'FILE';
+}
+
+function formatBytes(bytes: number) {
+  if (bytes >= 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
 const SELF_PACED_METHODS = new Set([
@@ -58,6 +66,8 @@ export default function AdminCoursesPage() {
   const [meetingUrl, setMeetingUrl] = useState('');
   const [documents, setDocuments] = useState<UploadedDoc[]>([]);
   const [uploadingDoc, setUploadingDoc] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
   const fetchCourses = async () => {
     try {
@@ -84,15 +94,22 @@ export default function AdminCoursesPage() {
     if (!files?.length) return;
 
     setUploadingDoc(true);
+    setUploadProgress(0);
     setMessage('');
 
     try {
       const uploaded: UploadedDoc[] = [];
       for (const file of Array.from(files)) {
-        // Client-side Blob upload bypasses Vercel function body size limits
+        if (file.size > DOC_MAX_BYTES) {
+          throw new Error(
+            `"${file.name}" is ${formatBytes(file.size)}. Study documents must be 50 MB or smaller.`
+          );
+        }
         const blob = await upload(`course-materials/${file.name}`, file, {
           access: 'public',
           handleUploadUrl: '/api/admin/upload',
+          multipart: file.size > 4 * 1024 * 1024,
+          onUploadProgress: (p) => setUploadProgress(Math.round(p.percentage)),
         });
         uploaded.push({
           url: blob.url,
@@ -105,6 +122,40 @@ export default function AdminCoursesPage() {
       setMessage(`Error: ${err.message || 'Document upload failed'}`);
     } finally {
       setUploadingDoc(false);
+      setUploadProgress(null);
+      e.target.value = '';
+    }
+  };
+
+  const handleVideoFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingVideo(true);
+    setUploadProgress(0);
+    setMessage('');
+
+    try {
+      if (file.size > VIDEO_MAX_BYTES) {
+        throw new Error(
+          `"${file.name}" is ${formatBytes(file.size)}. Videos must be 1 GB or smaller.`
+        );
+      }
+
+      const blob = await upload(`course-videos/${file.name}`, file, {
+        access: 'public',
+        handleUploadUrl: '/api/admin/upload',
+        multipart: true,
+        onUploadProgress: (p) => setUploadProgress(Math.round(p.percentage)),
+      });
+
+      setVideoUrl(blob.url);
+      setMessage(`Video uploaded (${formatBytes(file.size)}). Ready to publish.`);
+    } catch (err: any) {
+      setMessage(`Error: ${err.message || 'Video upload failed'}`);
+    } finally {
+      setUploadingVideo(false);
+      setUploadProgress(null);
       e.target.value = '';
     }
   };
@@ -323,18 +374,41 @@ export default function AdminCoursesPage() {
               <div className="p-4 rounded-xl bg-udemy-purple/5 border border-udemy-purple/20 space-y-3">
                 <div className="flex items-center space-x-2 text-udemy-purple font-bold">
                   <Video className="w-4 h-4" />
-                  <span>Video Lecture Material Upload & Streaming Link</span>
+                  <span>Video Lecture Material (up to 1 GB)</span>
                 </div>
 
+                <label className="flex flex-col items-center justify-center gap-2 px-4 py-5 rounded-lg border-2 border-dashed border-udemy-purple/30 bg-white cursor-pointer hover:border-udemy-purple hover:bg-udemy-purple/5 transition-colors">
+                  {uploadingVideo ? (
+                    <Loader2 className="w-6 h-6 text-udemy-purple animate-spin" />
+                  ) : (
+                    <Upload className="w-6 h-6 text-udemy-purple" />
+                  )}
+                  <span className="text-xs font-bold text-udemy-purple">
+                    {uploadingVideo
+                      ? `Uploading video… ${uploadProgress ?? 0}%`
+                      : 'Upload lecture video (MP4 / WebM / MOV, max 1 GB)'}
+                  </span>
+                  <input
+                    type="file"
+                    accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov,.m4v"
+                    disabled={uploadingVideo || uploadingDoc}
+                    onChange={handleVideoFileUpload}
+                    className="hidden"
+                  />
+                </label>
+
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1">Video Stream URL (MP4 / HLS / YouTube / Vimeo Embed)</label>
+                  <label className="block text-slate-700 font-bold mb-1">Or paste stream URL (YouTube / Vimeo / MP4)</label>
                   <input
                     type="url"
                     value={videoUrl}
                     onChange={(e) => setVideoUrl(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg bg-white border border-udemy-grayBorder text-udemy-black font-mono focus:border-udemy-purple focus:outline-none focus:ring-1 focus:ring-udemy-purple/20"
-                    placeholder="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    placeholder="https://www.youtube.com/embed/... or uploaded blob URL"
                   />
+                  {videoUrl && (
+                    <p className="mt-1 text-[10px] text-slate-500 font-medium truncate">Current: {videoUrl}</p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -369,7 +443,7 @@ export default function AdminCoursesPage() {
                     <span>Self-Paced Study Documents (PDF / Word)</span>
                   </div>
                   <p className="text-[11px] text-slate-600 font-medium">
-                    Upload PDF or Word (.doc/.docx) files. Learners will see and download them in the classroom Downloads tab and as syllabus items.
+                    Upload PDF or Word (.doc/.docx) files up to 50 MB each. Learners see them in Downloads and the syllabus.
                   </p>
                   <label className="flex flex-col items-center justify-center gap-2 px-4 py-6 rounded-lg border-2 border-dashed border-emerald-300 bg-white cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors">
                     {uploadingDoc ? (
@@ -378,14 +452,16 @@ export default function AdminCoursesPage() {
                       <Upload className="w-6 h-6 text-emerald-600" />
                     )}
                     <span className="text-xs font-bold text-emerald-800">
-                      {uploadingDoc ? 'Uploading…' : 'Choose PDF or Word files'}
+                      {uploadingDoc
+                        ? `Uploading… ${uploadProgress ?? 0}%`
+                        : 'Choose PDF or Word files (max 50 MB each)'}
                     </span>
                     <span className="text-[10px] text-slate-500">You can select multiple files</span>
                     <input
                       type="file"
                       accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       multiple
-                      disabled={uploadingDoc}
+                      disabled={uploadingDoc || uploadingVideo}
                       onChange={handleDocumentUpload}
                       className="hidden"
                     />

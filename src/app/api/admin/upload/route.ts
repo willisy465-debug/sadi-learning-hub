@@ -8,7 +8,13 @@ import { canManageCourses } from '@/lib/rbac';
 
 export const runtime = 'nodejs';
 
-const ALLOWED_CONTENT_TYPES = [
+const DOC_MAX_BYTES = 50 * 1024 * 1024; // 50 MB
+const VIDEO_MAX_BYTES = 1024 * 1024 * 1024; // 1 GB
+
+const DOC_EXTENSIONS = new Set(['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg', '.webp', '.gif']);
+const VIDEO_EXTENSIONS = new Set(['.mp4', '.webm', '.mov', '.m4v', '.avi', '.mkv']);
+
+const DOC_CONTENT_TYPES = [
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -18,28 +24,32 @@ const ALLOWED_CONTENT_TYPES = [
   'image/gif',
 ];
 
-const ALLOWED_EXTENSIONS = new Set([
-  '.pdf',
-  '.doc',
-  '.docx',
-  '.png',
-  '.jpg',
-  '.jpeg',
-  '.webp',
-  '.gif',
-]);
+const VIDEO_CONTENT_TYPES = [
+  'video/mp4',
+  'video/webm',
+  'video/quicktime',
+  'video/x-m4v',
+  'video/x-msvideo',
+  'video/x-matroska',
+];
+
+function isVideoPath(pathname: string) {
+  const ext = extname(pathname).toLowerCase();
+  return VIDEO_EXTENSIONS.has(ext) || pathname.startsWith('course-videos/');
+}
 
 function resolveContentType(name: string, mime = '') {
   const ext = extname(name).toLowerCase();
   const lowerMime = mime.toLowerCase();
+  if (VIDEO_EXTENSIONS.has(ext) || lowerMime.startsWith('video/')) return 'VIDEO';
   if (ext === '.pdf' || lowerMime.includes('pdf')) return 'PDF';
   if (ext === '.doc' || ext === '.docx' || lowerMime.includes('word')) return 'DOC';
   return 'FILE';
 }
 
 /**
- * Client upload token flow (@vercel/blob/client) — preferred on Vercel so large
- * PDFs/Word files never hit the serverless request body limit.
+ * Client upload token flow (@vercel/blob/client).
+ * Docs ≤ 50 MB, videos ≤ 1 GB (multipart recommended above ~100 MB).
  */
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -49,7 +59,6 @@ export async function POST(request: Request) {
 
   const contentType = request.headers.get('content-type') || '';
 
-  // Multipart fallback (local / small files posted directly to this route)
   if (contentType.includes('multipart/form-data')) {
     return handleDirectUpload(request);
   }
@@ -62,20 +71,39 @@ export async function POST(request: Request) {
       request,
       onBeforeGenerateToken: async (pathname) => {
         const ext = extname(pathname).toLowerCase();
-        if (!ALLOWED_EXTENSIONS.has(ext)) {
+        const video = isVideoPath(pathname);
+
+        if (video) {
+          if (!VIDEO_EXTENSIONS.has(ext) && !pathname.startsWith('course-videos/')) {
+            throw new Error('Only MP4, WebM, MOV, and similar video files are allowed.');
+          }
+          return {
+            allowedContentTypes: VIDEO_CONTENT_TYPES,
+            addRandomSuffix: true,
+            maximumSizeInBytes: VIDEO_MAX_BYTES,
+            tokenPayload: JSON.stringify({
+              kind: 'video',
+              uploadedBy: user?.email || user?.userId || 'admin',
+            }),
+          };
+        }
+
+        if (!DOC_EXTENSIONS.has(ext)) {
           throw new Error('Only PDF, Word (.doc/.docx), and image files are allowed.');
         }
+
         return {
-          allowedContentTypes: ALLOWED_CONTENT_TYPES,
+          allowedContentTypes: DOC_CONTENT_TYPES,
           addRandomSuffix: true,
-          maximumSizeInBytes: 50 * 1024 * 1024,
+          maximumSizeInBytes: DOC_MAX_BYTES,
           tokenPayload: JSON.stringify({
+            kind: 'document',
             uploadedBy: user?.email || user?.userId || 'admin',
           }),
         };
       },
       onUploadCompleted: async () => {
-        // Metadata is recorded when the course is published.
+        // Course publish persists the blob URL on the lesson/course record.
       },
     });
 
@@ -101,17 +129,36 @@ async function handleDirectUpload(request: Request) {
     const originalName = file.name.replace(/[^a-zA-Z0-9.\-_ ]/g, '').trim() || 'document';
     const ext = extname(originalName).toLowerCase();
     const mime = (file.type || '').toLowerCase();
-    const mimeAllowed =
-      ALLOWED_CONTENT_TYPES.includes(mime) || mime.startsWith('image/');
+    const video = VIDEO_EXTENSIONS.has(ext) || mime.startsWith('video/');
+    const maxBytes = video ? VIDEO_MAX_BYTES : DOC_MAX_BYTES;
 
-    if (!ALLOWED_EXTENSIONS.has(ext) && !mimeAllowed) {
+    if (file.size > maxBytes) {
       return NextResponse.json(
-        { error: 'Only PDF, Word (.doc/.docx), and image files are allowed.' },
+        {
+          error: video
+            ? 'Video must be 1 GB or smaller.'
+            : 'Document must be 50 MB or smaller.',
+        },
         { status: 400 }
       );
     }
 
-    const pathname = `course-materials/${Date.now()}-${originalName.replace(/\s+/g, '-')}`;
+    if (video) {
+      if (!VIDEO_EXTENSIONS.has(ext) && !mime.startsWith('video/')) {
+        return NextResponse.json({ error: 'Unsupported video type.' }, { status: 400 });
+      }
+    } else {
+      const mimeAllowed = DOC_CONTENT_TYPES.includes(mime) || mime.startsWith('image/');
+      if (!DOC_EXTENSIONS.has(ext) && !mimeAllowed) {
+        return NextResponse.json(
+          { error: 'Only PDF, Word (.doc/.docx), and image files are allowed.' },
+          { status: 400 }
+        );
+      }
+    }
+
+    const folder = video ? 'course-videos' : 'course-materials';
+    const pathname = `${folder}/${Date.now()}-${originalName.replace(/\s+/g, '-')}`;
     let fileUrl = '';
 
     if (process.env.BLOB_READ_WRITE_TOKEN) {
@@ -119,9 +166,16 @@ async function handleDirectUpload(request: Request) {
         access: 'public',
         contentType: file.type || undefined,
         addRandomSuffix: true,
+        multipart: file.size > 100 * 1024 * 1024,
       });
       fileUrl = blob.url;
     } else {
+      if (file.size > 10 * 1024 * 1024) {
+        return NextResponse.json(
+          { error: 'Large uploads require Vercel Blob. Configure BLOB_READ_WRITE_TOKEN.' },
+          { status: 500 }
+        );
+      }
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const uploadDir = join(process.cwd(), 'public', 'uploads');
