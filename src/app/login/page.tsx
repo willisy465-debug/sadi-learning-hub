@@ -100,7 +100,7 @@ function LoginForm() {
           <img
             src="/sadi-logo.png"
             alt="Southern Africa Development Institute"
-            className="mx-auto h-[1.84rem] sm:h-[2.185rem] w-auto max-w-[172px] object-contain mb-4 bg-transparent border-0 shadow-none mix-blend-multiply"
+            className="mx-auto h-[2.21rem] sm:h-[2.62rem] w-auto max-w-[206px] object-contain mb-4 bg-transparent border-0 shadow-none mix-blend-multiply"
           />
           <p className="mt-2 text-sm text-udemy-black">
             {isRegister
@@ -115,20 +115,13 @@ function LoginForm() {
               <KeyRound className="w-4 h-4" />
               <span>1-Click Demo Login Presets (Password: Password123!)</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 text-[11px]">
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
               <button
                 type="button"
                 onClick={() => handleQuickLogin('learner@saditraining.com')}
                 className="px-2.5 py-1.5 rounded-lg bg-udemy-gray hover:bg-udemy-gray text-black text-left border border-udemy-grayBorder truncate"
               >
                 👤 Learner Delegate
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin@saditraining.com')}
-                className="px-2.5 py-1.5 rounded-lg bg-udemy-gray hover:bg-udemy-gray text-[#2B3960] text-left border border-[#2B3960]/30 truncate font-bold shadow-sm shadow-[#2B3960]/5"
-              >
-                👑 Super Admin
               </button>
               <button
                 type="button"

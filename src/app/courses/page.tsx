@@ -6,10 +6,15 @@ import { CoursesMarketplaceClient } from './CoursesMarketplaceClient';
 
 export const dynamic = 'force-dynamic';
 
-export default async function CoursesPage() {
+export default async function CoursesPage({
+  searchParams,
+}: {
+  searchParams?: { delivery?: string };
+}) {
   let categories: any[] = [];
   let courses: any[] = [];
   let currentUser: any = null;
+  const initialDelivery = searchParams?.delivery || '';
 
   try {
     currentUser = await getCurrentUser();
@@ -141,6 +146,7 @@ export default async function CoursesPage() {
         initialCourses={courses}
         categories={categories}
         currentUser={currentUser}
+        initialDelivery={initialDelivery}
       />
 
       </div>

@@ -8,17 +8,26 @@ import {
 } from 'lucide-react';
 import { InstantCheckoutModal } from '@/components/checkout/InstantCheckoutModal';
 
+const ONLINE_SELF_PACED_METHODS = ['ONLINE_SELF_PACED', 'SELF_PACED', 'SELF_PACED_VIDEOS'];
+const LIVE_METHODS = ['FACE_TO_FACE', 'INSTRUCTOR_LED_LIVE'];
+
 interface CoursesMarketplaceClientProps {
   initialCourses: any[];
   categories: any[];
   currentUser?: any;
+  initialDelivery?: string;
 }
 
-export function CoursesMarketplaceClient({ initialCourses, categories, currentUser }: CoursesMarketplaceClientProps) {
+export function CoursesMarketplaceClient({
+  initialCourses,
+  categories,
+  currentUser,
+  initialDelivery = '',
+}: CoursesMarketplaceClientProps) {
   const [courses] = useState(initialCourses);
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedDelivery, setSelectedDelivery] = useState('');
+  const [selectedDelivery, setSelectedDelivery] = useState(initialDelivery);
   const [selectedCourseForCheckout, setSelectedCourseForCheckout] = useState<any>(null);
   const [hoveredCourseId, setHoveredCourseId] = useState<string | null>(null);
 
@@ -31,14 +40,9 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
     const matchesCat = selectedCategory ? course.categoryId === selectedCategory || (course.category && course.category.id === selectedCategory) : true;
     const matchesDel = selectedDelivery
       ? course.deliveryMethod === selectedDelivery ||
-        (selectedDelivery === 'SELF_PACED' &&
-          ['SELF_PACED', 'SELF_PACED_VIDEOS', 'ONLINE_SELF_PACED'].includes(course.deliveryMethod)) ||
-        (selectedDelivery === 'SELF_PACED_VIDEOS' &&
-          ['SELF_PACED', 'SELF_PACED_VIDEOS', 'ONLINE_SELF_PACED'].includes(course.deliveryMethod)) ||
-        (selectedDelivery === 'FACE_TO_FACE' &&
-          ['FACE_TO_FACE', 'INSTRUCTOR_LED_LIVE'].includes(course.deliveryMethod)) ||
-        (selectedDelivery === 'INSTRUCTOR_LED_LIVE' &&
-          ['FACE_TO_FACE', 'INSTRUCTOR_LED_LIVE'].includes(course.deliveryMethod))
+        (ONLINE_SELF_PACED_METHODS.includes(selectedDelivery) &&
+          ONLINE_SELF_PACED_METHODS.includes(course.deliveryMethod)) ||
+        (LIVE_METHODS.includes(selectedDelivery) && LIVE_METHODS.includes(course.deliveryMethod))
       : true;
     return matchesQuery && matchesCat && matchesDel;
   });
@@ -112,12 +116,13 @@ export function CoursesMarketplaceClient({ initialCourses, categories, currentUs
               onChange={(e) => setSelectedDelivery(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl bg-udemy-gray border border-udemy-grayBorder text-black text-sm focus:border-[#2B3960] focus:outline-none focus:ring-1 focus:ring-[#2B3960]/30"
             >
-              <option value="">All Online Delivery Modes</option>
-              <option value="SELF_PACED">100% Online Self-Paced Video</option>
-              <option value="SELF_PACED_VIDEOS">Self-Paced Video Lectures</option>
+              <option value="">All Delivery Modes</option>
+              <option value="ONLINE_SELF_PACED">Online Self-Paced Courses</option>
+              <option value="SELF_PACED_VIDEOS">Online Self-Paced Video Lectures</option>
               <option value="BLENDED">Blended Online & Masterclass</option>
               <option value="INSTRUCTOR_LED_LIVE">Instructor-Led Live</option>
               <option value="FACE_TO_FACE">Pretoria SADI Campus</option>
+              <option value="VIRTUAL_IN_HOUSE">Virtual In-House Corporate</option>
             </select>
           </div>
 

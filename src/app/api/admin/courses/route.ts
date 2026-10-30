@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         shortDescription,
         fullDescription: fullDescription || shortDescription,
         categoryId: category.id,
-        deliveryMethod: deliveryMethod || 'SELF_PACED_VIDEOS',
+        deliveryMethod: deliveryMethod || 'ONLINE_SELF_PACED',
         durationDays: parseInt(durationDays) || 5,
         cpdPoints: parseInt(cpdPoints) || 10,
         priceZar: parseFloat(priceZar) || 15000.0,

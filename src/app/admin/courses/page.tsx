@@ -15,7 +15,7 @@ export default function AdminCoursesPage() {
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [shortDescription, setShortDescription] = useState('');
-  const [deliveryMethod, setDeliveryMethod] = useState('SELF_PACED_VIDEOS');
+  const [deliveryMethod, setDeliveryMethod] = useState('ONLINE_SELF_PACED');
   const [durationDays, setDurationDays] = useState('5');
   const [cpdPoints, setCpdPoints] = useState('10');
   const [priceZar, setPriceZar] = useState('15000');
@@ -171,9 +171,12 @@ export default function AdminCoursesPage() {
                     onChange={(e) => setDeliveryMethod(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg bg-white border border-udemy-grayBorder text-udemy-black focus:border-udemy-purple focus:outline-none focus:ring-1 focus:ring-udemy-purple/20"
                   >
-                    <option value="SELF_PACED_VIDEOS">Online Self-Paced Videos</option>
+                    <option value="ONLINE_SELF_PACED">Online Self-Paced Courses</option>
+                    <option value="SELF_PACED_VIDEOS">Online Self-Paced Video Lectures</option>
+                    <option value="SELF_PACED">Self-Paced E-Learning</option>
                     <option value="INSTRUCTOR_LED_LIVE">Instructor-Led Live (Zoom/Teams)</option>
                     <option value="VIRTUAL_IN_HOUSE">Virtual In-House Corporate</option>
+                    <option value="BLENDED">Blended Online & Masterclass</option>
                   </select>
                 </div>
               </div>

@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
               <img
                 src="/sadi-logo-solid.png"
                 alt="Southern Africa Development Institute"
-                className="h-[1.84rem] sm:h-[2.185rem] md:h-[2.53rem] w-auto max-w-[172px] object-contain object-left mix-blend-normal"
+                className="h-[2.21rem] sm:h-[2.62rem] md:h-[3.04rem] w-auto max-w-[206px] object-contain object-left mix-blend-normal"
               />
             </div>
             <p className="text-xs text-white/70 leading-relaxed max-w-sm">
@@ -38,7 +38,7 @@ export const Footer: React.FC = () => {
             <h4 className="text-sm font-bold text-white tracking-wider uppercase">Programmes</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/courses" className="hover:text-brand-sage transition-colors">Scheduled Public Training</Link></li>
-              <li><Link href="/courses?delivery=SELF_PACED" className="hover:text-brand-sage transition-colors">Online Self-Paced E-Learning</Link></li>
+              <li><Link href="/courses?delivery=ONLINE_SELF_PACED" className="hover:text-brand-sage transition-colors">Online Self-Paced Courses</Link></li>
               <li><Link href="/courses?delivery=FACE_TO_FACE" className="hover:text-brand-sage transition-colors">Face-to-Face Workshops</Link></li>
               <li><Link href="/request-custom" className="hover:text-brand-sage transition-colors">In-House Corporate Training</Link></li>
               <li><Link href="/courses?delivery=CERTIFICATION_PROGRAMME" className="hover:text-brand-sage transition-colors">Certification Examinations</Link></li>

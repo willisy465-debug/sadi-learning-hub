@@ -45,7 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <img
               src="/sadi-logo.png"
               alt="Southern Africa Development Institute"
-              className="h-[1.67rem] sm:h-[2.185rem] md:h-[2.53rem] w-auto max-w-[min(55vw,184px)] object-contain object-left bg-transparent border-0 shadow-none outline-none mix-blend-multiply transition-opacity group-hover:opacity-90"
+              className="h-[2rem] sm:h-[2.62rem] md:h-[3.04rem] w-auto max-w-[min(55vw,221px)] object-contain object-left bg-transparent border-0 shadow-none outline-none mix-blend-multiply transition-opacity group-hover:opacity-90"
             />
           </Link>
 
