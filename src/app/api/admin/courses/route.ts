@@ -44,6 +44,7 @@ export async function POST(request: Request) {
       lessonTitle,
       meetingPlatform,
       meetingUrl,
+      documents = [],
     } = await request.json();
 
     if (!code || !title || !shortDescription) {
@@ -63,8 +64,39 @@ export async function POST(request: Request) {
     }
 
     const slug = code.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const docList = Array.isArray(documents)
+      ? documents.filter((d: any) => d?.url)
+      : [];
 
-    // Create course with initial module and lesson video material
+    const lessonsToCreate: any[] = [
+      {
+        title: lessonTitle || 'Lesson 1.1: Core Masterclass Video Lecture',
+        summary: 'Comprehensive executive video lecture material uploaded by admin.',
+        contentType: 'VIDEO',
+        videoUrl: videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        durationMinutes: 45,
+        displayOrder: 1,
+      },
+    ];
+
+    docList.forEach((doc: any, index: number) => {
+      const isPdf =
+        String(doc.contentType || '').toUpperCase() === 'PDF' ||
+        String(doc.url || '').toLowerCase().endsWith('.pdf') ||
+        String(doc.name || '').toLowerCase().endsWith('.pdf');
+      lessonsToCreate.push({
+        title: doc.name || `Study Material ${index + 1}`,
+        summary: isPdf
+          ? 'Downloadable PDF study material for self-paced learning.'
+          : 'Downloadable Word document for self-paced learning.',
+        contentType: isPdf ? 'PDF' : 'DOC',
+        assetUrl: doc.url,
+        durationMinutes: 10,
+        displayOrder: index + 2,
+      });
+    });
+
+    // Create course with initial module, video lesson, and uploaded documents
     const newCourse = await prisma.course.create({
       data: {
         code,
@@ -85,18 +117,12 @@ export async function POST(request: Request) {
             description: 'Core lecture videos and downloadable reading materials',
             displayOrder: 1,
             lessons: {
-              create: {
-                title: lessonTitle || 'Lesson 1.1: Core Masterclass Video Lecture',
-                summary: 'Comprehensive executive video lecture material uploaded by Super Admin.',
-                contentType: 'VIDEO',
-                videoUrl: videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                durationMinutes: 45,
-                displayOrder: 1,
-              },
+              create: lessonsToCreate,
             },
           },
         },
       },
+      include: { modules: { include: { lessons: true } } },
     });
 
     // If instructor-led or virtual in-house, create an initial cohort with meeting details

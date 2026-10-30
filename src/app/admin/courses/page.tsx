@@ -2,7 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BookOpen, PlusCircle, Calendar, Award, Edit, Trash2, ArrowLeft, Upload, Video, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { BookOpen, PlusCircle, ArrowLeft, Upload, Video, CheckCircle2, FileText, Trash2, Loader2 } from 'lucide-react';
+
+type UploadedDoc = { url: string; name: string; contentType: string };
+
+const SELF_PACED_METHODS = new Set([
+  'ONLINE_SELF_PACED',
+  'SELF_PACED_VIDEOS',
+  'SELF_PACED',
+  'BLENDED',
+]);
 
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -25,6 +34,8 @@ export default function AdminCoursesPage() {
   const [lessonTitle, setLessonTitle] = useState('');
   const [meetingPlatform, setMeetingPlatform] = useState('ZOOM');
   const [meetingUrl, setMeetingUrl] = useState('');
+  const [documents, setDocuments] = useState<UploadedDoc[]>([]);
+  const [uploadingDoc, setUploadingDoc] = useState(false);
 
   const fetchCourses = async () => {
     try {
@@ -45,6 +56,40 @@ export default function AdminCoursesPage() {
   useEffect(() => {
     fetchCourses();
   }, []);
+
+  const handleDocumentUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+
+    setUploadingDoc(true);
+    setMessage('');
+
+    try {
+      const uploaded: UploadedDoc[] = [];
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `Failed to upload ${file.name}`);
+        uploaded.push({
+          url: data.url,
+          name: data.name || file.name,
+          contentType: data.contentType || 'PDF',
+        });
+      }
+      setDocuments((prev) => [...prev, ...uploaded]);
+    } catch (err: any) {
+      setMessage(`Error: ${err.message}`);
+    } finally {
+      setUploadingDoc(false);
+      e.target.value = '';
+    }
+  };
+
+  const removeDocument = (url: string) => {
+    setDocuments((prev) => prev.filter((d) => d.url !== url));
+  };
 
   const handleCreateCourse = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +114,7 @@ export default function AdminCoursesPage() {
           lessonTitle,
           meetingPlatform,
           meetingUrl,
+          documents,
         }),
       });
 
@@ -77,13 +123,19 @@ export default function AdminCoursesPage() {
         throw new Error(data.error || 'Failed to upload course');
       }
 
-      setMessage('Course & video lecture material successfully uploaded!');
+      const docNote = documents.length
+        ? ` with ${documents.length} study document${documents.length === 1 ? '' : 's'}`
+        : '';
+      setMessage(`Course & materials successfully uploaded${docNote}!`);
       setShowModal(false);
-      // Reset form
+      setCode('');
       setTitle('');
       setShortDescription('');
       setVideoUrl('');
       setMeetingUrl('');
+      setModuleTitle('');
+      setLessonTitle('');
+      setDocuments([]);
       fetchCourses();
     } catch (err: any) {
       setMessage(`Error: ${err.message}`);
@@ -108,7 +160,7 @@ export default function AdminCoursesPage() {
                 ADMIN
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium">Upload new training curricula, streaming lecture videos, and set tuition pricing.</p>
+            <p className="text-xs text-slate-500 font-medium">Upload curricula, videos, PDF/Word study packs, and tuition pricing.</p>
           </div>
         </div>
 
@@ -143,7 +195,7 @@ export default function AdminCoursesPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-udemy-black text-lg">Upload Course & Video Lecture</h3>
-                  <p className="text-xs text-slate-500 font-medium">Add course metadata, pricing, and video streaming links.</p>
+                  <p className="text-xs text-slate-500 font-medium">Add metadata, video links, and PDF/Word materials for self-paced learning.</p>
                 </div>
               </div>
               <button onClick={() => setShowModal(false)} className="text-slate-500 hover:text-udemy-black font-bold text-sm">
@@ -286,6 +338,64 @@ export default function AdminCoursesPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Self-paced PDF / Word study materials */}
+              {SELF_PACED_METHODS.has(deliveryMethod) && (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-3">
+                  <div className="flex items-center space-x-2 text-emerald-800 font-bold">
+                    <FileText className="w-4 h-4" />
+                    <span>Self-Paced Study Documents (PDF / Word)</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 font-medium">
+                    Upload PDF or Word (.doc/.docx) files. Learners will see and download them in the classroom Downloads tab and as syllabus items.
+                  </p>
+                  <label className="flex flex-col items-center justify-center gap-2 px-4 py-6 rounded-lg border-2 border-dashed border-emerald-300 bg-white cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors">
+                    {uploadingDoc ? (
+                      <Loader2 className="w-6 h-6 text-emerald-600 animate-spin" />
+                    ) : (
+                      <Upload className="w-6 h-6 text-emerald-600" />
+                    )}
+                    <span className="text-xs font-bold text-emerald-800">
+                      {uploadingDoc ? 'Uploading…' : 'Choose PDF or Word files'}
+                    </span>
+                    <span className="text-[10px] text-slate-500">You can select multiple files</span>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      multiple
+                      disabled={uploadingDoc}
+                      onChange={handleDocumentUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  {documents.length > 0 && (
+                    <ul className="space-y-2">
+                      {documents.map((doc) => (
+                        <li
+                          key={doc.url}
+                          className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-white border border-emerald-200 text-xs"
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <FileText className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                            <span className="font-semibold text-slate-800 truncate">{doc.name}</span>
+                            <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px] shrink-0">
+                              {doc.contentType}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeDocument(doc.url)}
+                            className="p-1.5 rounded text-slate-500 hover:text-rose-600 hover:bg-rose-50"
+                            aria-label={`Remove ${doc.name}`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
 
               {/* Live Meeting details (if instructor-led or virtual in-house) */}
               {(deliveryMethod === 'INSTRUCTOR_LED_LIVE' || deliveryMethod === 'VIRTUAL_IN_HOUSE') && (

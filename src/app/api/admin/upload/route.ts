@@ -1,8 +1,26 @@
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { join, extname } from 'path';
 import { getCurrentUser } from '@/lib/auth';
 import { canManageCourses } from '@/lib/rbac';
+
+const ALLOWED_EXTENSIONS = new Set([
+  '.pdf',
+  '.doc',
+  '.docx',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.webp',
+  '.gif',
+]);
+
+const ALLOWED_MIME_PREFIXES = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml',
+  'image/',
+];
 
 export async function POST(request: Request) {
   try {
@@ -18,33 +36,43 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const originalName = file.name.replace(/[^a-zA-Z0-9.\-_ ]/g, '').trim() || 'document';
+    const ext = extname(originalName).toLowerCase();
+    const mime = (file.type || '').toLowerCase();
 
-    // Sanitize filename and create unique name
-    const originalName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '');
-    const filename = `${Date.now()}-${originalName}`;
-    
-    // Ensure upload directory exists
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    try {
-      await mkdir(uploadDir, { recursive: true });
-    } catch (e) {
-      // Ignore if directory already exists
+    const mimeAllowed = ALLOWED_MIME_PREFIXES.some((p) => mime.startsWith(p));
+    if (!ALLOWED_EXTENSIONS.has(ext) && !mimeAllowed) {
+      return NextResponse.json(
+        { error: 'Only PDF, Word (.doc/.docx), and image files are allowed.' },
+        { status: 400 }
+      );
     }
 
-    const path = join(uploadDir, filename);
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const safeBase = originalName.replace(/\s+/g, '-');
+    const filename = `${Date.now()}-${safeBase}`;
 
-    // Write file to public/uploads
+    const uploadDir = join(process.cwd(), 'public', 'uploads');
+    await mkdir(uploadDir, { recursive: true });
+
+    const path = join(uploadDir, filename);
     await writeFile(path, buffer);
 
-    // Return the URL for the frontend to use
     const fileUrl = `/uploads/${filename}`;
-    
-    return NextResponse.json({ 
-      success: true, 
+    const contentType =
+      ext === '.pdf' || mime.includes('pdf')
+        ? 'PDF'
+        : ext === '.doc' || ext === '.docx' || mime.includes('word')
+          ? 'DOC'
+          : 'FILE';
+
+    return NextResponse.json({
+      success: true,
       url: fileUrl,
-      message: 'File uploaded successfully'
+      name: originalName,
+      contentType,
+      message: 'File uploaded successfully',
     });
   } catch (error) {
     console.error('File upload error:', error);

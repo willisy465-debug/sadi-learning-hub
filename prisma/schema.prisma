@@ -209,7 +209,7 @@ model Lesson {
   moduleId        String
   title           String
   summary         String?
-  contentType     String  @default("VIDEO") // VIDEO, LIVE_SESSION, RICH_TEXT, PDF, QUIZ, ASSIGNMENT
+  contentType     String  @default("VIDEO") // VIDEO, LIVE_SESSION, RICH_TEXT, PDF, DOC, QUIZ, ASSIGNMENT
   videoUrl        String?
   meetingUrl      String?
   durationMinutes Int     @default(15)

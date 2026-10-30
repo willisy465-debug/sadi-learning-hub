@@ -125,13 +125,37 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
     setNewNote('');
   };
 
-  const handleDownloadMaterials = (lessonTitle: string) => {
-    const content = `SADI EXECUTIVE LEARNING HUB — ONLINE STUDY MATERIAL\n\nCourse: ${course.code} - ${course.title}\nLesson: ${lessonTitle}\nDelegate: ${userName} (${userEmail})\n\nOfficial Course Materials & Digital Notes:\n\n1. Executive Summary & Regulatory Framework\n2. Case Studies & Pan-African Implementation Protocols\n3. Self-Assessment Review Questions\n\n(c) 2026 Southern Africa Development Institute. All Rights Reserved.`;
+  const isDocumentLesson = (lesson: any) => {
+    const type = String(lesson?.contentType || '').toUpperCase();
+    if (type === 'VIDEO' || type === 'LIVE_SESSION' || type === 'QUIZ') return false;
+    return type === 'PDF' || type === 'DOC' || type === 'FILE' || Boolean(lesson?.assetUrl);
+  };
+
+  const isPdfLesson = (lesson: any) => {
+    const type = String(lesson?.contentType || '').toUpperCase();
+    const url = String(lesson?.assetUrl || '').toLowerCase();
+    return type === 'PDF' || url.endsWith('.pdf');
+  };
+
+  const downloadableMaterials = allLessons.filter((l: any) => l.assetUrl);
+
+  const handleDownloadMaterials = (lesson: any) => {
+    if (lesson?.assetUrl) {
+      const link = document.createElement('a');
+      link.href = lesson.assetUrl;
+      link.download = lesson.title || 'study-material';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.click();
+      return;
+    }
+
+    const content = `SADI EXECUTIVE LEARNING HUB — ONLINE STUDY MATERIAL\n\nCourse: ${course.code} - ${course.title}\nLesson: ${lesson?.title || 'Material'}\nDelegate: ${userName} (${userEmail})\n\nOfficial Course Materials & Digital Notes:\n\n1. Executive Summary & Regulatory Framework\n2. Case Studies & Pan-African Implementation Protocols\n3. Self-Assessment Review Questions\n\n(c) 2026 Southern Africa Development Institute. All Rights Reserved.`;
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `SADI_${course.code}_${lessonTitle.replace(/[^a-zA-Z0-9]/g, '_')}_StudyPack.txt`;
+    link.download = `SADI_${course.code}_${String(lesson?.title || 'Material').replace(/[^a-zA-Z0-9]/g, '_')}_StudyPack.txt`;
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -196,15 +220,42 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         {/* Main Content & Video Player Area */}
         <div className="lg:col-span-3 p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-60px)]">
           
-          {/* Udemy Media Player Container */}
+          {/* Media / Document Viewer */}
           <div className="aspect-video bg-black rounded-xl overflow-hidden relative border border-udemy-grayBorder shadow-sm flex flex-col justify-between group">
             
             {/* Dynamic Security Watermark */}
             <div className="absolute top-4 right-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400/50 select-none bg-black/50 backdrop-blur-md px-2.5 py-1 rounded border border-slate-800">
-              SADI Udemy Player • {userEmail} • {userName}
+              SADI Classroom • {userEmail} • {userName}
             </div>
 
-            {lowBandwidthMode ? (
+            {isDocumentLesson(activeLesson) && activeLesson?.assetUrl ? (
+              isPdfLesson(activeLesson) ? (
+                <iframe
+                  key={activeLesson.id}
+                  src={activeLesson.assetUrl}
+                  title={activeLesson.title}
+                  className="w-full h-full bg-white"
+                />
+              ) : (
+                <div className="flex-1 p-8 text-center flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
+                  <FileText className="w-16 h-16 text-udemy-purple" />
+                  <h3 className="text-lg font-bold text-white">Word Document Study Material</h3>
+                  <p className="text-xs text-slate-400">
+                    Open or download this document to continue your self-paced learning.
+                  </p>
+                  <a
+                    href={activeLesson.assetUrl}
+                    download={activeLesson.title}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="udemy-button-primary px-5 py-2.5 rounded text-xs font-bold inline-flex items-center space-x-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Document</span>
+                  </a>
+                </div>
+              )
+            ) : lowBandwidthMode ? (
               <div className="flex-1 p-8 text-center flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
                 <Volume2 className="w-16 h-16 text-udemy-purple animate-pulse" />
                 <h3 className="text-lg font-bold text-white">Audio Stream Fallback Active</h3>
@@ -230,36 +281,56 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               </video>
             )}
 
-            {/* Udemy Custom Speed Controller Overlay Bar */}
+            {/* Speed / type overlay */}
             <div className="bg-slate-950/90 backdrop-blur-md px-6 py-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300">
-              <div className="flex items-center space-x-3">
-                <span className="text-[11px] font-bold text-slate-400 uppercase">Speed:</span>
-                {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
+              {isDocumentLesson(activeLesson) && activeLesson?.assetUrl ? (
+                <>
+                  <div className="flex items-center space-x-2 text-[11px]">
+                    <FileText className="w-3.5 h-3.5 text-udemy-purple" />
+                    <span>{isPdfLesson(activeLesson) ? 'PDF Study Material' : 'Word Document'}</span>
+                  </div>
                   <button
-                    key={s}
-                    onClick={() => handleSpeedChange(s)}
-                    className={`px-2 py-0.5 rounded font-mono text-[11px] transition-colors ${
-                      playbackSpeed === s
-                        ? 'bg-udemy-purple text-slate-950 font-bold'
-                        : 'bg-udemy-black text-slate-400 hover:text-white'
-                    }`}
+                    type="button"
+                    onClick={() => handleDownloadMaterials(activeLesson)}
+                    className="flex items-center space-x-1 text-[11px] text-slate-300 hover:text-white"
                   >
-                    {s}x
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download</span>
                   </button>
-                ))}
-              </div>
-
-              <div className="flex items-center space-x-2 text-[11px] text-slate-400">
-                <Video className="w-3.5 h-3.5 text-udemy-purple" />
-                <span>HD 1080p Stream</span>
-              </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-[11px] font-bold text-slate-400 uppercase">Speed:</span>
+                    {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => handleSpeedChange(s)}
+                        className={`px-2 py-0.5 rounded font-mono text-[11px] transition-colors ${
+                          playbackSpeed === s
+                            ? 'bg-udemy-purple text-slate-950 font-bold'
+                            : 'bg-udemy-black text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {s}x
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex items-center space-x-2 text-[11px] text-slate-400">
+                    <Video className="w-3.5 h-3.5 text-udemy-purple" />
+                    <span>HD 1080p Stream</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
           {/* Lesson Header & Mark Complete Action */}
           <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Active Video Lecture</span>
+              <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">
+                {isDocumentLesson(activeLesson) && activeLesson?.assetUrl ? 'Study Document' : 'Active Video Lecture'}
+              </span>
               <h2 className="text-xl font-bold text-udemy-black">{activeLesson?.title}</h2>
               <p className="text-xs text-slate-500 font-medium">{activeLesson?.summary}</p>
             </div>
@@ -427,22 +498,40 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               {/* Downloads Tab */}
               {activeTab === 'resources' && (
                 <div className="space-y-4">
-                  <h4 className="font-bold text-udemy-black text-sm">Available Downloads for {activeLesson?.title}</h4>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-5 rounded-xl bg-slate-50 border border-udemy-grayBorder flex items-center justify-between">
-                      <div className="space-y-1">
-                        <p className="font-bold text-udemy-black">Lesson Study Pack (PDF)</p>
-                        <p className="text-[10px] text-slate-500 font-medium">Includes executive slides & case study notes</p>
-                      </div>
-                      <button
-                        onClick={() => handleDownloadMaterials(activeLesson?.title)}
-                        className="p-2.5 rounded-lg bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 hover:bg-udemy-purple/20 transition-colors"
-                      >
-                        <Download className="w-4 h-4" />
-                      </button>
+                  <h4 className="font-bold text-udemy-black text-sm">Course Study Materials</h4>
+                  <p className="text-xs text-slate-500">
+                    PDF and Word documents uploaded for this self-paced course.
+                  </p>
+
+                  {downloadableMaterials.length === 0 ? (
+                    <div className="p-5 rounded-xl bg-slate-50 border border-udemy-grayBorder text-xs text-slate-500">
+                      No uploaded documents yet for this course.
                     </div>
-                  </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                      {downloadableMaterials.map((lesson: any) => (
+                        <div
+                          key={lesson.id}
+                          className="p-5 rounded-xl bg-slate-50 border border-udemy-grayBorder flex items-center justify-between gap-3"
+                        >
+                          <div className="space-y-1 min-w-0">
+                            <p className="font-bold text-udemy-black truncate">{lesson.title}</p>
+                            <p className="text-[10px] text-slate-500 font-medium">
+                              {isPdfLesson(lesson) ? 'PDF document' : 'Word document'} · Self-paced material
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadMaterials(lesson)}
+                            className="p-2.5 rounded-lg bg-udemy-purple/10 text-udemy-purple border border-udemy-purple/30 hover:bg-udemy-purple/20 transition-colors shrink-0"
+                            aria-label={`Download ${lesson.title}`}
+                          >
+                            <Download className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -484,6 +573,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                         <div className="flex items-center space-x-2 truncate">
                           {isDone ? (
                             <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          ) : isDocumentLesson(lesson) && lesson.assetUrl ? (
+                            <FileText className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                           ) : (
                             <Video className="w-3.5 h-3.5 text-udemy-purple shrink-0" />
                           )}

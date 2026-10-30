@@ -35,3 +35,7 @@ prisma/*.db-journal
 
 .vercel
 .env*
+
+# uploaded course materials (keep folder)
+/public/uploads/*
+!/public/uploads/.gitkeep
