@@ -125,16 +125,56 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
     setNewNote('');
   };
 
+  const isReadingLesson = (lesson: any) => {
+    const type = String(lesson?.contentType || '').toUpperCase();
+    return type === 'RICH_TEXT' || (Boolean(lesson?.textContent) && type !== 'VIDEO');
+  };
+
   const isDocumentLesson = (lesson: any) => {
     const type = String(lesson?.contentType || '').toUpperCase();
-    if (type === 'VIDEO' || type === 'LIVE_SESSION' || type === 'QUIZ') return false;
-    return type === 'PDF' || type === 'DOC' || type === 'FILE' || Boolean(lesson?.assetUrl);
+    if (type === 'VIDEO' || type === 'LIVE_SESSION' || type === 'QUIZ' || type === 'RICH_TEXT') return false;
+    return type === 'PDF' || type === 'DOC' || type === 'FILE' || Boolean(lesson?.assetUrl && !lesson?.textContent);
   };
 
   const isPdfLesson = (lesson: any) => {
     const type = String(lesson?.contentType || '').toUpperCase();
     const url = String(lesson?.assetUrl || '').toLowerCase();
     return type === 'PDF' || url.endsWith('.pdf');
+  };
+
+  const renderReadingBody = (raw: string) => {
+    const parts = String(raw || '')
+      .split(/\n(?=### )/)
+      .filter(Boolean);
+    return parts.map((part, idx) => {
+      if (part.startsWith('### ')) {
+        const [headingLine, ...rest] = part.split('\n');
+        return (
+          <section key={idx} className="space-y-2">
+            <h3 className="text-sm font-bold text-udemy-black border-b border-udemy-grayBorder pb-1">
+              {headingLine.replace(/^###\s*/, '')}
+            </h3>
+            {rest
+              .join('\n')
+              .split(/\n{2,}/)
+              .filter(Boolean)
+              .map((para, pIdx) => (
+                <p key={pIdx} className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                  {para.trim()}
+                </p>
+              ))}
+          </section>
+        );
+      }
+      return part
+        .split(/\n{2,}/)
+        .filter(Boolean)
+        .map((para, pIdx) => (
+          <p key={`${idx}-${pIdx}`} className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+            {para.trim()}
+          </p>
+        ));
+    });
   };
 
   const downloadableMaterials = allLessons.filter((l: any) => l.assetUrl);
@@ -220,7 +260,35 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
         {/* Main Content & Video Player Area */}
         <div className="lg:col-span-3 p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-60px)]">
           
-          {/* Media / Document Viewer */}
+          {/* Media / Document / Reading Viewer */}
+          {isReadingLesson(activeLesson) ? (
+            <div className="min-h-[420px] bg-white rounded-xl border border-udemy-grayBorder shadow-sm p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between gap-3 border-b border-udemy-grayBorder pb-3">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Reading</span>
+                  <h2 className="text-lg font-bold text-udemy-black">{activeLesson?.title}</h2>
+                </div>
+                {activeLesson?.assetUrl && (
+                  <a
+                    href={activeLesson.assetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-bold text-udemy-purple inline-flex items-center gap-1 hover:underline"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    Source file
+                  </a>
+                )}
+              </div>
+              <div className="space-y-4 max-w-3xl">
+                {activeLesson?.textContent ? (
+                  renderReadingBody(activeLesson.textContent)
+                ) : (
+                  <p className="text-sm text-slate-500">No reading content for this item yet.</p>
+                )}
+              </div>
+            </div>
+          ) : (
           <div className="aspect-video bg-black rounded-xl overflow-hidden relative border border-udemy-grayBorder shadow-sm flex flex-col justify-between group">
             
             {/* Dynamic Security Watermark */}
@@ -324,12 +392,17 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               )}
             </div>
           </div>
+          )}
 
           {/* Lesson Header & Mark Complete Action */}
           <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div className="space-y-1">
               <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">
-                {isDocumentLesson(activeLesson) && activeLesson?.assetUrl ? 'Study Document' : 'Active Video Lecture'}
+                {isReadingLesson(activeLesson)
+                  ? 'Reading Item'
+                  : isDocumentLesson(activeLesson) && activeLesson?.assetUrl
+                    ? 'Study Document'
+                    : 'Active Video Lecture'}
               </span>
               <h2 className="text-xl font-bold text-udemy-black">{activeLesson?.title}</h2>
               <p className="text-xs text-slate-500 font-medium">{activeLesson?.summary}</p>
@@ -409,9 +482,13 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
               {activeTab === 'overview' && (
                 <div className="space-y-4 text-sm text-slate-700 leading-relaxed">
                   <h4 className="font-bold text-udemy-black text-base">About this lesson</h4>
+                  {isReadingLesson(activeLesson) && activeLesson?.textContent ? (
+                    <div className="space-y-3">{renderReadingBody(activeLesson.textContent)}</div>
+                  ) : (
                   <p>
-                    {activeLesson?.textContent || `This executive online video lecture covers fundamental concepts for ${course.title}.`}
+                    {activeLesson?.summary || `This executive online video lecture covers fundamental concepts for ${course.title}.`}
                   </p>
+                  )}
                   
                   <div className="pt-4 border-t border-udemy-grayBorder grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div className="p-4 rounded-xl bg-slate-50 border border-udemy-grayBorder">
@@ -573,6 +650,8 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                         <div className="flex items-center space-x-2 truncate">
                           {isDone ? (
                             <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          ) : isReadingLesson(lesson) ? (
+                            <BookOpen className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                           ) : isDocumentLesson(lesson) && lesson.assetUrl ? (
                             <FileText className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                           ) : (

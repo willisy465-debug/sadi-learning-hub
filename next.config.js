@@ -12,6 +12,7 @@ const nextConfig = {
   },
   // Bundle the SQLite seed DB into serverless functions (copied to /tmp at runtime)
   experimental: {
+    serverComponentsExternalPackages: ['unpdf', 'pdf-parse', 'mammoth'],
     outputFileTracingIncludes: {
       '/*': ['./prisma/dev.db'],
       '/api/**/*': ['./prisma/dev.db'],

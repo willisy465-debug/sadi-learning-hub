@@ -45,13 +45,13 @@ export async function POST(request: Request) {
       meetingPlatform,
       meetingUrl,
       documents = [],
+      curriculum = null,
     } = await request.json();
 
     if (!code || !title || !shortDescription) {
       return NextResponse.json({ error: 'Code, title, and short description are required.' }, { status: 400 });
     }
 
-    // Get default category
     let category = await prisma.courseCategory.findFirst();
     if (!category) {
       category = await prisma.courseCategory.create({
@@ -64,39 +64,88 @@ export async function POST(request: Request) {
     }
 
     const slug = code.toLowerCase().replace(/[^a-z0-9]/g, '-');
-    const docList = Array.isArray(documents)
-      ? documents.filter((d: any) => d?.url)
-      : [];
+    const docList = Array.isArray(documents) ? documents.filter((d: any) => d?.url) : [];
+    const parsedModules = Array.isArray(curriculum?.modules) ? curriculum.modules : [];
 
-    const lessonsToCreate: any[] = [
-      {
-        title: lessonTitle || 'Lesson 1.1: Core Masterclass Video Lecture',
-        summary: 'Comprehensive executive video lecture material uploaded by admin.',
-        contentType: 'VIDEO',
-        videoUrl: videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        durationMinutes: 45,
-        displayOrder: 1,
-      },
-    ];
+    let modulesCreate: any[];
 
-    docList.forEach((doc: any, index: number) => {
-      const isPdf =
-        String(doc.contentType || '').toUpperCase() === 'PDF' ||
-        String(doc.url || '').toLowerCase().endsWith('.pdf') ||
-        String(doc.name || '').toLowerCase().endsWith('.pdf');
-      lessonsToCreate.push({
-        title: doc.name || `Study Material ${index + 1}`,
-        summary: isPdf
-          ? 'Downloadable PDF study material for self-paced learning.'
-          : 'Downloadable Word document for self-paced learning.',
-        contentType: isPdf ? 'PDF' : 'DOC',
-        assetUrl: doc.url,
-        durationMinutes: 10,
-        displayOrder: index + 2,
+    if (parsedModules.length > 0) {
+      modulesCreate = parsedModules.map((mod: any, mIdx: number) => {
+        const lessons = Array.isArray(mod.lessons) ? mod.lessons : [];
+        const lessonCreates = lessons.map((lesson: any, lIdx: number) => ({
+          title: lesson.title || `Lesson ${lIdx + 1}`,
+          summary: lesson.summary || undefined,
+          contentType: lesson.contentType || 'RICH_TEXT',
+          textContent: lesson.textContent || undefined,
+          assetUrl: lesson.assetUrl || undefined,
+          videoUrl: lesson.contentType === 'VIDEO' ? lesson.videoUrl || videoUrl : undefined,
+          durationMinutes: lesson.durationMinutes || 10,
+          displayOrder: lesson.displayOrder || lIdx + 1,
+        }));
+
+        // Prepend intro video on first module when a video URL is provided
+        if (mIdx === 0 && videoUrl) {
+          lessonCreates.unshift({
+            title: lessonTitle || 'Welcome video lecture',
+            summary: 'Introductory video for this course',
+            contentType: 'VIDEO',
+            textContent: undefined,
+            assetUrl: undefined,
+            videoUrl,
+            durationMinutes: 45,
+            displayOrder: 0,
+          });
+          lessonCreates.forEach((l: any, i: number) => {
+            l.displayOrder = i + 1;
+          });
+        }
+
+        return {
+          title: mod.title || moduleTitle || `Module ${mIdx + 1}`,
+          description: mod.description || undefined,
+          displayOrder: mod.displayOrder || mIdx + 1,
+          lessons: { create: lessonCreates },
+        };
       });
-    });
+    } else {
+      const lessonsToCreate: any[] = [
+        {
+          title: lessonTitle || 'Lesson 1.1: Core Masterclass Video Lecture',
+          summary: 'Comprehensive executive video lecture material uploaded by admin.',
+          contentType: 'VIDEO',
+          videoUrl: videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+          durationMinutes: 45,
+          displayOrder: 1,
+        },
+      ];
 
-    // Create course with initial module, video lesson, and uploaded documents
+      docList.forEach((doc: any, index: number) => {
+        const isPdf =
+          String(doc.contentType || '').toUpperCase() === 'PDF' ||
+          String(doc.url || '').toLowerCase().endsWith('.pdf') ||
+          String(doc.name || '').toLowerCase().endsWith('.pdf');
+        lessonsToCreate.push({
+          title: doc.name || `Study Material ${index + 1}`,
+          summary: isPdf
+            ? 'Downloadable PDF study material for self-paced learning.'
+            : 'Downloadable Word document for self-paced learning.',
+          contentType: isPdf ? 'PDF' : 'DOC',
+          assetUrl: doc.url,
+          durationMinutes: 10,
+          displayOrder: index + 2,
+        });
+      });
+
+      modulesCreate = [
+        {
+          title: moduleTitle || 'Module 1: Executive Foundation & Materials',
+          description: 'Core lecture videos and downloadable reading materials',
+          displayOrder: 1,
+          lessons: { create: lessonsToCreate },
+        },
+      ];
+    }
+
     const newCourse = await prisma.course.create({
       data: {
         code,
@@ -112,28 +161,20 @@ export async function POST(request: Request) {
         priceUsd: parseFloat(priceUsd) || 950.0,
         promotionalVideoUrl: videoUrl || undefined,
         modules: {
-          create: {
-            title: moduleTitle || 'Module 1: Executive Foundation & Materials',
-            description: 'Core lecture videos and downloadable reading materials',
-            displayOrder: 1,
-            lessons: {
-              create: lessonsToCreate,
-            },
-          },
+          create: modulesCreate,
         },
       },
       include: { modules: { include: { lessons: true } } },
     });
 
-    // If instructor-led or virtual in-house, create an initial cohort with meeting details
     if (deliveryMethod === 'INSTRUCTOR_LED_LIVE' || deliveryMethod === 'VIRTUAL_IN_HOUSE') {
       const cohortCode = `${code}-COHORT-1`;
       const startDate = new Date();
-      startDate.setDate(startDate.getDate() + 14); // starts in 14 days by default
+      startDate.setDate(startDate.getDate() + 14);
       const endDate = new Date(startDate);
       const days = Number.parseInt(String(durationDays), 10);
       endDate.setDate(endDate.getDate() + (Number.isFinite(days) && days > 0 ? days : 5));
-      
+
       await prisma.cohort.create({
         data: {
           courseId: newCourse.id,
@@ -145,7 +186,7 @@ export async function POST(request: Request) {
           location: 'Online',
           meetingPlatform: meetingPlatform || 'ZOOM',
           meetingUrl: meetingUrl || undefined,
-        }
+        },
       });
     }
 
@@ -153,7 +194,7 @@ export async function POST(request: Request) {
       user.email,
       'COURSE_CREATE',
       'COURSE',
-      `Admin created course ${code}: "${title}" with video stream material`,
+      `Admin created course ${code}: "${title}" with ${modulesCreate.length} structured modules`,
       user.userId,
       newCourse.id
     );
