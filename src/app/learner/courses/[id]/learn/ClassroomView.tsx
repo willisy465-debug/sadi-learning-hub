@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { 
-  PlayCircle, CheckCircle, Volume2, FileText, Download, Shield, Wifi, WifiOff, 
-  ArrowLeft, ArrowRight, Award, Video, Sparkles, BookOpen, Lock, MessageSquare, Edit3, 
-  Settings, Check, Send, Trash2, Maximize2 
+  CheckCircle, Volume2, FileText, Download, Wifi, WifiOff, 
+  ArrowLeft, Award, Video, BookOpen, MessageSquare, Edit3, 
+  Send
 } from 'lucide-react';
 
 interface ClassroomViewProps {
@@ -46,6 +46,10 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
   const [newNote, setNewNote] = useState('');
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const readingScrollRef = useRef<HTMLDivElement | null>(null);
+  const readingEndRef = useRef<HTMLDivElement | null>(null);
+  const lastSavedRef = useRef<Record<string, number>>({});
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [completedLessons, setCompletedLessons] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -53,6 +57,15 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
       if (l.progresses && l.progresses.length > 0 && l.progresses[0].isCompleted) {
         initial[l.id] = true;
       }
+    });
+    return initial;
+  });
+
+  const [lessonProgress, setLessonProgress] = useState<Record<string, number>>(() => {
+    const initial: Record<string, number> = {};
+    allLessons.forEach((l: any) => {
+      const p = l.progresses?.[0];
+      if (p) initial[l.id] = p.isCompleted ? 100 : Math.round(p.progressPercent || 0);
     });
     return initial;
   });
@@ -68,6 +81,47 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
 
   const completedCount = Object.values(completedLessons).filter(Boolean).length;
   const progressPercent = allLessons.length > 0 ? Math.round((completedCount / allLessons.length) * 100) : 0;
+  const activeItemProgress = lessonProgress[activeLesson?.id] || (completedLessons[activeLesson?.id] ? 100 : 0);
+
+  const persistProgress = (
+    lessonId: string,
+    percent: number,
+    opts?: { source?: string; lastPosition?: number; forceComplete?: boolean }
+  ) => {
+    if (!lessonId || lessonId === 'demo-lesson') return;
+
+    const clamped = Math.max(0, Math.min(100, Math.round(percent)));
+    const prev = lessonProgress[lessonId] || 0;
+    if (clamped < prev && !opts?.forceComplete) return;
+
+    setLessonProgress((state) => ({ ...state, [lessonId]: Math.max(state[lessonId] || 0, clamped) }));
+    if (clamped >= 85 || opts?.forceComplete) {
+      setCompletedLessons((state) => ({ ...state, [lessonId]: true }));
+    }
+
+    const lastSaved = lastSavedRef.current[lessonId] || 0;
+    if (clamped - lastSaved < 8 && clamped < 85 && !opts?.forceComplete) return;
+
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(async () => {
+      lastSavedRef.current[lessonId] = clamped;
+      try {
+        await fetch('/api/learner/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lessonId,
+            progressPercent: opts?.forceComplete ? 100 : clamped,
+            isCompleted: opts?.forceComplete || clamped >= 85,
+            lastPosition: opts?.lastPosition || 0,
+            source: opts?.source || 'auto',
+          }),
+        });
+      } catch (e) {
+        console.warn('Auto progress save failed:', e);
+      }
+    }, 400);
+  };
 
   const handleSpeedChange = (speed: number) => {
     setPlaybackSpeed(speed);
@@ -79,17 +133,112 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
   const handleToggleComplete = async (lessonId: string) => {
     const nextState = !completedLessons[lessonId];
     setCompletedLessons({ ...completedLessons, [lessonId]: nextState });
-
+    setLessonProgress((s) => ({ ...s, [lessonId]: nextState ? 100 : Math.min(s[lessonId] || 0, 84) }));
     try {
       await fetch('/api/learner/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lessonId, isCompleted: nextState }),
+        body: JSON.stringify({
+          lessonId,
+          isCompleted: nextState,
+          progressPercent: nextState ? 100 : 0,
+          source: 'manual',
+        }),
       });
     } catch (e) {
-      console.warn('Progress save fallback:', e);
+      console.warn('Manual progress save failed:', e);
     }
   };
+
+  // Auto-track reading scroll depth
+  useEffect(() => {
+    const el = readingScrollRef.current;
+    if (!el || !activeLesson?.id) return;
+
+    const onScroll = () => {
+      const max = el.scrollHeight - el.clientHeight;
+      const ratio = max <= 0 ? 100 : (el.scrollTop / max) * 100;
+      persistProgress(activeLesson.id, Math.max(ratio, 12), { source: 'reading', lastPosition: Math.round(ratio) });
+    };
+
+    el.addEventListener('scroll', onScroll, { passive: true });
+    // Short readings that fit on screen
+    if (el.scrollHeight <= el.clientHeight + 8) {
+      persistProgress(activeLesson.id, 100, { source: 'reading', forceComplete: true });
+    } else {
+      persistProgress(activeLesson.id, Math.max(activeItemProgress, 8), { source: 'reading' });
+    }
+
+    return () => el.removeEventListener('scroll', onScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeLesson?.id, currentLessonIndex]);
+
+  // Complete when reader reaches end marker
+  useEffect(() => {
+    const end = readingEndRef.current;
+    if (!end || !activeLesson?.id) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          persistProgress(activeLesson.id, 100, { source: 'reading', forceComplete: true });
+        }
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(end);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeLesson?.id, currentLessonIndex]);
+
+  // Auto-track video watch percent
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !activeLesson?.id) return;
+
+    const onTime = () => {
+      if (!video.duration || !Number.isFinite(video.duration)) return;
+      const pct = (video.currentTime / video.duration) * 100;
+      persistProgress(activeLesson.id, pct, {
+        source: 'video',
+        lastPosition: Math.floor(video.currentTime),
+      });
+    };
+    const onEnded = () => {
+      persistProgress(activeLesson.id, 100, { source: 'video', forceComplete: true });
+    };
+
+    video.addEventListener('timeupdate', onTime);
+    video.addEventListener('ended', onEnded);
+    return () => {
+      video.removeEventListener('timeupdate', onTime);
+      video.removeEventListener('ended', onEnded);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeLesson?.id, currentLessonIndex, lowBandwidthMode]);
+
+  // Auto-track PDF/document viewing time (dwell)
+  useEffect(() => {
+    if (!activeLesson?.id) return;
+    const type = String(activeLesson.contentType || '').toUpperCase();
+    const isDoc =
+      type === 'PDF' ||
+      type === 'DOC' ||
+      type === 'FILE' ||
+      (Boolean(activeLesson.assetUrl) && !activeLesson.textContent && type !== 'VIDEO');
+    if (!isDoc || !activeLesson.assetUrl) return;
+
+    persistProgress(activeLesson.id, Math.max(activeItemProgress, 15), { source: 'document' });
+    const t1 = setTimeout(() => persistProgress(activeLesson.id, 55, { source: 'document' }), 12000);
+    const t2 = setTimeout(
+      () => persistProgress(activeLesson.id, 100, { source: 'document', forceComplete: true }),
+      28000
+    );
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeLesson?.id, currentLessonIndex]);
 
   const handleAddQuestion = (e: React.FormEvent) => {
     e.preventDefault();
@@ -180,6 +329,10 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
   const downloadableMaterials = allLessons.filter((l: any) => l.assetUrl);
 
   const handleDownloadMaterials = (lesson: any) => {
+    if (lesson?.id) {
+      persistProgress(lesson.id, 100, { source: 'download', forceComplete: true });
+    }
+
     if (lesson?.assetUrl) {
       const link = document.createElement('a');
       link.href = lesson.assetUrl;
@@ -199,6 +352,12 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
     link.click();
     URL.revokeObjectURL(url);
   };
+
+  /** Prefer lesson file, else first course document asset for download alongside reading */
+  const readingDownloadUrl =
+    activeLesson?.assetUrl ||
+    downloadableMaterials.find((l: any) => l.assetUrl)?.assetUrl ||
+    null;
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
@@ -262,30 +421,55 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           
           {/* Media / Document / Reading Viewer */}
           {isReadingLesson(activeLesson) ? (
-            <div className="min-h-[420px] bg-white rounded-xl border border-udemy-grayBorder shadow-sm p-6 sm:p-8 space-y-4">
-              <div className="flex items-center justify-between gap-3 border-b border-udemy-grayBorder pb-3">
+            <div className="bg-white rounded-xl border border-udemy-grayBorder shadow-sm overflow-hidden">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-udemy-grayBorder px-6 py-4">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Reading</span>
+                  <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">Read online</span>
                   <h2 className="text-lg font-bold text-udemy-black">{activeLesson?.title}</h2>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Progress auto-tracks as you scroll · {activeItemProgress}% of this item
+                  </p>
                 </div>
-                {activeLesson?.assetUrl && (
-                  <a
-                    href={activeLesson.assetUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-bold text-udemy-purple inline-flex items-center gap-1 hover:underline"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    Source file
-                  </a>
-                )}
+                <div className="flex items-center gap-2">
+                  {readingDownloadUrl && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleDownloadMaterials(
+                          activeLesson?.assetUrl
+                            ? activeLesson
+                            : { ...activeLesson, assetUrl: readingDownloadUrl }
+                        )
+                      }
+                      className="udemy-button-primary px-4 py-2 rounded text-xs font-bold inline-flex items-center gap-1.5"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download document
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="space-y-4 max-w-3xl">
-                {activeLesson?.textContent ? (
-                  renderReadingBody(activeLesson.textContent)
-                ) : (
-                  <p className="text-sm text-slate-500">No reading content for this item yet.</p>
-                )}
+              <div className="h-1.5 bg-slate-100">
+                <div
+                  className="h-full bg-udemy-purple transition-all duration-300"
+                  style={{ width: `${activeItemProgress}%` }}
+                />
+              </div>
+              <div
+                ref={readingScrollRef}
+                className="max-h-[min(70vh,640px)] overflow-y-auto p-6 sm:p-8 space-y-4"
+              >
+                <div className="space-y-4 max-w-3xl mx-auto">
+                  {activeLesson?.textContent ? (
+                    renderReadingBody(activeLesson.textContent)
+                  ) : (
+                    <p className="text-sm text-slate-500">No reading content for this item yet.</p>
+                  )}
+                  <div ref={readingEndRef} className="h-4" aria-hidden />
+                  <p className="text-[10px] text-slate-400 text-center pt-4 border-t border-udemy-grayBorder">
+                    End of reading · progress saved automatically
+                  </p>
+                </div>
               </div>
             </div>
           ) : (
@@ -298,29 +482,42 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
 
             {isDocumentLesson(activeLesson) && activeLesson?.assetUrl ? (
               isPdfLesson(activeLesson) ? (
-                <iframe
-                  key={activeLesson.id}
-                  src={activeLesson.assetUrl}
-                  title={activeLesson.title}
-                  className="w-full h-full bg-white"
-                />
+                <div className="relative w-full h-full flex flex-col bg-white">
+                  <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-slate-200 bg-slate-50">
+                    <span className="text-[11px] font-bold text-slate-600">
+                      Reading online · auto-progress {activeItemProgress}%
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleDownloadMaterials(activeLesson)}
+                      className="text-[11px] font-bold text-udemy-purple inline-flex items-center gap-1 hover:underline"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download PDF
+                    </button>
+                  </div>
+                  <iframe
+                    key={activeLesson.id}
+                    src={activeLesson.assetUrl}
+                    title={activeLesson.title}
+                    className="w-full flex-1 bg-white"
+                  />
+                </div>
               ) : (
                 <div className="flex-1 p-8 text-center flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
                   <FileText className="w-16 h-16 text-udemy-purple" />
                   <h3 className="text-lg font-bold text-white">Word Document Study Material</h3>
                   <p className="text-xs text-slate-400">
-                    Open or download this document to continue your self-paced learning.
+                    Download to read offline. Opening the file also updates your progress automatically.
                   </p>
-                  <a
-                    href={activeLesson.assetUrl}
-                    download={activeLesson.title}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => handleDownloadMaterials(activeLesson)}
                     className="udemy-button-primary px-5 py-2.5 rounded text-xs font-bold inline-flex items-center space-x-2"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download Document</span>
-                  </a>
+                  </button>
                 </div>
               )
             ) : lowBandwidthMode ? (
@@ -394,7 +591,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
           </div>
           )}
 
-          {/* Lesson Header & Mark Complete Action */}
+          {/* Lesson Header & Auto Progress */}
           <div className="bg-white p-6 rounded-xl border border-udemy-grayBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div className="space-y-1">
               <span className="text-[10px] uppercase font-bold text-udemy-purple tracking-wider">
@@ -405,20 +602,49 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                     : 'Active Video Lecture'}
               </span>
               <h2 className="text-xl font-bold text-udemy-black">{activeLesson?.title}</h2>
-              <p className="text-xs text-slate-500 font-medium">{activeLesson?.summary}</p>
+              <p className="text-xs text-slate-500 font-medium">
+                {activeLesson?.summary || 'Progress is tracked automatically as you learn.'}
+              </p>
+              <div className="pt-2 flex items-center gap-3">
+                <div className="w-40 bg-slate-100 rounded-full h-1.5 overflow-hidden border border-udemy-grayBorder">
+                  <div className="bg-emerald-500 h-full transition-all" style={{ width: `${activeItemProgress}%` }} />
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-600">{activeItemProgress}%</span>
+                <span className="text-[10px] text-slate-400">auto-tracked</span>
+              </div>
             </div>
 
-            <button
-              onClick={() => handleToggleComplete(activeLesson.id)}
-              className={`px-5 py-3 rounded text-xs font-bold flex items-center space-x-2 transition-all ${
-                completedLessons[activeLesson?.id]
-                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                  : 'udemy-button-primary shadow-sm'
-              }`}
-            >
-              <CheckCircle className="w-4 h-4" />
-              <span>{completedLessons[activeLesson?.id] ? 'Lesson Completed ✓' : 'Mark Lesson Complete'}</span>
-            </button>
+            <div className="flex flex-col sm:flex-row gap-2">
+              {(activeLesson?.assetUrl || readingDownloadUrl) && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDownloadMaterials(
+                      activeLesson?.assetUrl
+                        ? activeLesson
+                        : { ...activeLesson, assetUrl: readingDownloadUrl }
+                    )
+                  }
+                  className="px-5 py-3 rounded text-xs font-bold flex items-center space-x-2 border border-udemy-grayBorder bg-white text-udemy-black hover:bg-slate-50"
+                >
+                  <Download className="w-4 h-4 text-udemy-purple" />
+                  <span>Download</span>
+                </button>
+              )}
+              <button
+                onClick={() => handleToggleComplete(activeLesson.id)}
+                className={`px-5 py-3 rounded text-xs font-bold flex items-center space-x-2 transition-all ${
+                  completedLessons[activeLesson?.id]
+                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    : 'udemy-button-primary shadow-sm'
+                }`}
+              >
+                <CheckCircle className="w-4 h-4" />
+                <span>
+                  {completedLessons[activeLesson?.id] ? 'Completed (auto) ✓' : 'Mark complete'}
+                </span>
+              </button>
+            </div>
           </div>
 
           {/* Udemy Multi-Tab Navigation */}
@@ -577,7 +803,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ course, userId, us
                 <div className="space-y-4">
                   <h4 className="font-bold text-udemy-black text-sm">Course Study Materials</h4>
                   <p className="text-xs text-slate-500">
-                    PDF and Word documents uploaded for this self-paced course.
+                    Read online in the syllabus, or download here. Downloading also counts toward progress.
                   </p>
 
                   {downloadableMaterials.length === 0 ? (
